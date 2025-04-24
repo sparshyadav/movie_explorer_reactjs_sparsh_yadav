@@ -1,0 +1,114 @@
+.login-container {
+    background: url('/Login_Signup_Banner.png') center/cover no-repeat;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.login-card {
+    background: rgba(6, 5, 3, 0.75);
+    padding: 25px;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 550px;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.login-title {
+    color: #f5c518;
+    font-size: 37px;
+    font-weight: bold;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+
+    input {
+        padding: 10px;
+        background: transparent;
+        border: 1px solid #5f5e5e;
+        border-radius: 4px;
+        color: white;
+        outline: none;
+
+        &::placeholder {
+            color: #b0b0b0;
+        }
+    }
+
+    .error {
+        color: red;
+        font-size: 0.875rem;
+        margin-top: 2px;
+    }
+}
+
+.password-group {
+    display: flex;
+    justify-content: space-around;
+    border: 1px solid #5f5e5e;
+    border-radius: 4px;
+
+    input {
+        width: 90%;
+        padding-right: 40px; 
+        background: transparent;
+        border-radius: 4px;
+        color: white;
+        padding: 10px;
+        outline: none;
+        border: none;
+
+        &::placeholder {
+            color: #b0b0b0;
+        }
+    }
+
+    button {
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .error {
+        color: red;
+        font-size: 0.875rem;
+        margin-top: 4px;
+        margin-left: 5px;
+    }
+}
+
+.login-btn {
+    background-color: #f5c518;
+    padding: 10px;
+    border-radius: 4px;
+    border: none;
+    color: black;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+
+    &:hover {
+        background-color: #e0b917;
+    }
+}
+
+.login-link {
+    text-align: right;
+
+    span {
+        text-decoration: underline;
+        cursor: pointer;
+        color: #f5c518;
+    }
+}
