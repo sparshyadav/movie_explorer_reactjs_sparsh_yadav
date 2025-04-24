@@ -1,5 +1,6 @@
 import React from 'react';
 import { Eye, EyeOff } from 'lucide-react';
+import Box from '@mui/material/Box';
 import './Signup.scss';
 
 type State = {
@@ -8,12 +9,14 @@ type State = {
     formFields: {
         email: string;
         username: string;
+        phoneNumber: string;
         password: string;
         confirmPassword: string;
     };
     errors: {
         emailError?: string;
         usernameError?: string;
+        phoneNumberError?: string;
         passwordError?: string;
         confirmPasswordError?: string;
     };
@@ -26,6 +29,7 @@ class Signup extends React.Component {
         formFields: {
             email: '',
             username: '',
+            phoneNumber: "",
             password: '',
             confirmPassword: '',
         },
@@ -44,11 +48,11 @@ class Signup extends React.Component {
     };
 
     handleSubmit = () => {
-        const { email, username, password, confirmPassword } = this.state.formFields;
+        const { email, username, phoneNumber, password, confirmPassword } = this.state.formFields;
 
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        const passwordRegex =
-            /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?#&^_-])[A-Za-z\d@$!%*?#&^_-]{8,}$/;
+        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?#&^_-])[A-Za-z\d@$!%*?#&^_-]{8,}$/;
+        const phoneNumberRegex = /^[7-9][0-9]{9}$/;
 
         const errors: State['errors'] = {};
 
@@ -56,6 +60,9 @@ class Signup extends React.Component {
         else if (!emailRegex.test(email)) errors.emailError = 'Enter a valid email';
 
         if (!username) errors.usernameError = 'Username is required';
+
+        if (!phoneNumber) errors.phoneNumberError = 'Phone Number is required';
+        else if (!phoneNumberRegex.test(phoneNumber)) errors.phoneNumberError = 'Enter a valid phone number'
 
         if (!password) errors.passwordError = 'Password is required';
         else if (!passwordRegex.test(password))
@@ -73,11 +80,11 @@ class Signup extends React.Component {
         const { showPassword, showConfirmPassword, formFields, errors } = this.state;
 
         return (
-            <div className="signup-container">
-                <div className="signup-card">
+            <Box className="signup-container">
+                <Box className="signup-card">
                     <h1 className="signup-title">Sign Up</h1>
 
-                    <div className="form-group">
+                    <Box className="form-group">
                         <input
                             type="text"
                             name="email"
@@ -86,9 +93,9 @@ class Signup extends React.Component {
                             onChange={this.handleChange}
                         />
                         {errors.emailError && <p className="error">{errors.emailError}</p>}
-                    </div>
+                    </Box>
 
-                    <div className="form-group">
+                    <Box className="form-group">
                         <input
                             type="text"
                             name="username"
@@ -97,9 +104,20 @@ class Signup extends React.Component {
                             onChange={this.handleChange}
                         />
                         {errors.usernameError && <p className="error">{errors.usernameError}</p>}
-                    </div>
+                    </Box>
 
-                    <div className='password-container'>
+                    <Box className="form-group">
+                        <input
+                            type="text"
+                            name="phoneNumber"
+                            placeholder="Phone Number"
+                            value={formFields.phoneNumber}
+                            onChange={this.handleChange}
+                        />
+                        {errors.phoneNumberError && <p className="error">{errors.phoneNumberError}</p>}
+                    </Box>
+
+                    <Box className='password-container'>
                         <div className="password-group">
                             <input
                                 type={showPassword ? 'text' : 'password'}
@@ -113,9 +131,9 @@ class Signup extends React.Component {
                             </button>
                         </div>
                         {errors.passwordError && <p className="error">{errors.passwordError}</p>}
-                    </div>
+                    </Box>
 
-                    <div className='password-container'>
+                    <Box className='password-container'>
                         <div className="password-group">
                             <input
                                 type={showConfirmPassword ? 'text' : 'password'}
@@ -137,7 +155,7 @@ class Signup extends React.Component {
                         {errors.confirmPasswordError && (
                             <p className="error">{errors.confirmPasswordError}</p>
                         )}
-                    </div>
+                    </Box>
 
                     <button className="signup-btn" onClick={this.handleSubmit}>
                         Create Account
@@ -146,8 +164,8 @@ class Signup extends React.Component {
                     <p className="login-link">
                         Already a Member? <span>Login</span>
                     </p>
-                </div>
-            </div>
+                </Box>
+            </Box>
         );
     }
 }
