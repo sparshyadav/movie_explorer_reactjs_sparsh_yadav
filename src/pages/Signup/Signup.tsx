@@ -2,6 +2,7 @@ import React from 'react';
 import { Eye, EyeOff } from 'lucide-react';
 import Box from '@mui/material/Box';
 import './Signup.scss';
+import { NavLink } from 'react-router-dom';
 
 type State = {
     showPassword: boolean;
@@ -162,7 +163,7 @@ class Signup extends React.Component {
                     </button>
 
                     <p className="login-link">
-                        Already a Member? <span>Login</span>
+                        Already a Member? <NavLink to={'/login'}><span>Login</span></NavLink>
                     </p>
                 </Box>
             </Box>
