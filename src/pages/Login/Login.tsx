@@ -2,6 +2,7 @@ import React from 'react';
 import { Eye, EyeOff } from 'lucide-react';
 import './Login.scss';
 import { NavLink } from 'react-router-dom';
+import Box from '@mui/material/Box';
 
 type State = {
     showPassword: boolean;
@@ -45,6 +46,7 @@ class Login extends React.Component {
         if (!email) errors.emailError = 'Email is required';
         else if (!emailRegex.test(email)) errors.emailError = 'Enter a valid email';
 
+        console.log("Email: ", email);
         console.log("Password: ", password);
 
         this.setState({ errors });
@@ -54,11 +56,11 @@ class Login extends React.Component {
         const { showPassword, formFields, errors } = this.state;
 
         return (
-            <div className="login-container">
-                <div className="login-card">
+            <Box className="login-container">
+                <Box className="login-card">
                     <h1 className="login-title">Login</h1>
 
-                    <div className="form-group">
+                    <Box className="form-group">
                         <input
                             type="text"
                             name="email"
@@ -67,9 +69,9 @@ class Login extends React.Component {
                             onChange={this.handleChange}
                         />
                         {errors.emailError && <p className="error">{errors.emailError}</p>}
-                    </div>
+                    </Box>
 
-                    <div className="password-group">
+                    <Box className="password-group">
                         <input
                             type={showPassword ? 'text' : 'password'}
                             name="password"
@@ -80,17 +82,17 @@ class Login extends React.Component {
                         <button type="button" onClick={() => this.setState({ showPassword: !showPassword })}>
                             {showPassword ? <Eye color="#F5C518" /> : <EyeOff color="#F5C518" />}
                         </button>
-                    </div>
+                    </Box>
 
                     <button className="login-btn" onClick={this.handleSubmit}>
                         Create Account
                     </button>
 
                     <p className="login-link">
-                        Become a Member? <NavLink to={'/signup'}><span>Login</span></NavLink>
+                        Become a Member? <NavLink to={'/signup'}><span>Signup</span></NavLink>
                     </p>
-                </div>
-            </div>
+                </Box>
+            </Box>
         );
     }
 }
