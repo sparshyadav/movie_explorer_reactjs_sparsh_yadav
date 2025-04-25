@@ -37,8 +37,6 @@ export const signupAPI = async (payload: { email: string, password: string, name
                 }
             }
         );
-        // console.log("Response from API: ", response);
-
 
         return response;
     }
