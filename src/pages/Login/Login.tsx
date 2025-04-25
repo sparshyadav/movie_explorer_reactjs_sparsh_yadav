@@ -3,6 +3,7 @@ import { Eye, EyeOff } from 'lucide-react';
 import './Login.scss';
 import { NavLink } from 'react-router-dom';
 import Box from '@mui/material/Box';
+import { loginAPI } from '../../API';
 
 type State = {
     showPassword: boolean;
@@ -50,6 +51,9 @@ class Login extends React.Component {
         console.log("Password: ", password);
 
         this.setState({ errors });
+
+        const response=loginAPI({email, password});
+        console.log("Response in LOGIN: ", response);
     };
 
     render() {
@@ -85,7 +89,7 @@ class Login extends React.Component {
                     </Box>
 
                     <button className="login-btn" onClick={this.handleSubmit}>
-                        Create Account
+                        Login
                     </button>
 
                     <p className="login-link">
