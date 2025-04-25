@@ -57,7 +57,7 @@
 
     input {
         width: 90%;
-        padding-right: 40px; 
+        padding-right: 40px;
         background: transparent;
         border-radius: 4px;
         color: white;
@@ -100,6 +100,28 @@
 
     &:hover {
         background-color: #e0b917;
+    }
+
+    &.loading {
+        background: linear-gradient(90deg, #f9d967 25%, #f1d565 50%, #ebe0b8 75%);
+        background-size: 200% 100%;
+        animation: shimmer 2.5s infinite ease-in-out;
+        color: black;
+        border: 1px solid #f5c518;
+    }
+
+    @keyframes shimmer {
+        0% {
+            background-position: -200% 0;
+        }
+
+        50% {
+            background-position: 200% 0;
+        }
+
+        100% {
+            background-position: -200% 0;
+        }
     }
 }
 

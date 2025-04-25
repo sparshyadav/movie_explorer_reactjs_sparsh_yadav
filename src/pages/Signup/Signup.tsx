@@ -4,10 +4,12 @@ import Box from '@mui/material/Box';
 import './Signup.scss';
 import { NavLink } from 'react-router-dom';
 import { signupAPI } from '../../API';
+import toast from 'react-hot-toast';
 
 type State = {
     showPassword: boolean;
     showConfirmPassword: boolean;
+    isLoading: boolean;
     formFields: {
         email: string;
         username: string;
@@ -28,6 +30,7 @@ class Signup extends React.Component {
     state: State = {
         showPassword: false,
         showConfirmPassword: false,
+        isLoading: false,
         formFields: {
             email: '',
             username: '',
@@ -40,6 +43,9 @@ class Signup extends React.Component {
 
     handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
+        this.state.errors = {};
+
+        this.state.isLoading = false;
 
         this.setState((prevState: State) => ({
             formFields: {
@@ -49,7 +55,7 @@ class Signup extends React.Component {
         }));
     };
 
-    handleSubmit = async() => {
+    handleSubmit = async () => {
         const { email, username, phoneNumber, password, confirmPassword } = this.state.formFields;
 
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -58,27 +64,63 @@ class Signup extends React.Component {
 
         const errors: State['errors'] = {};
 
-        if (!email) errors.emailError = 'Email is required';
-        else if (!emailRegex.test(email)) errors.emailError = 'Enter a valid email';
+        let isValid: boolean = true;
 
-        if (!username) errors.usernameError = 'Username is required';
+        if (!email) {
+            errors.emailError = 'Email is required';
+            isValid = false;
+        }
+        else if (!emailRegex.test(email)) {
+            errors.emailError = 'Enter a valid email';
+            isValid = false;
+        }
 
-        if (!phoneNumber) errors.phoneNumberError = 'Phone Number is required';
-        else if (!phoneNumberRegex.test(phoneNumber)) errors.phoneNumberError = 'Enter a valid phone number'
+        if (!username) {
+            errors.usernameError = 'Username is required';
+            isValid = false;
+        }
 
-        if (!password) errors.passwordError = 'Password is required';
-        else if (!passwordRegex.test(password))
-            errors.passwordError =
-                'Password must contain 8 characters, a number, a special character, an uppercase and a lowercase letter';
+        if (!phoneNumber) {
+            errors.phoneNumberError = 'Phone Number is required';
+            isValid = false;
+        }
+        else if (!phoneNumberRegex.test(phoneNumber)) {
+            errors.phoneNumberError = 'Enter a valid phone number'
+            isValid = false;
+        }
 
-        if (!confirmPassword) errors.confirmPasswordError = 'Confirm password is required';
-        else if (password !== confirmPassword)
+        if (!password) {
+            errors.passwordError = 'Password is required';
+            isValid = false;
+        }
+        else if (!passwordRegex.test(password)) {
+            errors.passwordError = 'Password must contain 8 characters, a number, a special character, an uppercase and a lowercase letter';
+            isValid = false;
+        }
+
+        if (!confirmPassword) {
+            errors.confirmPasswordError = 'Confirm password is required';
+            isValid = false;
+        }
+        else if (password !== confirmPassword) {
             errors.confirmPasswordError = 'Passwords do not match';
+            isValid = false;
+        }
+
 
         this.setState({ errors });
 
-        const response=await signupAPI({name: username, email, password, mobile_number: phoneNumber});
-        console.log("Response in Signup: ", response);
+        if (isValid) {
+            this.setState({ isLoading: true });
+            const response = await signupAPI({ name: username, email, password, mobile_number: phoneNumber });
+            console.log("Response in Signup: ", response);
+
+            if (response?.status === 201) {
+                toast.success("Sign Up Successfull");
+            }
+
+            this.setState({ isLoading: false });
+        }
     };
 
     render() {
@@ -161,9 +203,16 @@ class Signup extends React.Component {
                             <p className="error">{errors.confirmPasswordError}</p>
                         )}
                     </Box>
-
-                    <button className="signup-btn" onClick={this.handleSubmit}>
-                        Create Account
+                    <button
+                        className={`signup-btn ${this.state.isLoading ? 'loading' : ''}`}
+                        onClick={this.handleSubmit}
+                        disabled={this.state.isLoading}
+                    >
+                        {this.state.isLoading ? (
+                            <span className="loader">Signing Up...</span>
+                        ) : (
+                            'Create an Account'
+                        )}
                     </button>
 
                     <p className="login-link">

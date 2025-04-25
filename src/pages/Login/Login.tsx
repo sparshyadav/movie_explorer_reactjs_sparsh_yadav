@@ -4,9 +4,11 @@ import './Login.scss';
 import { NavLink } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import { loginAPI } from '../../API';
+import toast from 'react-hot-toast';
 
 type State = {
     showPassword: boolean;
+    isLoading: boolean;
     formFields: {
         email: string;
         password: string;
@@ -20,6 +22,7 @@ type State = {
 class Login extends React.Component {
     state: State = {
         showPassword: false,
+        isLoading: false,
         formFields: {
             email: '',
             password: ''
@@ -28,6 +31,8 @@ class Login extends React.Component {
     };
 
     handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        this.state.errors = {};
+        this.state.isLoading = false;
         const { name, value } = e.target;
 
         this.setState((prevState: State) => ({
@@ -45,16 +50,32 @@ class Login extends React.Component {
 
         const errors: State['errors'] = {};
 
-        if (!email) errors.emailError = 'Email is required';
-        else if (!emailRegex.test(email)) errors.emailError = 'Enter a valid email';
+        let isValid: boolean = true;
 
-        console.log("Email: ", email);
-        console.log("Password: ", password);
+        if (!email) {
+            errors.emailError = 'Email is required';
+            isValid = false;
+        }
+        else if (!emailRegex.test(email)) {
+            errors.emailError = 'Enter a valid email';
+            isValid = false;
+        }
 
         this.setState({ errors });
-        
-        const response = await loginAPI({ email, password });
-        console.log("Response in LOGIN: ", response);
+
+        if (isValid) {
+            this.setState({ isLoading: true });
+            const response = await loginAPI({ email, password });
+            console.log("Response in LOGIN: ", response);
+
+            
+
+            if (response?.status === 200) {
+                toast.success("Login Successfull");
+            }
+
+            this.setState({ isLoading: false });
+        }
     };
 
     render() {
@@ -90,8 +111,16 @@ class Login extends React.Component {
                     </Box>
                     {errors.passwordError && <p className="error">{errors.passwordError}</p>}
 
-                    <button className="login-btn" onClick={this.handleSubmit}>
-                        Login
+                    <button
+                        className={`login-btn ${this.state.isLoading ? 'loading' : ''}`}
+                        onClick={this.handleSubmit}
+                        disabled={this.state.isLoading}
+                    >
+                        {this.state.isLoading ? (
+                            <span className="loader">Loging In...</span>
+                        ) : (
+                            'Login'
+                        )}
                     </button>
 
                     <p className="login-link">
