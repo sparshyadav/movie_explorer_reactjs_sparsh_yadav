@@ -14,11 +14,32 @@ export const loginAPI = async (payload: { email: string, password: string }) => 
                 }
             }
         );
-        console.log("Response from API: ", response);
 
+        console.log("Response from API: ", response);
         return response;
     }
     catch (error) {
         console.log("Error Occurred while Signing In: ", error);
+    }
+}
+
+export const signupAPI = async (payload: { email: string, password: string, name: string, mobile_number: string }) => {
+    const { email, password, name, mobile_number } = payload;
+
+    try {
+        const response = await axios.post(`${BASE_URL}/auth/sign_up`, { user: {email, password, name, mobile_number} },
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                }
+            }
+        );
+        // console.log("Response from API: ", response);
+
+        return response;
+    }
+    catch (error) {
+        console.log("Error Occurred while Signing Up: ", error);
     }
 }

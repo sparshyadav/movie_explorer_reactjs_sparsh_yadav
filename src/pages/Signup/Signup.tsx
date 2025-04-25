@@ -3,6 +3,7 @@ import { Eye, EyeOff } from 'lucide-react';
 import Box from '@mui/material/Box';
 import './Signup.scss';
 import { NavLink } from 'react-router-dom';
+import { signupAPI } from '../../API';
 
 type State = {
     showPassword: boolean;
@@ -48,7 +49,7 @@ class Signup extends React.Component {
         }));
     };
 
-    handleSubmit = () => {
+    handleSubmit = async() => {
         const { email, username, phoneNumber, password, confirmPassword } = this.state.formFields;
 
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -75,6 +76,9 @@ class Signup extends React.Component {
             errors.confirmPasswordError = 'Passwords do not match';
 
         this.setState({ errors });
+
+        const response=await signupAPI({name: username, email, password, mobile_number: phoneNumber});
+        console.log("Response in Signup: ", response);
     };
 
     render() {

@@ -13,6 +13,7 @@ type State = {
     };
     errors: {
         emailError?: string;
+        passwordError?: string;
     };
 };
 
@@ -37,7 +38,7 @@ class Login extends React.Component {
         }));
     };
 
-    handleSubmit = () => {
+    handleSubmit = async () => {
         const { email, password } = this.state.formFields;
 
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -51,8 +52,8 @@ class Login extends React.Component {
         console.log("Password: ", password);
 
         this.setState({ errors });
-
-        const response=loginAPI({email, password});
+        
+        const response = await loginAPI({ email, password });
         console.log("Response in LOGIN: ", response);
     };
 
@@ -87,6 +88,7 @@ class Login extends React.Component {
                             {showPassword ? <Eye color="#F5C518" /> : <EyeOff color="#F5C518" />}
                         </button>
                     </Box>
+                    {errors.passwordError && <p className="error">{errors.passwordError}</p>}
 
                     <button className="login-btn" onClick={this.handleSubmit}>
                         Login
