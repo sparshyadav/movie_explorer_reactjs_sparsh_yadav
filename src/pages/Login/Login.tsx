@@ -1,10 +1,12 @@
-import React from 'react';
 import { Eye, EyeOff } from 'lucide-react';
 import './Login.scss';
 import { NavLink } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import { loginAPI } from '../../API';
 import toast from 'react-hot-toast';
+import Cookies from 'js-cookie';
+import NavigateWrapper from '../../components/NavigateWrapper';
+import React from 'react';
 
 type State = {
     showPassword: boolean;
@@ -19,7 +21,22 @@ type State = {
     };
 };
 
-class Login extends React.Component {
+type User = {
+    email: string;
+    mobile_number: string;
+    name: string;
+    role: string;
+}
+
+type Props = {
+    navigate: (path: string) => void;
+    userContext: {
+        setUser: (user: User) => void;
+        user: User;
+    }
+};
+
+class Login extends React.Component<Props> {
     state: State = {
         showPassword: false,
         isLoading: false,
@@ -61,6 +78,11 @@ class Login extends React.Component {
             isValid = false;
         }
 
+        if (!password) {
+            errors.passwordError = 'Password is required';
+            isValid = false;
+        }
+
         this.setState({ errors });
 
         if (isValid) {
@@ -68,7 +90,25 @@ class Login extends React.Component {
             const response = await loginAPI({ email, password });
             console.log("Response in LOGIN: ", response);
 
-            
+            if (response && response.data) {
+                this.props.userContext.setUser({
+                    email: response.data.email,
+                    mobile_number: response.data.mobile_number,
+                    role: response.data.role,
+                    name: response.data.name
+                });
+            }
+
+            const token = response?.data?.token;
+            if (token) {
+                Cookies.set('authToken', token, {
+                    expires: 7,
+                    secure: true,
+                    sameSite: 'Strict',
+                });
+            }
+
+            this.props.navigate('/')
 
             if (response?.status === 200) {
                 toast.success("Login Successfull");
@@ -97,19 +137,21 @@ class Login extends React.Component {
                         {errors.emailError && <p className="error">{errors.emailError}</p>}
                     </Box>
 
-                    <Box className="password-group">
-                        <input
-                            type={showPassword ? 'text' : 'password'}
-                            name="password"
-                            placeholder="Password"
-                            value={formFields.password}
-                            onChange={this.handleChange}
-                        />
-                        <button type="button" onClick={() => this.setState({ showPassword: !showPassword })}>
-                            {showPassword ? <Eye color="#F5C518" /> : <EyeOff color="#F5C518" />}
-                        </button>
+                    <Box className='password-main-container'>
+                        <Box className="password-group">
+                            <input
+                                type={showPassword ? 'text' : 'password'}
+                                name="password"
+                                placeholder="Password"
+                                value={formFields.password}
+                                onChange={this.handleChange}
+                            />
+                            <button type="button" onClick={() => this.setState({ showPassword: !showPassword })}>
+                                {showPassword ? <Eye color="#F5C518" /> : <EyeOff color="#F5C518" />}
+                            </button>
+                        </Box>
+                        {errors.passwordError && <p className="error">{errors.passwordError}</p>}
                     </Box>
-                    {errors.passwordError && <p className="error">{errors.passwordError}</p>}
 
                     <button
                         className={`login-btn ${this.state.isLoading ? 'loading' : ''}`}
@@ -132,4 +174,4 @@ class Login extends React.Component {
     }
 }
 
-export default Login;
+export default NavigateWrapper(Login);

@@ -41,12 +41,6 @@
             color: #b0b0b0;
         }
     }
-
-    .error {
-        color: red;
-        font-size: 0.875rem;
-        margin-top: 2px;
-    }
 }
 
 .password-group {
@@ -79,13 +73,18 @@
         align-items: center;
         justify-content: center;
     }
+}
 
-    .error {
-        color: red;
-        font-size: 0.875rem;
-        margin-top: 4px;
-        margin-left: 5px;
-    }
+.password-main-container {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.error {
+    color: red;
+    font-size: 0.875rem;
+    margin-left: 5px;
 }
 
 .login-btn {
