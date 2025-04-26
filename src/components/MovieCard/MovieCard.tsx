@@ -35,9 +35,11 @@ const MovieCard: React.FC<ShowCardProps> = ({
 
             <div className="show-info">
                 <div className="rating-container">
-                    <span className="star-icon">★</span>
-                    <span className="rating">{rating.toFixed(1)}</span>
-                    <span className="bookmark-icon">☆</span>
+                    <div className='rating-info'>
+                        <span className="star-icon">★</span>
+                        <span className="rating">{rating.toFixed(1)}</span>
+                    </div>
+                    <div className='bookmark-container'><span className="bookmark-icon">☆</span></div>
                 </div>
 
                 <div className="title-row">

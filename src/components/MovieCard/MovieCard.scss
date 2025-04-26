@@ -58,6 +58,7 @@
         .rating-container {
             display: flex;
             align-items: center;
+            justify-content: space-between;
             margin-bottom: 8px;
 
             .star-icon {
@@ -69,6 +70,15 @@
             .rating {
                 font-weight: bold;
                 margin-right: 8px;
+            }
+
+            .bookmark-container{
+                height: 20px;
+                width: 20px;
+
+                &:hover{
+                    cursor: pointer;
+                }
             }
 
             .bookmark-icon {
