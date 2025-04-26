@@ -12,7 +12,6 @@ type UserContextType = {
     setUser: (user: User | null) => void;
 };
 
-
 export const UserContext = createContext<UserContextType | undefined>(undefined);
 
 export const UserProvider = ({ children }: { children: ReactNode }) => {
