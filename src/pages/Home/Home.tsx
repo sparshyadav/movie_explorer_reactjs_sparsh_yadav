@@ -4,6 +4,7 @@ import Navbar from '../../components/Navbar/Navbar';
 import Footer from '../../components/Footer/Footer';
 import MainCarousal from '../../components/MainCarousal/MainCarousal';
 import WhatToWatch from '../../components/WhatToWatch/WhatToWatch';
+import StreamingPlatform from '../../components/StreamingPlatform/StreamingPlatform';
 
 export class Home extends Component {
   render() {
@@ -12,6 +13,7 @@ export class Home extends Component {
         <Navbar />
         <MainCarousal />
         <WhatToWatch />
+        <StreamingPlatform />
         <Footer />
       </div>
     )

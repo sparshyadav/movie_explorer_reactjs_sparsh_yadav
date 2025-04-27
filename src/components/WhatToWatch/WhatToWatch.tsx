@@ -9,8 +9,6 @@ interface Movie {
     title: string;
     posterImage: string;
     rating: number;
-    isNetflixOriginal?: boolean;
-    nowPlaying?: boolean;
 }
 
 interface WhatToWatchState {
@@ -21,7 +19,7 @@ interface WhatToWatchState {
 
 class WhatToWatch extends Component<object, WhatToWatchState> {
     carouselRef = createRef<HTMLDivElement>();
-    cardWidth = 250; 
+    cardWidth = 250;
     visibleCards = 5;
     scrollAmount = this.cardWidth * this.visibleCards;
 
@@ -31,15 +29,12 @@ class WhatToWatch extends Component<object, WhatToWatchState> {
             title: 'Inception',
             posterImage: 'https://irs.www.warnerbros.com/keyart-jpeg/inception_keyart.jpg',
             rating: 8.8,
-            isNetflixOriginal: true,
-            nowPlaying: false,
         },
         {
             id: '2',
             title: 'The Dark Knight',
             posterImage: 'https://m.media-amazon.com/images/M/MV5BMTMxNTMwODM0NF5BMl5BanBnXkFtZTcwODAyMTk2Mw@@._V1_FMjpg_UX1000_.jpg',
             rating: 9.0,
-            nowPlaying: true,
         },
         {
             id: '3',
@@ -52,7 +47,6 @@ class WhatToWatch extends Component<object, WhatToWatchState> {
             title: 'Stranger Things',
             posterImage: 'https://m.media-amazon.com/images/M/MV5BMjg2NmM0MTEtYWY2Yy00NmFlLTllNTMtMjVkZjEwMGVlNzdjXkEyXkFqcGc@._V1_.jpg',
             rating: 8.7,
-            isNetflixOriginal: true,
         },
         {
             id: '5',
@@ -65,7 +59,6 @@ class WhatToWatch extends Component<object, WhatToWatchState> {
             title: 'Money Heist',
             posterImage: 'https://m.media-amazon.com/images/M/MV5BZjkxZWJiNTUtYjQwYS00MTBlLTgwODQtM2FkNWMyMjMwOGZiXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg',
             rating: 8.3,
-            isNetflixOriginal: true,
         },
         {
             id: '7',
