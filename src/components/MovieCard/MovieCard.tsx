@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './MovieCard.scss';
 import { Add, Check } from '@mui/icons-material';
+import Box from '@mui/material/Box';
 
 interface ShowCardProps {
     id: string;
@@ -28,27 +29,27 @@ const MovieCard: React.FC<ShowCardProps> = ({
     };
 
     return (
-        <div className="netflix-show-card">
-            <div className="poster-container">
+        <Box className="netflix-show-card">
+            <Box className="poster-container">
                 <img src={posterImage} alt={`${title} poster`} className="poster-image" />
-            </div>
+            </Box>
 
-            <div className="show-info">
-                <div className="rating-container">
-                    <div className='rating-info'>
+            <Box className="show-info">
+                <Box className="rating-container">
+                    <Box className='rating-info'>
                         <span className="star-icon">★</span>
                         <span className="rating">{rating.toFixed(1)}</span>
-                    </div>
-                    <div className='bookmark-container'><span className="bookmark-icon">☆</span></div>
-                </div>
+                    </Box>
+                    <Box className='bookmark-container'><span className="bookmark-icon">☆</span></Box>
+                </Box>
 
-                <div className="title-row">
+                <Box className="title-row">
                     <span className="title">{title}</span>
-                </div>
+                </Box>
 
                 <button className="watch-options-btn">Watch options</button>
 
-                <div className="action-buttons">
+                <Box className="action-buttons">
                     <button
                         className="watchlist-btn"
                         onClick={handleWatchlistToggle}
@@ -57,9 +58,9 @@ const MovieCard: React.FC<ShowCardProps> = ({
                         {isInWatchlist ? <Check /> : <Add />}
                         {isInWatchlist ? "In Watchlist" : "Add to Watchlist"}
                     </button>
-                </div>
-            </div>
-        </div>
+                </Box>
+            </Box>
+        </Box>
     );
 };
 

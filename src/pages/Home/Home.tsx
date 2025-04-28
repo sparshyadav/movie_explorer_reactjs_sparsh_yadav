@@ -5,17 +5,20 @@ import Footer from '../../components/Footer/Footer';
 import MainCarousal from '../../components/MainCarousal/MainCarousal';
 import WhatToWatch from '../../components/WhatToWatch/WhatToWatch';
 import StreamingPlatform from '../../components/StreamingPlatform/StreamingPlatform';
+import BornToday from '../../components/BornToday/BornToday';
+import Box from '@mui/material/Box';
 
 export class Home extends Component {
   render() {
     return (
-      <div>
+      <Box>
         <Navbar />
         <MainCarousal />
         <WhatToWatch />
         <StreamingPlatform />
+        <BornToday />
         <Footer />
-      </div>
+      </Box>
     )
   }
 }

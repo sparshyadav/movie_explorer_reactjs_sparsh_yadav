@@ -3,6 +3,7 @@ import './StreamingPlatforlm.scss';
 import { ArrowBackIos, ArrowForwardIos } from '@mui/icons-material';
 import MovieCard from '../MovieCard/MovieCard';
 import { ChevronRight } from 'lucide-react';
+import Box from '@mui/material/Box';
 
 interface Movie {
     id: string;
@@ -21,7 +22,7 @@ interface StreamingPlatformState {
 }
 
 export class StreamingPlatform extends Component<object, StreamingPlatformState> {
-    carouselRef = createRef<HTMLDivElement>();
+    carouselRef = createRef<HTMLBRElement>();
     cardWidth = 250;
     visibleCards = 5;
     scrollAmount = this.cardWidth * this.visibleCards;
@@ -234,14 +235,14 @@ export class StreamingPlatform extends Component<object, StreamingPlatformState>
         const canScrollRight = scrollPosition < (this.movies.length - this.visibleCards) * this.cardWidth;
 
         return (
-            <div className='main-container'>
-                <div
+            <Box className='main-container'>
+                <Box
                     className="netflix-card-carousel"
                     onMouseEnter={() => this.setState({ showControls: true })}
                 >
                     <h2 className="carousel-title">Explore What's Streaming <span className='title-icon'><ChevronRight className='next-icon' /></span></h2>
 
-                    <div className='platform-options'>
+                    <Box className='platform-options'>
                         {this.images.map((src, index) => (
                             <img
                                 key={index}
@@ -251,9 +252,9 @@ export class StreamingPlatform extends Component<object, StreamingPlatformState>
                                 onClick={() => this.handleImageClick(index)}
                             />
                         ))}
-                    </div>
+                    </Box>
 
-                    <div className="carousel-container">
+                    <Box className="carousel-container">
                         {showControls && canScrollLeft && (
                             <button
                                 className="carousel-control left-control"
@@ -264,18 +265,18 @@ export class StreamingPlatform extends Component<object, StreamingPlatformState>
                             </button>
                         )}
 
-                        <div className="carousel-track" ref={this.carouselRef}>
+                        <Box className="carousel-track" ref={this.carouselRef}>
                             {this.state.selectedPlatformMovies.map((movie) => (
-                                <div className="carousel-item" key={movie.id}>
+                                <Box className="carousel-item" key={movie.id}>
                                     <MovieCard
                                         id={movie.id}
                                         title={movie.title}
                                         posterImage={movie.posterImage}
                                         rating={movie.rating}
                                     />
-                                </div>
+                                </Box>
                             ))}
-                        </div>
+                        </Box>
 
                         {showControls && canScrollRight && (
                             <button
@@ -286,9 +287,9 @@ export class StreamingPlatform extends Component<object, StreamingPlatformState>
                                 <ArrowForwardIos />
                             </button>
                         )}
-                    </div>
-                </div>
-            </div>
+                    </Box>
+                </Box>
+            </Box>
         )
     }
 }

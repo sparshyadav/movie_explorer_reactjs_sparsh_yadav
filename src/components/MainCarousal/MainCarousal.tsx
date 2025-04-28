@@ -14,7 +14,7 @@ interface ArrowProps {
 
 function NextArrow({ className, style, onClick }: ArrowProps) {
     return (
-        <div
+        <Box
             className={className}
             style={{
                 ...style,
@@ -31,13 +31,13 @@ function NextArrow({ className, style, onClick }: ArrowProps) {
             onClick={onClick}
         >
             <ArrowForwardIos style={{ color: 'white', fontSize: '20px' }} />
-        </div>
+        </Box>
     );
 }
 
 function PrevArrow({ className, style, onClick }: ArrowProps) {
     return (
-        <div
+        <Box
             className={className}
             style={{
                 ...style,
@@ -54,7 +54,7 @@ function PrevArrow({ className, style, onClick }: ArrowProps) {
             onClick={onClick}
         >
             <ArrowBackIos style={{ color: 'white', fontSize: '20px' }} />
-        </div>
+        </Box>
     );
 }
 

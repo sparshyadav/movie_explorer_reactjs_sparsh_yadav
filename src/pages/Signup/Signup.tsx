@@ -165,7 +165,7 @@ class Signup extends React.Component {
                     </Box>
 
                     <Box className='password-container'>
-                        <div className="password-group">
+                        <Box className="password-group">
                             <input
                                 type={showPassword ? 'text' : 'password'}
                                 name="password"
@@ -176,12 +176,12 @@ class Signup extends React.Component {
                             <button type="button" onClick={() => this.setState({ showPassword: !showPassword })}>
                                 {showPassword ? <Eye color="#F5C518" /> : <EyeOff color="#F5C518" />}
                             </button>
-                        </div>
+                        </Box>
                         {errors.passwordError && <p className="error">{errors.passwordError}</p>}
                     </Box>
 
                     <Box className='password-container'>
-                        <div className="password-group">
+                        <Box className="password-group">
                             <input
                                 type={showConfirmPassword ? 'text' : 'password'}
                                 name="confirmPassword"
@@ -198,7 +198,7 @@ class Signup extends React.Component {
                                 {showConfirmPassword ? <Eye color="#F5C518" /> : <EyeOff color="#F5C518" />}
                             </button>
 
-                        </div>
+                        </Box>
                         {errors.confirmPasswordError && (
                             <p className="error">{errors.confirmPasswordError}</p>
                         )}

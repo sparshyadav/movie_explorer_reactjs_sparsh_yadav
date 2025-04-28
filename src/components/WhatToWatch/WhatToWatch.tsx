@@ -18,7 +18,7 @@ interface WhatToWatchState {
 }
 
 class WhatToWatch extends Component<object, WhatToWatchState> {
-    carouselRef = createRef<HTMLDivElement>();
+    carouselRef = createRef<HTMLBRElement>();
     cardWidth = 250;
     visibleCards = 5;
     scrollAmount = this.cardWidth * this.visibleCards;
