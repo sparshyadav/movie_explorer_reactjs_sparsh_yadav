@@ -1,13 +1,13 @@
 import axios from "axios";
 import toast from "react-hot-toast";
 
-const BASE_URL = 'https://movie-explorer-ror-aalekh.onrender.com/api/v1';
+const BASE_URL = 'https://movie-explorer-ror-aalekh-2ewg.onrender.com';
 
 export const loginAPI = async (payload: { email: string, password: string }) => {
     const { email, password } = payload;
 
     try {
-        const response = await axios.post(`${BASE_URL}/auth/sign_in`, { user: { email, password } },
+        const response = await axios.post(`${BASE_URL}/user/sign_in`, { user: { email, password } },
             {
                 headers: {
                     'Content-Type': 'application/json',
