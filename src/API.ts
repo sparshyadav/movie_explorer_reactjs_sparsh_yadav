@@ -69,3 +69,37 @@ export const getAllMoviesAPI = async () => {
         }
     }
 }
+
+export const addMovieAdminAPI = async (payload: {
+    title: string;
+    genre: string;
+    release_year: string;
+    rating: string;
+    director: string;
+    duration: string;
+    main_lead: string;
+    streaming_platform: string;
+    poster: File | null;
+    banner: File | null;
+}) => {
+    try {
+        const response = await axios.post(`${BASE_URL}/api/v1/movies`, payload);
+
+        console.log("Response from API: ", response);
+        return response;
+    }
+    // catch(error){
+    //     console.log("Error: ", error);
+    // }
+    catch (error: { response: { data: { errors: string } } }) {
+        console.log("Error Occurred while Adding Movies via Admin: ", error);
+        if (error?.response?.data?.errors.length > 1) {
+            toast.error(error?.response?.data?.errors[0]);
+        }
+        else {
+            toast.error(error?.response?.data?.errors);
+        }
+    }
+}
+
+

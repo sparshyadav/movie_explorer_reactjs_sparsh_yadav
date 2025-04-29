@@ -17,10 +17,11 @@ type Props = {
   role: 'admin' | 'user';
 };
 
-const ProfileMenu: React.FC<Props> = ({ role }) => {
+const ProfileMenu: React.FC<Props> = () => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const navigate = useNavigate();
+  const role = localStorage.getItem("role");
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -103,7 +104,7 @@ const ProfileMenu: React.FC<Props> = ({ role }) => {
           <Avatar /> Profile
         </MenuItem>
 
-        {role === 'admin' && (
+        {role === 'supervisor' && (
           <MenuItem onClick={handleCreateMovie}>
             <ListItemIcon>
               <PersonAdd fontSize="small" />

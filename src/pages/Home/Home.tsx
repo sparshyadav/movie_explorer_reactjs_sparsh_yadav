@@ -7,9 +7,11 @@ import WhatToWatch from '../../components/WhatToWatch/WhatToWatch';
 import StreamingPlatform from '../../components/StreamingPlatform/StreamingPlatform';
 import BornToday from '../../components/BornToday/BornToday';
 import Box from '@mui/material/Box';
+import NavigateWrapper from '../../components/NavigateWrapper';
 
 export class Home extends Component {
   render() {
+
     return (
       <Box>
         <Navbar />
@@ -23,6 +25,6 @@ export class Home extends Component {
   }
 }
 
-export default Home
+export default NavigateWrapper(Home)
 
 

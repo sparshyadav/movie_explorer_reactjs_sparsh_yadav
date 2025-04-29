@@ -121,7 +121,7 @@ class Signup extends React.Component<Props> {
 
             if (response?.status === 201) {
                 toast.success("Sign Up Successfull");
-                
+
                 this.props.navigate('/login')
             }
 

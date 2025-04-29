@@ -108,6 +108,8 @@ class Login extends React.Component<Props> {
                 });
             }
 
+            localStorage.setItem("role", response?.data.role);
+
             this.props.navigate('/')
 
             if (response?.status === 200) {

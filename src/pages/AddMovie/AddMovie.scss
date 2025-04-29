@@ -1,0 +1,291 @@
+$primary-color: #f5c518;
+$secondary-color: #141414;
+$text-light: #ffffff;
+$text-dark: rgba(6, 5, 3, 0.75);
+$accent-color: #f5c518;
+$error-color: #ff3d00;
+$success-color: #00c853;
+$border-radius: 4px;
+$box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+$transition-speed: 0.3s;
+
+@mixin flex($direction: row, $justify: flex-start, $align: center) {
+    display: flex;
+    flex-direction: $direction;
+    justify-content: $justify;
+    align-items: $align;
+}
+
+@mixin responsive-padding {
+    padding: 16px;
+
+    @media (min-width: 600px) {
+        padding: 24px;
+    }
+
+    @media (min-width: 960px) {
+        padding: 32px;
+    }
+}
+
+.admin-movie-page {
+    min-height: 100vh;
+    background-color: $secondary-color;
+    @include flex(column, flex-start, center);
+    @include responsive-padding;
+    color: $text-light;
+
+    .MuiPaper-root {
+        background-color: black;
+        color: $text-light;
+    }
+
+    .MuiTypography-root {
+        color: $text-light;
+    }
+
+    .MuiInputBase-root {
+        color: $text-light;
+    }
+
+    .MuiOutlinedInput-notchedOutline {
+        border-color: rgba($primary-color, 0.5);
+    }
+
+    .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline {
+        border-color: $primary-color;
+    }
+
+    .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
+        border-color: $primary-color;
+    }
+
+    .MuiInputLabel-root {
+        color: rgba($primary-color, 0.7);
+
+        &.Mui-focused {
+            color: $primary-color;
+        }
+    }
+
+    .MuiFormLabel-root {
+        color: $primary-color;
+    }
+
+    .MuiCheckbox-root {
+        color: rgba($primary-color, 0.7);
+
+        &.Mui-checked {
+            color: $primary-color;
+        }
+    }
+
+    .MuiButton-contained {
+        background-color: $primary-color;
+        color: $text-dark;
+        font-weight: bold;
+
+        &:hover {
+            background-color: darken($primary-color, 10%);
+        }
+
+        &:disabled {
+            background-color: rgba($primary-color, 0.3);
+            color: rgba($text-dark, 0.7);
+        }
+    }
+
+    .MuiButton-outlined {
+        border-color: $primary-color;
+        color: $primary-color;
+
+        &:hover {
+            background-color: rgba($primary-color, 0.1);
+        }
+    }
+
+    .MuiMenuItem-root {
+        color: $text-dark;
+
+        &:hover {
+            background-color: rgba($primary-color, 0.1);
+        }
+
+        &.Mui-selected {
+            background-color: rgba($primary-color, 0.2);
+
+            &:hover {
+                background-color: rgba($primary-color, 0.3);
+            }
+        }
+    }
+}
+
+.form-container {
+    width: 100%;
+    max-width: 1000px;
+    @include responsive-padding;
+    margin: 24px 0;
+    border-radius: $border-radius;
+    box-shadow: $box-shadow;
+    border-top: 4px solid $primary-color;
+}
+
+.form-title {
+    margin-bottom: 32px !important;
+    padding-bottom: 16px;
+    border-bottom: 1px solid rgba($primary-color, 0.3);
+    color: $primary-color !important;
+    font-weight: 600 !important;
+    text-align: center;
+}
+
+.form-section {
+    margin-bottom: 32px;
+
+    &:last-child {
+        margin-bottom: 16px;
+    }
+}
+
+.section-title {
+    margin-bottom: 16px !important;
+    color: $primary-color !important;
+    font-weight: 500 !important;
+    position: relative;
+
+    &:after {
+        content: '';
+        position: absolute;
+        bottom: -8px;
+        left: 0;
+        width: 60px;
+        height: 3px;
+        background-color: $primary-color;
+    }
+}
+
+.form-row {
+    margin-bottom: 24px;
+    width: 100%;
+
+    &.two-columns {
+        @include flex(column, space-between, flex-start);
+        gap: 24px;
+
+        @media (min-width: 600px) {
+            flex-direction: row;
+
+            .form-field {
+                width: 100%;
+            }
+        }
+    }
+
+    &:last-child {
+        margin-bottom: 0;
+    }
+}
+
+.file-upload-container {
+    @include flex(column, flex-start, flex-start);
+    width: 100%;
+
+    .file-input {
+        display: none;
+    }
+
+    .upload-button {
+        margin-top: 8px;
+        margin-bottom: 16px;
+        background-color: rgba($primary-color, 0.8);
+
+        &:hover {
+            background-color: $primary-color;
+        }
+    }
+
+    .preview-container {
+        width: 100%;
+        margin-top: 8px;
+        border: 1px dashed $primary-color;
+        padding: 8px;
+        border-radius: $border-radius;
+        @include flex(column, center, center);
+        overflow: hidden;
+
+        .image-preview {
+            max-width: 100%;
+            max-height: 200px;
+            object-fit: contain;
+
+            &.banner-preview {
+                max-height: 120px;
+            }
+        }
+    }
+}
+
+.premium-options {
+    margin-top: 16px !important;
+
+    .premium-label {
+        margin-bottom: 12px !important;
+    }
+
+    .premium-checkbox {
+        &.elite {
+            color: lighten($accent-color, 10%) !important;
+
+            &.Mui-checked {
+                color: $accent-color !important;
+            }
+        }
+
+        &.pro {
+            color: lighten($primary-color, 10%) !important;
+
+            &.Mui-checked {
+                color: $primary-color !important;
+            }
+        }
+
+        &.free {
+            color: lighten(#64b5f6, 10%) !important;
+
+            &.Mui-checked {
+                color: #64b5f6 !important;
+            }
+        }
+    }
+}
+
+.form-actions {
+    @include flex(column, center, center);
+    margin-top: 40px;
+    gap: 16px;
+
+    @media (min-width: 480px) {
+        flex-direction: row;
+        justify-content: center;
+
+        .submit-button {
+            margin-right: 16px;
+        }
+    }
+
+    .submit-button {
+        min-width: 180px;
+        background-color: $primary-color;
+        color: $text-dark;
+        font-weight: bold;
+
+        &:hover {
+            background-color: darken($primary-color, 8%);
+        }
+    }
+
+    .cancel-button {
+        min-width: 120px;
+    }
+}

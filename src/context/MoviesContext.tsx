@@ -26,19 +26,6 @@ export const MovieContext = createContext<MovieContextType | undefined>(undefine
 export const MovieProvider = ({ children }: { children: ReactNode }) => {
     const [movies, setMovies] = useState<Movie[]>([]); 
 
-    useEffect(() => {
-        async function fetchMovies() {
-            try {
-                const response: {data: {movies: Movie[]}} = await getAllMoviesAPI();
-                setMovies(response.data.movies || []); 
-                console.log("Response in CONTEXT: ", response.data.movies);
-            } catch (error) {
-                console.error("Failed to fetch movies:", error);
-            }
-        }
-        fetchMovies();
-    }, []);
-
     return (
         <MovieContext.Provider value={{ movies, setMovies }}>
             {children}

@@ -6,6 +6,9 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import { ArrowBackIos, ArrowForwardIos } from '@mui/icons-material';
 import NavigateWrapper from '../NavigateWrapper';
+import { connect } from 'react-redux';
+import { RootState } from '../../redux/store';
+import { fetchMovies } from '../../redux/movieSlice';
 
 interface ArrowProps {
     className?: string;
@@ -30,11 +33,13 @@ type Movie = {
 }
 
 type Props = {
-    navigate: (path: string) => void;
-    movieContext: {
-        setMovies: (movies: Movie[]) => void;
-        movies: Movie[];
-    }
+    movies: Movie[];
+    fetchMovies: () => void;
+}
+
+type State={
+    allMovies: Movie[];
+    isSmallScreen: boolean;
 }
 
 function NextArrow({ className, style, onClick }: ArrowProps) {
@@ -83,35 +88,40 @@ function PrevArrow({ className, style, onClick }: ArrowProps) {
     );
 }
 
-type State = {
-    allMovies: Movie[];
-}
+export class MainCarousal extends Component<Props, State> {
+    constructor(props: Props) {
+        super(props);
 
-export class MainCarousal extends Component<Props> {
-    state: State = {
-        allMovies: [],
-    };
+        this.state = {
+            allMovies: [],
+            isSmallScreen: window.innerWidth<500
+        };
+    }
+
+    truncateDescription(description: string) {
+        return this.state.isSmallScreen && description.length > 50 ? description.slice(0, 50) + "..." : description;
+    }
+
+    handleResize = () => {
+        this.setState({ isSmallScreen: window.innerWidth < 500 });
+    }
 
     componentDidMount() {
-        const { movieContext } = this.props;
-        console.log("MOVIECONTEXT in Main Component: ", movieContext);
-        if (movieContext && movieContext.movies) {
-            this.setState({ allMovies: movieContext.movies });
-        }
+        this.props.fetchMovies();
+        window.addEventListener('resize', this.handleResize); 
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener('resize', this.handleResize);  
     }
 
     componentDidUpdate(prevProps: Props) {
-        if (
-            prevProps.movieContext.movies !== this.props.movieContext.movies &&
-            this.props.movieContext.movies.length > 0
-        ) {
-            this.setState({ allMovies: this.props.movieContext.movies });
+        if (prevProps.movies !== this.props.movies) {
+            this.setState({ allMovies: this.props.movies });
         }
     }
 
     render() {
-        console.log("Movies: ", this.state.allMovies);
-
         const settings: Settings = {
             dots: true,
             infinite: true,
@@ -130,7 +140,7 @@ export class MainCarousal extends Component<Props> {
             <Box className='carousal-main-container'>
                 <Box className="main-carousal">
                     <Slider {...settings}>
-                        {this.state.allMovies.map((movie) => (
+                        {this.state.allMovies?.map((movie) => (
                             <Box key={movie.id} className="carousel-item">
                                 <Box
                                     className="banner-image"
@@ -146,7 +156,7 @@ export class MainCarousal extends Component<Props> {
                                                 {movie.title}
                                             </Typography>
                                             <Typography variant="body1" className="movie-description">
-                                                {movie.description}
+                                                {this.truncateDescription(movie.description)}
                                             </Typography>
                                         </Box>
                                     </Box>
@@ -160,6 +170,14 @@ export class MainCarousal extends Component<Props> {
     }
 }
 
-export default NavigateWrapper(MainCarousal);
+const mapStateToProps = (state: RootState) => ({
+    movies: state.movies.movies
+});
+
+const mapDispatchToProps = {
+    fetchMovies,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(NavigateWrapper(MainCarousal));
 
 
