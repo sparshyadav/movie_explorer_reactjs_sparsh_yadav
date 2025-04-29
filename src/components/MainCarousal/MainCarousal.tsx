@@ -1,15 +1,40 @@
-import React, { Component } from 'react';
+import React, { Component, Key } from 'react';
 import Slider, { Settings } from 'react-slick';
 import './MainCarousal.scss';
 import { Box, Typography } from '@mui/material';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import { ArrowBackIos, ArrowForwardIos } from '@mui/icons-material';
+import NavigateWrapper from '../NavigateWrapper';
 
 interface ArrowProps {
     className?: string;
     style?: React.CSSProperties;
     onClick?: () => void;
+}
+
+type Movie = {
+    id: Key | null | undefined;
+    title: string;
+    genre: string;
+    release_year: string;
+    rating: string;
+    director: string;
+    duration: string;
+    streaming_platform: string;
+    main_lead: string;
+    description: string;
+    premium: boolean;
+    poster_url: string;
+    banner_url: string;
+}
+
+type Props = {
+    navigate: (path: string) => void;
+    movieContext: {
+        setMovies: (movies: Movie[]) => void;
+        movies: Movie[];
+    }
 }
 
 function NextArrow({ className, style, onClick }: ArrowProps) {
@@ -58,16 +83,35 @@ function PrevArrow({ className, style, onClick }: ArrowProps) {
     );
 }
 
-interface Movie {
-    id: number;
-    title: string;
-    description: string;
-    banner: string;
-    poster: string;
+type State = {
+    allMovies: Movie[];
 }
 
-export class MainCarousal extends Component {
+export class MainCarousal extends Component<Props> {
+    state: State = {
+        allMovies: [],
+    };
+
+    componentDidMount() {
+        const { movieContext } = this.props;
+        console.log("MOVIECONTEXT in Main Component: ", movieContext);
+        if (movieContext && movieContext.movies) {
+            this.setState({ allMovies: movieContext.movies });
+        }
+    }
+
+    componentDidUpdate(prevProps: Props) {
+        if (
+            prevProps.movieContext.movies !== this.props.movieContext.movies &&
+            this.props.movieContext.movies.length > 0
+        ) {
+            this.setState({ allMovies: this.props.movieContext.movies });
+        }
+    }
+
     render() {
+        console.log("Movies: ", this.state.allMovies);
+
         const settings: Settings = {
             dots: true,
             infinite: true,
@@ -82,43 +126,19 @@ export class MainCarousal extends Component {
             prevArrow: <PrevArrow />,
         };
 
-        const movies: Movie[] = [
-            {
-                id: 1,
-                title: "Avengers: Endgame",
-                description: "After the devastating events of Avengers: Infinity War, the universe is in ruins...",
-                banner: "https://disney.images.edge.bamgrid.com/ripcut-delivery/v1/variant/disney/7b350a2f-0b3e-4033-8125-34c4d67e3bbe?/scale?width=1200&aspectRatio=1.78&format=webp",
-                poster: "https://m.media-amazon.com/images/M/MV5BMTc5MDE2ODcwNV5BMl5BanBnXkFtZTgwMzI2NzQ2NzM@._V1_FMjpg_UX1000_.jpg",
-            },
-            {
-                id: 2,
-                title: "The Batman",
-                description: "In his second year of fighting crime, Batman uncovers corruption in Gotham...",
-                banner: "https://www.thebatman.com/images/banner_img.jpg",
-                poster: "https://m.media-amazon.com/images/S/pv-target-images/3de84cca07fc963b66a01a5465c2638066119711e89c707ce952555783dd4b4f.jpg",
-            },
-            {
-                id: 3,
-                title: "Interstellar",
-                description: "A team of explorers travel through a wormhole in space in an attempt to ensure humanity's survival.",
-                banner: "https://www.hauweele.net/~gawen/blog/wp-content/uploads/2014/11/interstellar.jpg",
-                poster: "https://upload.wikimedia.org/wikipedia/en/b/bc/Interstellar_film_poster.jpg",
-            },
-        ];
-
         return (
             <Box className='carousal-main-container'>
                 <Box className="main-carousal">
                     <Slider {...settings}>
-                        {movies.map((movie) => (
+                        {this.state.allMovies.map((movie) => (
                             <Box key={movie.id} className="carousel-item">
                                 <Box
                                     className="banner-image"
-                                    sx={{ backgroundImage: `url(${movie.banner})` }}
+                                    sx={{ backgroundImage: `url(${movie.banner_url})` }}
                                 />
                                 <Box className="banner-content">
                                     <Box className="poster-container">
-                                        <img src={movie.poster} alt="Poster" className="poster-image" />
+                                        <img src={movie.poster_url} alt="Poster" className="poster-image" />
                                     </Box>
                                     <Box className='info-main-container'>
                                         <Box className="info-container">
@@ -140,6 +160,6 @@ export class MainCarousal extends Component {
     }
 }
 
-export default MainCarousal;
+export default NavigateWrapper(MainCarousal);
 
 

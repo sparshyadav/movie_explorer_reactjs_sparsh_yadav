@@ -5,6 +5,7 @@ import './Signup.scss';
 import { NavLink } from 'react-router-dom';
 import { signupAPI } from '../../API';
 import toast from 'react-hot-toast';
+import NavigateWrapper from '../../components/NavigateWrapper';
 
 type State = {
     showPassword: boolean;
@@ -26,7 +27,11 @@ type State = {
     };
 };
 
-class Signup extends React.Component {
+type Props = {
+    navigate: (path: string) => void;
+};
+
+class Signup extends React.Component<Props> {
     state: State = {
         showPassword: false,
         showConfirmPassword: false,
@@ -107,7 +112,6 @@ class Signup extends React.Component {
             isValid = false;
         }
 
-
         this.setState({ errors });
 
         if (isValid) {
@@ -117,6 +121,8 @@ class Signup extends React.Component {
 
             if (response?.status === 201) {
                 toast.success("Sign Up Successfull");
+                
+                this.props.navigate('/login')
             }
 
             this.setState({ isLoading: false });
@@ -224,4 +230,4 @@ class Signup extends React.Component {
     }
 }
 
-export default Signup;
+export default NavigateWrapper(Signup);
