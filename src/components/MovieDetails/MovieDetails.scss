@@ -1,0 +1,301 @@
+$primary-color: #0070f3;
+$secondary-color: #10b981;
+$dark-bg: #121212;
+$darker-bg: #0a0a0a;
+$light-text: #ffffff;
+$gray-text: #aaaaaa;
+$rating-color: #ffc107;
+$border-radius: 8px;
+$box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+
+@mixin flex($direction: row, $justify: flex-start, $align: center, $gap: 0) {
+    display: flex;
+    flex-direction: $direction;
+    justify-content: $justify;
+    align-items: $align;
+    gap: $gap;
+}
+
+@mixin responsive-padding {
+    padding: 1rem;
+
+    @media (min-width: 768px) {
+        padding: 2rem;
+    }
+}
+
+.movie-page {
+    background-color: $dark-bg;
+    color: $light-text;
+    min-height: 100vh;
+    font-family: 'Inter', sans-serif;
+    padding-bottom: 100px;
+}
+
+.banner {
+    position: relative;
+    width: 100%;
+    height: 240px;
+
+    @media (min-width: 768px) {
+        height: 380px;
+    }
+
+    &__image {
+        position: absolute;
+        inset: 0;
+        background-size: cover;
+        background-position: center;
+    }
+
+    &__overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(to top, $dark-bg 5%, transparent 95%);
+    }
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+    position: relative;
+    z-index: 10;
+    margin-top: -120px;
+
+    @media (min-width: 768px) {
+        margin-top: -160px;
+    }
+}
+
+.movie-content {
+    @include flex(column, flex-start, flex-start, 2rem);
+
+    @media (min-width: 768px) {
+        flex-direction: row;
+        align-items: flex-start;
+    }
+
+    &__poster {
+        flex-shrink: 0;
+
+        img {
+            width: 150px;
+            height: 230px;
+            object-fit: cover;
+            border-radius: $border-radius;
+            box-shadow: $box-shadow;
+
+            @media (min-width: 768px) {
+                width: 220px;
+                height: 330px;
+            }
+
+            @media (max-width: 499px) {
+                width: 120px;
+                height: 180px;
+            }
+        }
+    }
+
+    &__details {
+        flex-grow: 1;
+        width: 100%;
+
+        @media (min-width: 768px) {
+            padding-left: 1rem;
+        }
+    }
+}
+
+.movie-header {
+    @include flex(column, space-between, flex-start, 1rem);
+    margin-bottom: 1.5rem;
+
+    @media (min-width: 768px) {
+        flex-direction: row;
+        align-items: center;
+    }
+
+    &__title-group {
+        h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 0;
+
+            @media (min-width: 768px) {
+                font-size: 2.5rem;
+            }
+        }
+    }
+}
+
+.movie-meta {
+    @include flex(row, flex-start, center, 0);
+    margin-top: 0.5rem;
+    color: $gray-text;
+    font-size: 0.9rem;
+
+    .separator {
+        margin: 0 0.5rem;
+    }
+}
+
+.watchlist-btn {
+    @include flex(row, center, center, 0.5rem);
+    background-color: $primary-color;
+    color: $light-text;
+    border: none;
+    border-radius: $border-radius;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.2s;
+
+    &:hover {
+        background-color: darken($primary-color, 10%);
+    }
+
+    &--added {
+        background-color: $secondary-color;
+
+        &:hover {
+            background-color: darken($secondary-color, 10%);
+        }
+    }
+}
+
+.genre-tags {
+    @include flex(row, flex-start, center, 0.5rem);
+    flex-wrap: wrap;
+    margin-bottom: 1.5rem;
+}
+
+.genre-tag {
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 0.3rem 0.8rem;
+    border-radius: 50px;
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+.rating-section {
+    margin-bottom: 2rem;
+}
+
+.rating-display {
+    @include flex(row, flex-start, center, 0.5rem);
+}
+
+.rating-badge {
+    @include flex(row, center, center, 0.25rem);
+    background-color: $rating-color;
+    color: $darker-bg;
+    padding: 0.25rem 0.5rem;
+    border-radius: $border-radius;
+    font-weight: 600;
+
+    .star-icon {
+        color: $darker-bg;
+        fill: $darker-bg;
+    }
+}
+
+.rating-max {
+    color: $gray-text;
+    font-size: 0.9rem;
+}
+
+.user-rating {
+    margin-top: 1rem;
+
+    p {
+        margin: 0 0 0.5rem 0;
+        font-size: 0.9rem;
+        color: $gray-text;
+    }
+}
+
+.star-rating {
+    @include flex(row, flex-start, center, 0);
+}
+
+.star-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.25rem;
+    color: $gray-text;
+
+    &__filled {
+        color: $rating-color;
+        fill: $rating-color;
+    }
+
+    &__empty {
+        color: $gray-text;
+        fill: transparent;
+    }
+}
+
+.movie-description {
+    margin-bottom: 2rem;
+
+    h2 {
+        font-size: 1.25rem;
+        margin: 0 0 0.75rem 0;
+        font-weight: 600;
+    }
+
+    p {
+        line-height: 1.6;
+        color: $gray-text;
+    }
+}
+
+.credits-section {
+    @include flex(row, flex-start, flex-start, 2rem);
+    flex-wrap: wrap;
+    margin-bottom: 2rem;
+}
+
+.credits-item {
+    min-width: 150px;
+
+    h3 {
+        font-size: 1rem;
+        margin: 0 0 0.5rem 0;
+        font-weight: 600;
+    }
+
+    p {
+        color: $gray-text;
+        margin: 0;
+    }
+}
+
+.streaming-section {
+    h2 {
+        font-size: 1.25rem;
+        margin: 0 0 0.75rem 0;
+        font-weight: 600;
+    }
+}
+
+.platform-list {
+    @include flex(row, flex-start, center, 0.75rem);
+    flex-wrap: wrap;
+}
+
+.platform-badge {
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 0.5rem 1rem;
+    border-radius: $border-radius;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: background-color 0.2s;
+
+    &:hover {
+        background-color: rgba(255, 255, 255, 0.2);
+    }
+}

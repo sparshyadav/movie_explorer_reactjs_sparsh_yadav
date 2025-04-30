@@ -88,11 +88,31 @@ export const addMovieAdminAPI = async (payload: {
         console.log("Response from API: ", response);
         return response;
     }
-    // catch(error){
-    //     console.log("Error: ", error);
-    // }
     catch (error: { response: { data: { errors: string } } }) {
         console.log("Error Occurred while Adding Movies via Admin: ", error);
+        if (error?.response?.data?.errors.length > 1) {
+            toast.error(error?.response?.data?.errors[0]);
+        }
+        else {
+            toast.error(error?.response?.data?.errors);
+        }
+    }
+}
+
+export const movieDetailsAPI = async (id: number) => {
+    try {
+        const response = await axios.get(`${BASE_URL}/api/v1/movies/${id}`, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            }
+        });
+
+        console.log("Response from API: ", response);
+        return response.data;
+    }
+    catch (error: { response: { data: { errors: string } } }) {
+        console.log("Error Occurred Fetching Movie Details ", error);
         if (error?.response?.data?.errors.length > 1) {
             toast.error(error?.response?.data?.errors[0]);
         }
