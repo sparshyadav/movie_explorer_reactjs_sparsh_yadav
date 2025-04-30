@@ -14,7 +14,7 @@ interface Movie {
     genre: string;
     description: string;
     director: string;
-    leadActor: string;
+    main_lead: string;
     streaming_platform: string;
 }
 
@@ -149,7 +149,7 @@ const MovieDetails: React.FC = () => {
                             </div>
                             <div className="credits-item">
                                 <h3>Lead Actor</h3>
-                                <p>{movie.leadActor}</p>
+                                <p>{movie.main_lead}</p>
                             </div>
                         </div>
 

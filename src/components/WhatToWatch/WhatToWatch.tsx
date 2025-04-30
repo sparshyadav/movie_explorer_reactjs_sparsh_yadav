@@ -13,6 +13,7 @@ interface Movie {
     title: string;
     poster_url: string;
     rating: number;
+    premium: boolean;
 }
 
 interface WhatToWatchState {
@@ -117,6 +118,7 @@ class WhatToWatch extends Component<WhatToWatchProps, WhatToWatchState> {
                             {this.props.movies.map((movie) => (
                                 <div className="carousel-item" key={movie.id}>
                                     <MovieCard
+                                        premium={movie.premium}
                                         id={movie.id}
                                         title={movie.title}
                                         posterImage={movie.poster_url}
