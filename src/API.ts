@@ -52,7 +52,7 @@ export const signupAPI = async (payload: { email: string, password: string, name
 
 export const getAllMoviesAPI = async () => {
     try {
-        const response = await axios.get(`${BASE_URL}/api/v1/movies`);
+        const response = await axios.get(`${BASE_URL}/api/v1/movies?page=2`);
 
         return response;
     }
