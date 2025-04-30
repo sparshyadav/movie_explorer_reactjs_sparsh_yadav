@@ -1,4 +1,4 @@
-import { Component } from 'react'
+import { Component } from 'react';
 import './Home.scss';
 import Navbar from '../../components/Navbar/Navbar';
 import Footer from '../../components/Footer/Footer';
@@ -7,9 +7,10 @@ import WhatToWatch from '../../components/WhatToWatch/WhatToWatch';
 import StreamingPlatform from '../../components/StreamingPlatform/StreamingPlatform';
 import BornToday from '../../components/BornToday/BornToday';
 import Box from '@mui/material/Box';
-import NavigateWrapper from '../../components/NavigateWrapper';
 
-export class Home extends Component {
+class Home extends Component {
+  
+
   render() {
 
     return (
@@ -21,10 +22,10 @@ export class Home extends Component {
         <BornToday />
         <Footer />
       </Box>
-    )
+    );
   }
 }
 
-export default NavigateWrapper(Home)
+export default Home;
 
 

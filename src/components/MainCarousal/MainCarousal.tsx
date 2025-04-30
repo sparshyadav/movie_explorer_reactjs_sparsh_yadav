@@ -37,7 +37,7 @@ type Props = {
     fetchMovies: () => void;
 }
 
-type State={
+type State = {
     allMovies: Movie[];
     isSmallScreen: boolean;
 }
@@ -94,12 +94,18 @@ export class MainCarousal extends Component<Props, State> {
 
         this.state = {
             allMovies: [],
-            isSmallScreen: window.innerWidth<500
+            isSmallScreen: window.innerWidth < 500
         };
     }
 
     truncateDescription(description: string) {
-        return this.state.isSmallScreen && description.length > 50 ? description.slice(0, 50) + "..." : description;
+        if (this.state.isSmallScreen && description.length > 50) {
+            return description.slice(0, 50) + "...";
+        } else if (description.length > 100) {
+            return description.slice(0, 300) + "...";
+        } else {
+            return description;
+        }
     }
 
     handleResize = () => {
@@ -108,11 +114,11 @@ export class MainCarousal extends Component<Props, State> {
 
     componentDidMount() {
         this.props.fetchMovies();
-        window.addEventListener('resize', this.handleResize); 
+        window.addEventListener('resize', this.handleResize);
     }
 
     componentWillUnmount() {
-        window.removeEventListener('resize', this.handleResize);  
+        window.removeEventListener('resize', this.handleResize);
     }
 
     componentDidUpdate(prevProps: Props) {

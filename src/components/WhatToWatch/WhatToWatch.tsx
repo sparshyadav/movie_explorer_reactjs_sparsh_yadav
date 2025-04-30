@@ -33,57 +33,6 @@ class WhatToWatch extends Component<WhatToWatchProps, WhatToWatchState> {
     visibleCards = 5;
     scrollAmount = this.cardWidth * this.visibleCards;
 
-    movies: Movie[] = [
-        {
-            id: '1',
-            title: 'Inception',
-            posterImage: 'https://irs.www.warnerbros.com/keyart-jpeg/inception_keyart.jpg',
-            rating: 8.8,
-        },
-        {
-            id: '2',
-            title: 'The Dark Knight',
-            posterImage: 'https://m.media-amazon.com/images/M/MV5BMTMxNTMwODM0NF5BMl5BanBnXkFtZTcwODAyMTk2Mw@@._V1_FMjpg_UX1000_.jpg',
-            rating: 9.0,
-        },
-        {
-            id: '3',
-            title: 'Interstellar',
-            posterImage: 'https://m.media-amazon.com/images/M/MV5BYzdjMDAxZGItMjI2My00ODA1LTlkNzItOWFjMDU5ZDJlYWY3XkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg',
-            rating: 8.6,
-        },
-        {
-            id: '4',
-            title: 'Stranger Things',
-            posterImage: 'https://m.media-amazon.com/images/M/MV5BMjg2NmM0MTEtYWY2Yy00NmFlLTllNTMtMjVkZjEwMGVlNzdjXkEyXkFqcGc@._V1_.jpg',
-            rating: 8.7,
-        },
-        {
-            id: '5',
-            title: 'Breaking Bad',
-            posterImage: 'https://m.media-amazon.com/images/M/MV5BMzU5ZGYzNmQtMTdhYy00OGRiLTg0NmQtYjVjNzliZTg1ZGE4XkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg',
-            rating: 9.5,
-        },
-        {
-            id: '6',
-            title: 'Money Heist',
-            posterImage: 'https://m.media-amazon.com/images/M/MV5BZjkxZWJiNTUtYjQwYS00MTBlLTgwODQtM2FkNWMyMjMwOGZiXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg',
-            rating: 8.3,
-        },
-        {
-            id: '7',
-            title: 'The Witcher',
-            posterImage: 'https://m.media-amazon.com/images/M/MV5BMTQ5MDU5MTktMDZkMy00NDU1LWIxM2UtODg5OGFiNmRhNDBjXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg',
-            rating: 8.2,
-        },
-        {
-            id: '8',
-            title: 'Peaky Blinders',
-            posterImage: 'https://m.media-amazon.com/images/M/MV5BOGM0NGY3ZmItOGE2ZC00OWIxLTk0N2EtZWY4Yzg3ZDlhNGI3XkEyXkFqcGc@._V1_.jpg',
-            rating: 8.8,
-        }
-    ];
-
     constructor(props: WhatToWatchProps) {
         super(props);
         this.state = {
@@ -203,4 +152,3 @@ const mapDispatchToProps = {
 
 export default connect(mapStateToProps, mapDispatchToProps)(NavigateWrapper(WhatToWatch));
 
-// export default WhatToWatch;

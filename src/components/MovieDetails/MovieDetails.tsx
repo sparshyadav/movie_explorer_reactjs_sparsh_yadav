@@ -24,7 +24,6 @@ const MovieDetails: React.FC = () => {
     const [hoverRating, setHoverRating] = useState<number | null>(null);
     const [movie, setMovie] = useState<Movie | null>(null);
     const { id } = useParams();
-    console.log("ID: ", id);
 
     const handleRating = (rating: number) => {
         setUserRating(rating);
@@ -38,11 +37,8 @@ const MovieDetails: React.FC = () => {
         const fetchMovieDetails = async () => {
             if (!id) return;
             try {
-                console.log("api call")
                 const response = await movieDetailsAPI(Number(id));
-                console.log("MOVIE DETAILS: ", response);
                 setMovie(response);
-                console.log("Movie State: ", movie);
             } catch (error) {
                 console.error("Error fetching movie details:", error);
             }

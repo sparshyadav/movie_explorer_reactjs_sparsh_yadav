@@ -16,7 +16,6 @@ export const loginAPI = async (payload: { email: string, password: string }) => 
             }
         );
 
-        console.log("Response from API: ", response);
         return response;
     }
     catch (error: { response: { data: { errors: string } } }) {
@@ -38,7 +37,6 @@ export const signupAPI = async (payload: { email: string, password: string, name
             }
         );
 
-        console.log("Response from API: ", response);
         return response;
     }
     catch (error: { response: { data: { errors: string } } }) {
@@ -56,7 +54,6 @@ export const getAllMoviesAPI = async () => {
     try {
         const response = await axios.get(`${BASE_URL}/api/v1/movies`);
 
-        console.log("Response from API: ", response);
         return response;
     }
     catch (error: { response: { data: { errors: string } } }) {
@@ -85,7 +82,6 @@ export const addMovieAdminAPI = async (payload: {
     try {
         const response = await axios.post(`${BASE_URL}/api/v1/movies`, payload);
 
-        console.log("Response from API: ", response);
         return response;
     }
     catch (error: { response: { data: { errors: string } } }) {
