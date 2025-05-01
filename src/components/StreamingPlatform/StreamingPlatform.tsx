@@ -4,10 +4,7 @@ import { ArrowBackIos, ArrowForwardIos } from '@mui/icons-material';
 import MovieCard from '../MovieCard/MovieCard';
 import { ChevronRight } from 'lucide-react';
 import Box from '@mui/material/Box';
-import { RootState } from '../../redux/store';
-import { fetchMovies } from '../../redux/movieSlice';
-import NavigateWrapper from '../NavigateWrapper';
-import { connect } from 'react-redux';
+import { getEveryMovieAPI } from '../../API';
 
 interface Movie {
     id: string;
@@ -30,13 +27,11 @@ interface StreamingPlatformState {
     maxScrollReached: boolean;
     showControls: boolean;
     selectedIndex: number;
+    allMovies: Movie[];
     selectedPlatformMovies: Movie[];
 }
 
-interface StreamingPlatformProps {
-    movies: Movie[];
-    fetchMovies: () => void;
-}
+interface StreamingPlatformProps { }
 
 export class StreamingPlatform extends Component<StreamingPlatformProps, StreamingPlatformState> {
     carouselRef = createRef<HTMLBRElement>();
@@ -57,12 +52,24 @@ export class StreamingPlatform extends Component<StreamingPlatformProps, Streami
             maxScrollReached: false,
             showControls: false,
             selectedIndex: 0,
+            allMovies: [],
             selectedPlatformMovies: []
         };
     }
 
     componentDidMount(): void {
-        this.props.fetchMovies();
+        // this.props.fetchMovies();
+
+        const fetchMovies = async () => {
+            let response = await getEveryMovieAPI();
+            console.log("RESPONSE FROM API FETCH: ", response);
+            this.setState({
+                allMovies: response,
+                selectedPlatformMovies: response.filter(movie => movie.streaming_platform === 'Netflix') // Default platform
+            });
+        }
+
+        fetchMovies();
 
         const carousel = this.carouselRef.current;
         if (carousel) {
@@ -70,15 +77,15 @@ export class StreamingPlatform extends Component<StreamingPlatformProps, Streami
         }
     }
 
-    componentDidUpdate(prevProps: StreamingPlatformProps) {
-        if (prevProps.movies !== this.props.movies && this.props.movies.length > 0) {
-            const filteredMovies = this.props.movies.filter(
-                (mov) => mov.streaming_platform === 'Netflix'
-            );
+    // componentDidUpdate(prevProps: StreamingPlatformProps) {
+    //     if (prevProps.movies !== this.props.movies && this.props.movies.length > 0) {
+    //         const filteredMovies = this.props.movies.filter(
+    //             (mov) => mov.streaming_platform === 'Netflix'
+    //         );
 
-            this.setState({ selectedPlatformMovies: filteredMovies });
-        }
-    }
+    //         this.setState({ selectedPlatformMovies: filteredMovies });
+    //     }
+    // }
 
     componentWillUnmount(): void {
         const carousel = this.carouselRef.current;
@@ -126,13 +133,13 @@ export class StreamingPlatform extends Component<StreamingPlatformProps, Streami
 
         let filteredMovies: Movie[] = [];
 
-        if (index === 0) {
-            filteredMovies = this.props.movies.filter((mov) => mov.streaming_platform === 'Netflix');
-        } else if (index === 1) {
-            filteredMovies = this.props.movies.filter((mov) => mov.streaming_platform === 'Amazon');
-        } else if (index === 2) {
-            filteredMovies = this.props.movies.filter((mov) => mov.streaming_platform === 'HBO');
-        }
+        filteredMovies = this.state.allMovies.filter((mov) => {
+            if (index === 0) return mov.streaming_platform === 'Netflix';
+            if (index === 1) return mov.streaming_platform === 'Amazon';
+            if (index === 2) return mov.streaming_platform === 'HBO';
+            return false;
+        });
+        
 
         this.setState({ selectedPlatformMovies: filteredMovies });
     };
@@ -141,7 +148,7 @@ export class StreamingPlatform extends Component<StreamingPlatformProps, Streami
         const { scrollPosition, showControls } = this.state;
 
         const canScrollLeft = scrollPosition > 0;
-        const canScrollRight = scrollPosition < (this.props.movies.length - this.visibleCards) * this.cardWidth;
+        const canScrollRight = scrollPosition < (this.state.allMovies.length - this.visibleCards) * this.cardWidth;
 
         return (
             <Box className='main-container'>
@@ -203,14 +210,16 @@ export class StreamingPlatform extends Component<StreamingPlatformProps, Streami
     }
 }
 
-const mapStateToProps = (state: RootState) => ({
-    movies: state.movies.movies,
-});
+export default StreamingPlatform;
 
-const mapDispatchToProps = {
-    fetchMovies,
-};
+// const mapStateToProps = (state: RootState) => ({
+//     movies: state.movies.movies,
+// });
 
-const ConnectedStreamingPlatform = connect(mapStateToProps, mapDispatchToProps)(StreamingPlatform);
-export default NavigateWrapper(ConnectedStreamingPlatform);
+// const mapDispatchToProps = {
+//     fetchMovies,
+// };
+
+// const ConnectedStreamingPlatform = connect(mapStateToProps, mapDispatchToProps)(StreamingPlatform);
+// export default NavigateWrapper(ConnectedStreamingPlatform);
 

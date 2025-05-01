@@ -5,10 +5,11 @@ import { Box, Typography } from '@mui/material';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import { ArrowBackIos, ArrowForwardIos } from '@mui/icons-material';
-import NavigateWrapper from '../NavigateWrapper';
-import { connect } from 'react-redux';
-import { RootState } from '../../redux/store';
-import { fetchMovies } from '../../redux/movieSlice';
+import { getAllMoviesAPI } from '../../API';
+// import NavigateWrapper from '../NavigateWrapper';
+// import { connect } from 'react-redux';
+// import { RootState } from '../../redux/store';
+// import { fetchMovies } from '../../redux/movieSlice';
 
 interface ArrowProps {
     className?: string;
@@ -97,6 +98,7 @@ export class MainCarousal extends Component<Props, State> {
             isSmallScreen: window.innerWidth < 500
         };
     }
+    
 
     truncateDescription(description: string) {
         if (this.state.isSmallScreen && description.length > 50) {
@@ -113,18 +115,18 @@ export class MainCarousal extends Component<Props, State> {
     }
 
     componentDidMount() {
-        this.props.fetchMovies();
+        const fetchMovies=async()=>{
+            let response=await getAllMoviesAPI(1);
+            console.log("RESPONSE FROM API FETCH: ", response);
+            this.setState({allMovies: response});
+        }
+
+        fetchMovies();
         window.addEventListener('resize', this.handleResize);
     }
 
     componentWillUnmount() {
         window.removeEventListener('resize', this.handleResize);
-    }
-
-    componentDidUpdate(prevProps: Props) {
-        if (prevProps.movies !== this.props.movies) {
-            this.setState({ allMovies: this.props.movies });
-        }
     }
 
     render() {
@@ -176,14 +178,16 @@ export class MainCarousal extends Component<Props, State> {
     }
 }
 
-const mapStateToProps = (state: RootState) => ({
-    movies: state.movies.movies
-});
+export default MainCarousal;
 
-const mapDispatchToProps = {
-    fetchMovies,
-};
+// const mapStateToProps = (state: RootState) => ({
+//     movies: state.movies.movies
+// });
 
-export default connect(mapStateToProps, mapDispatchToProps)(NavigateWrapper(MainCarousal));
+// const mapDispatchToProps = {
+//     fetchMovies,
+// };
+
+// export default connect(mapStateToProps, mapDispatchToProps)(NavigateWrapper(MainCarousal));
 
 

@@ -3,11 +3,8 @@ import './WhatToWatch.scss';
 import { ArrowBackIos, ArrowForwardIos } from '@mui/icons-material';
 import MovieCard from '../../components/MovieCard/MovieCard';
 import { ChevronRight } from 'lucide-react';
-import { RootState } from '../../redux/store';
-import { fetchMovies } from '../../redux/movieSlice';
-import { connect } from 'react-redux';
-import NavigateWrapper from '../NavigateWrapper';
 import { NavLink } from 'react-router-dom';
+import { getAllMoviesAPI } from '../../API';
 
 interface Movie {
     id: string;
@@ -21,6 +18,7 @@ interface WhatToWatchState {
     scrollPosition: number;
     maxScrollReached: boolean;
     showControls: boolean;
+    allMovies: Movie[];
 }
 
 interface WhatToWatchProps {
@@ -41,16 +39,25 @@ class WhatToWatch extends Component<WhatToWatchProps, WhatToWatchState> {
             scrollPosition: 0,
             maxScrollReached: false,
             showControls: false,
+            allMovies: []
         };
     }
 
     componentDidMount() {
+        const fetchMovies = async () => {
+            let response = await getAllMoviesAPI(2);
+            // console.log("RESPONSE FROM API FETCH: ", response);
+            this.setState({ allMovies: response });
+        }
+
+        fetchMovies();
+
         const carousel = this.carouselRef.current;
         if (carousel) {
             carousel.addEventListener('scroll', this.updateScrollPosition);
         }
 
-        this.props.fetchMovies();
+        // this.props.fetchMovies();
     }
 
     componentWillUnmount() {
@@ -93,7 +100,7 @@ class WhatToWatch extends Component<WhatToWatchProps, WhatToWatchState> {
         const { scrollPosition, maxScrollReached, showControls } = this.state;
 
         const canScrollLeft = scrollPosition > 0;
-        const canScrollRight = !maxScrollReached && scrollPosition < (this.props.movies.length - this.visibleCards) * this.cardWidth;
+        const canScrollRight = !maxScrollReached && scrollPosition < (this.state.allMovies.length - this.visibleCards) * this.cardWidth;
         const restrictedScrollRight = canScrollRight && scrollPosition < (10 - this.visibleCards) * this.cardWidth;
 
         return (
@@ -116,7 +123,7 @@ class WhatToWatch extends Component<WhatToWatchProps, WhatToWatchState> {
                         )}
 
                         <div className="carousel-track" ref={this.carouselRef}>
-                            {this.props.movies.map((movie) => (
+                            {this.state.allMovies.map((movie) => (
                                 <div className="carousel-item" key={movie.id}>
                                     <MovieCard
                                         premium={movie.premium}
@@ -145,13 +152,14 @@ class WhatToWatch extends Component<WhatToWatchProps, WhatToWatchState> {
     }
 }
 
-const mapStateToProps = (state: RootState) => ({
-    movies: state.movies.movies
-});
+export default WhatToWatch;
+// const mapStateToProps = (state: RootState) => ({
+//     movies: state.movies.movies
+// });
 
-const mapDispatchToProps = {
-    fetchMovies,
-};
+// const mapDispatchToProps = {
+//     fetchMovies,
+// };
 
-export default connect(mapStateToProps, mapDispatchToProps)(NavigateWrapper(WhatToWatch));
+// export default connect(mapStateToProps, mapDispatchToProps)(NavigateWrapper(WhatToWatch));
 

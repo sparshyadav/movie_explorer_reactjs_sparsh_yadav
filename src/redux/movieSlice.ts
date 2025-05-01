@@ -28,14 +28,15 @@ const initialState: MovieState = {
     error: null
 }
 
-export const fetchMovies = createAsyncThunk('movies/fetchAll', async () => {
-    const response = await getAllMoviesAPI();
+export const fetchMovies = createAsyncThunk<Movie[], void>('movies/fetchAll', async () => {
+    const response = await getAllMoviesAPI(1);
 
+    // console.log("RESPONSE IN REDUX SLICE: ", response);
     if (!response || !response.data) {
         throw new Error("Failed to fetch movies: No response or data");
     }
 
-    return response.data.movies;
+    return response;
 })
 
 const movieSlice = createSlice({
@@ -54,7 +55,7 @@ const movieSlice = createSlice({
             })
             .addCase(fetchMovies.fulfilled, (state, action: PayloadAction<Movie[]>) => {
                 state.movies = action.payload;
-                state.loading = true;
+                state.loading = false;
             })
             .addCase(fetchMovies.rejected, (state, action) => {
                 state.loading = false;
