@@ -50,11 +50,12 @@ export const signupAPI = async (payload: { email: string, password: string, name
     }
 }
 
-export const getAllMoviesAPI = async () => {
+export const getAllMoviesAPI = async (page: number) => {
     try {
-        const response = await axios.get(`${BASE_URL}/api/v1/movies?page=2`);
+        const response = await axios.get(`${BASE_URL}/api/v1/movies?page=${page}`);
+        console.log("RESPONSE: ", response);
 
-        return response;
+        return response.data.movies;
     }
     catch (error: { response: { data: { errors: string } } }) {
         console.log("Error Occurred while Getting Movies: ", error);

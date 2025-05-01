@@ -28,7 +28,7 @@ const MovieDetails: React.FC = () => {
     const [inWatchlist, setInWatchlist] = useState(false);
     const [hoverRating, setHoverRating] = useState<number | null>(null);
     const [movie, setMovie] = useState<Movie | null>(null);
-    const [imageUrl, setImageUrl] = useState<string>(''); // State for platform image URL
+    const [imageUrl, setImageUrl] = useState<string>(''); 
     const { id } = useParams();
 
     const handleRating = (rating: number) => {

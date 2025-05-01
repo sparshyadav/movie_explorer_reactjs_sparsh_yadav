@@ -178,7 +178,6 @@
 @media (max-width: 480px) {
   .movie-page {
     .categories-container {
-      // flex-direction: column;
       align-items: center;
     }
 
@@ -200,49 +199,28 @@
   }
 }
 
-.movies-container {
-  display: grid;
-  gap: 2rem;
-  justify-content: center;
-  width: 85%;
-  margin: 0 auto;
-  
-  // For large screens (4+ cards per row)
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  
-  // Ensure minimum 2 cards per row
-  @media (min-width: 1200px) {
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-      max-width: 1200px;
-  }
-  
-  // For medium screens (3-4 cards)
-  @media (max-width: 1199px) {
-      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-      max-width: 900px;
-  }
-  
-  // For tablet screens (2-3 cards)
-  @media (max-width: 768px) {
-      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-      max-width: 600px;
-      gap: 1.5rem;
-  }
-  
-  // For mobile screens (2 cards)
-  @media (max-width: 480px) {
-      grid-template-columns: repeat(2, 1fr);
-      width: 95%;
-      gap: 1rem;
-  }
 
-  // Loading and No Movies states
-  .loading,
-  .no-movies {
-      grid-column: 1 / -1; // Span all columns
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 200px;
+.pagination-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+
+  .MuiPagination-root {
+    .MuiPaginationItem-root {
+      color: #fff; 
+      border-color: #2196f3; 
+
+      &:hover {
+        background-color: #2196f3; 
+        color: #000;
+      }
+
+      &.Mui-selected {
+        background-color: #ffeb3b; 
+        color: #000;
+        font-weight: bold;
+        border-color: #ffeb3b;
+      }
+    }
   }
 }

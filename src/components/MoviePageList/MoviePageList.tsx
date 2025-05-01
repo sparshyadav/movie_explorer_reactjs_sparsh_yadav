@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Typography, Button } from '@mui/material';
+import { Box, Typography, Button, Pagination } from '@mui/material';
 import './MoviePageList.scss';
-import { getEveryMovieAPI, getMoviesByGenre } from '../../API';
+import { getAllMoviesAPI, getMoviesByGenre } from '../../API';
 import MovieCard from '../MovieCard/MovieCard';
 
 interface Movie {
@@ -17,6 +17,8 @@ const MoviePageList: React.FC = () => {
     const [movies, setMovies] = useState<Movie[]>([]);
     const [activeCategory, setActiveCategory] = useState('All Movies');
     const [loading, setLoading] = useState(true);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1); 
 
     const genres = [
         'All Movies',
@@ -32,44 +34,41 @@ const MoviePageList: React.FC = () => {
     ];
 
     useEffect(() => {
-        const fetchData = async () => {
+        const fetchMovies = async () => {
             try {
                 setLoading(true);
-                const response = await getEveryMovieAPI();
-                setMovies(response || []);
+                let response;
+
+                if (activeCategory === 'All Movies') {
+                    response = await getAllMoviesAPI(currentPage);
+                    console.log("RESPONSE FOR ALL MOVIES: ", response);
+                } else {
+                    response = await getMoviesByGenre(activeCategory, currentPage);
+                    console.log("RESPONSE BY GENRE: ", response);
+                }
+
+                setMovies(response);
+                setTotalPages(response?.data?.pagination?.total_pages || 1);
             } catch (error) {
-                console.error("Error fetching initial movies:", error);
+                console.error(`Error fetching movies for genre ${activeCategory}, page ${currentPage}:`, error);
                 setMovies([]);
+                setTotalPages(1);
             } finally {
                 setLoading(false);
             }
-        }
+        };
 
-        fetchData();
-    }, []);
+        fetchMovies();
+    }, [activeCategory, currentPage]);
+
 
     useEffect(() => {
-        window.scrollTo(0, 0);
-    }, []);
+        window.scrollTo(0, 0); 
+    }, [currentPage, activeCategory]);
 
-    const handleGenreMovieFetch = async (genre: string) => {
-        try {
-            setLoading(true);
-            if (genre === 'All Movies') {
-                const response = await getEveryMovieAPI();
-                setMovies(response || []);
-            }
-            else {
-                const response = await getMoviesByGenre(genre);
-
-                setMovies(response || []);
-            }
-        } catch (error) {
-            console.error("Error fetching movies:", error);
-            setMovies([]);
-        } finally {
-            setLoading(false);
-        }
+    const handleGenreChange = async (genre: string) => {
+        setActiveCategory(genre);
+        setCurrentPage(1);
     }
 
     return (
@@ -83,10 +82,7 @@ const MoviePageList: React.FC = () => {
                     <Button
                         key={category}
                         className={`category-button ${activeCategory === category ? 'active' : ''}`}
-                        onClick={() => {
-                            setActiveCategory(category);
-                            handleGenreMovieFetch(category);
-                        }}
+                        onClick={() => handleGenreChange(category)}
                     >
                         {category}
                     </Button>
@@ -98,11 +94,9 @@ const MoviePageList: React.FC = () => {
                     <Box className="loading">
                         <Typography variant="h5">Loading...</Typography>
                     </Box>
-                ) : movies?.length === undefined ? (
+                ) : movies.length === 0 ? (
                     <Box className="no-movies">
-                        <Typography variant="h5">
-                            No Movies Found
-                        </Typography>
+                        <Typography variant="h5">No Movies Found</Typography>
                     </Box>
                 ) : (
                     movies.map((movie) => (
@@ -118,7 +112,16 @@ const MoviePageList: React.FC = () => {
                 )}
             </Box>
 
-
+            {!loading && totalPages > 1 && (
+                <Box className="pagination-container" sx={{ display: 'flex', justifyContent: 'center', mt: 4 }}>
+                    <Pagination
+                        count={totalPages}
+                        page={currentPage}
+                        onChange={(_, value) => setCurrentPage(value)}
+                        color="primary"
+                    />
+                </Box>
+            )}
         </Box>
     );
 };
