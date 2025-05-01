@@ -7,6 +7,7 @@ import { RootState } from '../../redux/store';
 import { fetchMovies } from '../../redux/movieSlice';
 import { connect } from 'react-redux';
 import NavigateWrapper from '../NavigateWrapper';
+import { NavLink } from 'react-router-dom';
 
 interface Movie {
     id: string;
@@ -101,7 +102,7 @@ class WhatToWatch extends Component<WhatToWatchProps, WhatToWatchState> {
                     className="netflix-card-carousel"
                     onMouseEnter={() => this.setState({ showControls: true })}
                 >
-                    <h2 className="carousel-title">What to Watch <span className='title-icon'><ChevronRight className='next-icon' /></span></h2>
+                    <NavLink to={'/all-movies'}><h2 className="carousel-title">What to Watch <span className='title-icon'><ChevronRight className='next-icon' /></span></h2></NavLink>
 
                     <div className="carousel-container">
                         {showControls && canScrollLeft && (

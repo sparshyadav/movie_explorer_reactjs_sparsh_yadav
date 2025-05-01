@@ -67,6 +67,49 @@ export const getAllMoviesAPI = async () => {
     }
 }
 
+export const getEveryMovieAPI = async () => {
+    try {
+        let allMovies: any[] = [];
+        let currentPage = 1;
+        let hasMorePages = true;
+
+        while (hasMorePages) {
+            const response = await axios.get(`${BASE_URL}/api/v1/movies?page=${currentPage}`);
+            console.log(`Response from a single Page ${currentPage}: `, response);
+
+            if (response?.data?.movies?.length === 10) {
+                allMovies = [...allMovies, ...response.data.movies];
+                currentPage++;
+            }
+            else if (response.data.movies.length < 10) {
+                allMovies = [...allMovies, ...response.data.movies];
+                hasMorePages = false;
+            }
+            else {
+                hasMorePages = false;
+            }
+
+            if (currentPage > 100) {
+                hasMorePages = false;
+            }
+        }
+
+        console.log("THIS is ALL MOVIES: ", allMovies);
+
+        return allMovies;
+    }
+    catch (error: { response: { data: { errors: string } } }) {
+        console.log("Error Occurred while Getting Movies: ", error);
+        if (error?.response?.data?.errors.length > 1) {
+            toast.error(error?.response?.data?.errors[0]);
+        }
+        else {
+            toast.error(error?.response?.data?.errors);
+        }
+        return [];
+    }
+}
+
 export const addMovieAdminAPI = async (payload: {
     title: string;
     genre: string;
@@ -118,4 +161,60 @@ export const movieDetailsAPI = async (id: number) => {
     }
 }
 
+export const getMoviesByGenre = async (genre: string, page: number = 1): Promise<any> => {
+    try {
+        const response = await axios.get(`${BASE_URL}/api/v1/movies`, {
+            params: {
+                genre,
+                page,
+            },
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+            },
+        });
 
+        const movieData = {
+            movies: response.data.movies || [],
+            pagination: response.data.pagination || {
+                current_page: page,
+                total_pages: 1,
+                total_count: response.data.movies?.length || 0,
+                per_page: 10,
+            },
+        };
+
+        console.log(`Fetched movies for genre ${genre}, page ${page}:`, movieData);
+        return movieData.movies;
+    } catch (error: any) {
+        console.error(`Error fetching movies for genre ${genre}, page ${page}:`, error.message);
+        return {
+            movies: [],
+            pagination: {
+                current_page: page,
+                total_pages: 1,
+                total_count: 0,
+                per_page: 10,
+            },
+        };
+    }
+};
+
+
+export const searchMovieAPI = async (title: string) => {
+    try {
+        const response = await axios.get(`${BASE_URL}/api/v1/movies?title=${title}`);
+        console.log("RESPONSE FROM SEARCH: ", response);
+
+        return response;
+    }
+    catch (error: { response: { data: { errors: string } } }) {
+        console.log("Error Occurred while Getting Movies: ", error);
+        if (error?.response?.data?.errors.length > 1) {
+            toast.error(error?.response?.data?.errors[0]);
+        }
+        else {
+            toast.error(error?.response?.data?.errors);
+        }
+    }
+}

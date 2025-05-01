@@ -7,6 +7,7 @@ import { Search } from 'lucide-react';
 import ProfileMenu from '../ProfileMenu';
 import { useContext } from 'react';
 import UserContext from '../../context/UserContext';
+import { NavLink } from 'react-router-dom';
 
 function Navbar() {
     const userContext = useContext(UserContext);
@@ -16,11 +17,13 @@ function Navbar() {
     return (
         <Container maxWidth={false} disableGutters className="navbar-container">
             <Box className='navbar-center-container' >
+                <NavLink to={'/'}>
                 <Box className='navbar-icon'>
                     <Typography variant="h4" fontWeight="bold">
                         IMDB
                     </Typography>
                 </Box>
+                </NavLink>
                 <Box className='navbar-search'>
                     <TextField placeholder='Search Movies' className='search-input' InputProps={{
                         endAdornment: (

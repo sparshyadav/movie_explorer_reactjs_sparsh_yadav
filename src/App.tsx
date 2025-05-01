@@ -3,8 +3,8 @@ import Login from './pages/Login/Login'
 import Signup from './pages/Signup/Signup'
 import Home from './pages/Home/Home';
 import AddMovie from './pages/AddMovie/AddMovie';
-// import MovieDetailsPage from './pages/MovieDetailsPage/MovieDetailsPage';
 import MovieDetails from './components/MovieDetails/MovieDetails';
+import AllMoviesPage from './pages/AllMoviesPage/AllMoviesPage';
 
 function App() {
   return (
@@ -15,6 +15,7 @@ function App() {
         <Route path='/create-movie' element={<AddMovie />} />
         <Route path='/' element={<Home />} />
         <Route path='/movie-details/:id' element={<MovieDetails />} />
+        <Route path='/all-movies' element={<AllMoviesPage />} />
       </Routes>
     </Router>
   )
