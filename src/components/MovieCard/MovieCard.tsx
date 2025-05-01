@@ -5,7 +5,6 @@ import Box from '@mui/material/Box';
 import { useNavigate } from 'react-router-dom';
 import { Pencil, Crown } from 'lucide-react';
 
-
 interface ShowCardProps {
     id: string;
     title: string;
@@ -37,7 +36,15 @@ const MovieCard: React.FC<ShowCardProps> = ({
 
     const handleDetails = () => {
         navigate(`/movie-details/${id}`)
+        scrollToTop();
     }
+
+    const scrollToTop = () => {
+        window.scrollTo({
+            top: 0, 
+            behavior: 'smooth' 
+        });
+    };
 
     return (
         <Box className="netflix-show-card">

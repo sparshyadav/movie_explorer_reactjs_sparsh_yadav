@@ -7,6 +7,8 @@ import Navbar from '../Navbar/Navbar';
 import Footer from '../Footer/Footer';
 import WhatToWatch from '../WhatToWatch/WhatToWatch';
 
+type StreamingPlatform = 'Netflix' | 'Amazon' | 'HBO';
+
 interface Movie {
     title: string;
     release_year: number;
@@ -18,7 +20,7 @@ interface Movie {
     description: string;
     director: string;
     main_lead: string;
-    streaming_platform: string;
+    streaming_platform: StreamingPlatform;
 }
 
 const MovieDetails: React.FC = () => {
@@ -26,6 +28,7 @@ const MovieDetails: React.FC = () => {
     const [inWatchlist, setInWatchlist] = useState(false);
     const [hoverRating, setHoverRating] = useState<number | null>(null);
     const [movie, setMovie] = useState<Movie | null>(null);
+    const [imageUrl, setImageUrl] = useState<string>(''); // State for platform image URL
     const { id } = useParams();
 
     const handleRating = (rating: number) => {
@@ -36,12 +39,24 @@ const MovieDetails: React.FC = () => {
         setInWatchlist(!inWatchlist);
     };
 
+    const streaming_platform_url = {
+        Netflix: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/69/Netflix_logo.svg/2560px-Netflix_logo.svg.png',
+        Amazon: 'https://pentagram-production.imgix.net/38cf1cca-b7de-4393-85b9-cf36de0e38cf/Amazon_PrimeVideo_Documentation_02copy.jpg?crop=edges&fit=crop&h=630&rect=192%2C0%2C3456%2C2160&w=1200',
+        HBO: 'https://9meters.com/wp-content/uploads/hbo-max-logo.webp',
+    };
+
     useEffect(() => {
         const fetchMovieDetails = async () => {
             if (!id) return;
             try {
                 const response = await movieDetailsAPI(Number(id));
                 setMovie(response);
+
+                if (response.streaming_platform in streaming_platform_url) {
+                    setImageUrl(streaming_platform_url[response.streaming_platform as StreamingPlatform]);
+                } else {
+                    setImageUrl(''); 
+                }
             } catch (error) {
                 console.error("Error fetching movie details:", error);
             }
@@ -161,7 +176,13 @@ const MovieDetails: React.FC = () => {
                             <div className="streaming-section">
                                 <h2>Available on</h2>
                                 <div className="platform-list">
-                                    {movie.streaming_platform}
+                                    <div className="movie-box">
+                                        <img
+                                            src={imageUrl}
+                                            alt={`${movie.streaming_platform} logo`}
+                                            className="movie-poster"
+                                        />
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -175,5 +196,3 @@ const MovieDetails: React.FC = () => {
 };
 
 export default MovieDetails;
-
-
