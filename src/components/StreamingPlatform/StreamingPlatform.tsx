@@ -58,15 +58,13 @@ export class StreamingPlatform extends Component<StreamingPlatformProps, Streami
     }
 
     componentDidMount(): void {
-        // this.props.fetchMovies();
-
         const fetchMovies = async () => {
             let response = await getEveryMovieAPI();
             console.log("RESPONSE FROM API FETCH: ", response);
             this.setState({
                 allMovies: response,
-                selectedPlatformMovies: response.filter(movie => movie.streaming_platform === 'Netflix') // Default platform
-            });
+                selectedPlatformMovies: response.filter(movie => movie.streaming_platform === 'Netflix')
+            });   
         }
 
         fetchMovies();
@@ -76,16 +74,6 @@ export class StreamingPlatform extends Component<StreamingPlatformProps, Streami
             carousel.addEventListener('scroll', this.updateScrollPosition);
         }
     }
-
-    // componentDidUpdate(prevProps: StreamingPlatformProps) {
-    //     if (prevProps.movies !== this.props.movies && this.props.movies.length > 0) {
-    //         const filteredMovies = this.props.movies.filter(
-    //             (mov) => mov.streaming_platform === 'Netflix'
-    //         );
-
-    //         this.setState({ selectedPlatformMovies: filteredMovies });
-    //     }
-    // }
 
     componentWillUnmount(): void {
         const carousel = this.carouselRef.current;
@@ -185,6 +173,7 @@ export class StreamingPlatform extends Component<StreamingPlatformProps, Streami
                             {this.state.selectedPlatformMovies.map((movie) => (
                                 <Box className="carousel-item" key={movie.id}>
                                     <MovieCard
+                                        premium={movie.premium}
                                         id={movie.id}
                                         title={movie.title}
                                         posterImage={movie.poster_url}
@@ -211,15 +200,3 @@ export class StreamingPlatform extends Component<StreamingPlatformProps, Streami
 }
 
 export default StreamingPlatform;
-
-// const mapStateToProps = (state: RootState) => ({
-//     movies: state.movies.movies,
-// });
-
-// const mapDispatchToProps = {
-//     fetchMovies,
-// };
-
-// const ConnectedStreamingPlatform = connect(mapStateToProps, mapDispatchToProps)(StreamingPlatform);
-// export default NavigateWrapper(ConnectedStreamingPlatform);
-

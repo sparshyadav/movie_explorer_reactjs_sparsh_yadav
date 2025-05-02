@@ -31,7 +31,6 @@ const initialState: MovieState = {
 export const fetchMovies = createAsyncThunk<Movie[], void>('movies/fetchAll', async () => {
     const response = await getAllMoviesAPI(1);
 
-    // console.log("RESPONSE IN REDUX SLICE: ", response);
     if (!response || !response.data) {
         throw new Error("Failed to fetch movies: No response or data");
     }

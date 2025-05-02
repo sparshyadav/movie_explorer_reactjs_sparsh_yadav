@@ -3,6 +3,7 @@ import { Box, Typography, Button, Pagination } from '@mui/material';
 import './MoviePageList.scss';
 import { getAllMoviesAPI, getMoviesByGenre } from '../../API';
 import MovieCard from '../MovieCard/MovieCard';
+import { useSearchParams } from 'react-router-dom';
 
 interface Movie {
     id: string;
@@ -18,7 +19,8 @@ const MoviePageList: React.FC = () => {
     const [activeCategory, setActiveCategory] = useState('All Movies');
     const [loading, setLoading] = useState(true);
     const [currentPage, setCurrentPage] = useState(1);
-    const [totalPages, setTotalPages] = useState(1); 
+    const [totalPages, setTotalPages] = useState(1);
+    const [searchParams, setSearchParams] = useSearchParams();
 
     const genres = [
         'All Movies',
@@ -34,6 +36,18 @@ const MoviePageList: React.FC = () => {
     ];
 
     useEffect(() => {
+        const pageParam = parseInt(searchParams.get('page') || '1', 10);
+        setCurrentPage(pageParam);
+    }, []);
+
+
+    useEffect(() => {
+        setSearchParams({ page: currentPage.toString() });
+    }, [currentPage]);
+
+
+
+    useEffect(() => {
         const fetchMovies = async () => {
             try {
                 setLoading(true);
@@ -42,13 +56,14 @@ const MoviePageList: React.FC = () => {
                 if (activeCategory === 'All Movies') {
                     response = await getAllMoviesAPI(currentPage);
                     console.log("RESPONSE FOR ALL MOVIES: ", response);
+                    setMovies(response.movies);
                 } else {
                     response = await getMoviesByGenre(activeCategory, currentPage);
                     console.log("RESPONSE BY GENRE: ", response);
+                    setMovies(response);
                 }
 
-                setMovies(response);
-                setTotalPages(response?.data?.pagination?.total_pages || 1);
+                setTotalPages(response?.pagination?.total_pages || 1);
             } catch (error) {
                 console.error(`Error fetching movies for genre ${activeCategory}, page ${currentPage}:`, error);
                 setMovies([]);
@@ -63,7 +78,7 @@ const MoviePageList: React.FC = () => {
 
 
     useEffect(() => {
-        window.scrollTo(0, 0); 
+        window.scrollTo(0, 0);
     }, [currentPage, activeCategory]);
 
     const handleGenreChange = async (genre: string) => {
@@ -112,7 +127,7 @@ const MoviePageList: React.FC = () => {
                 )}
             </Box>
 
-            {!loading && totalPages > 1 && (
+            {!loading && (
                 <Box className="pagination-container" sx={{ display: 'flex', justifyContent: 'center', mt: 4 }}>
                     <Pagination
                         count={totalPages}

@@ -55,7 +55,7 @@ export const getAllMoviesAPI = async (page: number) => {
         const response = await axios.get(`${BASE_URL}/api/v1/movies?page=${page}`);
         console.log("RESPONSE: ", response);
 
-        return response.data.movies;
+        return response.data;
     }
     catch (error: { response: { data: { errors: string } } }) {
         console.log("Error Occurred while Getting Movies: ", error);
@@ -186,7 +186,7 @@ export const getMoviesByGenre = async (genre: string, page: number = 1): Promise
         };
 
         console.log(`Fetched movies for genre ${genre}, page ${page}:`, movieData);
-        return movieData.movies;
+        return movieData;
     } catch (error: any) {
         console.error(`Error fetching movies for genre ${genre}, page ${page}:`, error.message);
         return {
@@ -201,21 +201,49 @@ export const getMoviesByGenre = async (genre: string, page: number = 1): Promise
     }
 };
 
+export const searchMovieAPI = async (page: number = 1, title: string, genre?: string): Promise<any> => {
+    const params: Record<string, any> = {
+        title,
+        page
+    };
 
-export const searchMovieAPI = async (title: string) => {
+    if (genre && genre !== 'all') {
+        params.genre = genre;
+    }
+
+    console.log("PARAMS: ", params);
+
     try {
-        const response = await axios.get(`${BASE_URL}/api/v1/movies?title=${title}`);
-        console.log("RESPONSE FROM SEARCH: ", response);
+        const response = await axios.get(`${BASE_URL}/api/v1/movies`, {
+            params,
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+            },
+        });
 
-        return response;
+        const movieData = {
+            movies: response.data.movies || [],
+            pagination: response.data.pagination || {
+                current_page: page,
+                total_pages: 1,
+                total_count: response.data.movies?.length || 0,
+                per_page: 10,
+            },
+        };
+
+        console.log(`Fetched movies for genre ${genre}, page ${page}:`, movieData);
+        return movieData;
+    } catch (error: any) {
+        console.error(`Error fetching movies for genre ${genre}, page ${page}:`, error.message);
+        return {
+            movies: [],
+            pagination: {
+                current_page: page,
+                total_pages: 1,
+                total_count: 0,
+                per_page: 10,
+            },
+        };
     }
-    catch (error: { response: { data: { errors: string } } }) {
-        console.log("Error Occurred while Getting Movies: ", error);
-        if (error?.response?.data?.errors.length > 1) {
-            toast.error(error?.response?.data?.errors[0]);
-        }
-        else {
-            toast.error(error?.response?.data?.errors);
-        }
-    }
-}
+};

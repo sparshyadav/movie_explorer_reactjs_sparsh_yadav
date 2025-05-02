@@ -46,8 +46,8 @@ class WhatToWatch extends Component<WhatToWatchProps, WhatToWatchState> {
     componentDidMount() {
         const fetchMovies = async () => {
             let response = await getAllMoviesAPI(2);
-            // console.log("RESPONSE FROM API FETCH: ", response);
-            this.setState({ allMovies: response });
+            console.log("RESPONSE FROM API FETCH: ", response);
+            this.setState({ allMovies: response.movies });
         }
 
         fetchMovies();
@@ -56,8 +56,6 @@ class WhatToWatch extends Component<WhatToWatchProps, WhatToWatchState> {
         if (carousel) {
             carousel.addEventListener('scroll', this.updateScrollPosition);
         }
-
-        // this.props.fetchMovies();
     }
 
     componentWillUnmount() {
@@ -153,13 +151,3 @@ class WhatToWatch extends Component<WhatToWatchProps, WhatToWatchState> {
 }
 
 export default WhatToWatch;
-// const mapStateToProps = (state: RootState) => ({
-//     movies: state.movies.movies
-// });
-
-// const mapDispatchToProps = {
-//     fetchMovies,
-// };
-
-// export default connect(mapStateToProps, mapDispatchToProps)(NavigateWrapper(WhatToWatch));
-

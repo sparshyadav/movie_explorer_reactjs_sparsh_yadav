@@ -6,10 +6,7 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import { ArrowBackIos, ArrowForwardIos } from '@mui/icons-material';
 import { getAllMoviesAPI } from '../../API';
-// import NavigateWrapper from '../NavigateWrapper';
-// import { connect } from 'react-redux';
-// import { RootState } from '../../redux/store';
-// import { fetchMovies } from '../../redux/movieSlice';
+import { NavLink } from 'react-router-dom';
 
 interface ArrowProps {
     className?: string;
@@ -98,7 +95,7 @@ export class MainCarousal extends Component<Props, State> {
             isSmallScreen: window.innerWidth < 500
         };
     }
-    
+
 
     truncateDescription(description: string) {
         if (this.state.isSmallScreen && description.length > 50) {
@@ -115,10 +112,10 @@ export class MainCarousal extends Component<Props, State> {
     }
 
     componentDidMount() {
-        const fetchMovies=async()=>{
-            let response=await getAllMoviesAPI(1);
+        const fetchMovies = async () => {
+            let response = await getAllMoviesAPI(1);
             console.log("RESPONSE FROM API FETCH: ", response);
-            this.setState({allMovies: response});
+            this.setState({ allMovies: response.movies });
         }
 
         fetchMovies();
@@ -155,9 +152,11 @@ export class MainCarousal extends Component<Props, State> {
                                     sx={{ backgroundImage: `url(${movie.banner_url})` }}
                                 />
                                 <Box className="banner-content">
-                                    <Box className="poster-container">
-                                        <img src={movie.poster_url} alt="Poster" className="poster-image" />
-                                    </Box>
+                                    <NavLink to={`movie-details/${movie.id}`}>
+                                        <Box className="poster-container">
+                                            <img src={movie.poster_url} alt="Poster" className="poster-image" />
+                                        </Box>
+                                    </NavLink>
                                     <Box className='info-main-container'>
                                         <Box className="info-container">
                                             <Typography variant="h3" className="movie-title">
@@ -179,15 +178,3 @@ export class MainCarousal extends Component<Props, State> {
 }
 
 export default MainCarousal;
-
-// const mapStateToProps = (state: RootState) => ({
-//     movies: state.movies.movies
-// });
-
-// const mapDispatchToProps = {
-//     fetchMovies,
-// };
-
-// export default connect(mapStateToProps, mapDispatchToProps)(NavigateWrapper(MainCarousal));
-
-
