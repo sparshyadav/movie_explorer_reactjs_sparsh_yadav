@@ -1,5 +1,6 @@
 import axios from "axios";
 import toast from "react-hot-toast";
+import Cookies from 'js-cookie';
 
 const BASE_URL = 'https://movie-explorer-ror-aalekh-2ewg.onrender.com';
 
@@ -117,14 +118,22 @@ export const addMovieAdminAPI = async (payload: {
     release_year: string;
     rating: string;
     director: string;
-    duration: string;
+    duration: number;
     main_lead: string;
     streaming_platform: string;
+    description: string;
     poster: File | null;
     banner: File | null;
+    premium: boolean,
 }) => {
     try {
-        const response = await axios.post(`${BASE_URL}/api/v1/movies`, payload);
+        const token = Cookies.get('authToken'); 
+        console.log("TOKEN: ", token);
+        const response = await axios.post(`${BASE_URL}/api/v1/movies`, payload, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
 
         return response;
     }
@@ -247,3 +256,7 @@ export const searchMovieAPI = async (page: number = 1, title: string, genre?: st
         };
     }
 };
+
+
+
+

@@ -6,6 +6,7 @@ import AddMovie from './pages/AddMovie/AddMovie';
 import MovieDetails from './components/MovieDetails/MovieDetails';
 import AllMoviesPage from './pages/AllMoviesPage/AllMoviesPage';
 import SearchResultPage from './components/SearchResultPage/SearchResultPage';
+import SubscriptionPage from './pages/SubscriptionPage/SubscriptionPage';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route path='/movie-details/:id' element={<MovieDetails />} />
         <Route path='/all-movies' element={<AllMoviesPage />} />
         <Route path='/search' element={<SearchResultPage />} />
+        <Route path='/subscribe' element={<SubscriptionPage />} />
       </Routes>
     </Router>
   )

@@ -60,7 +60,7 @@ const MoviePageList: React.FC = () => {
                 } else {
                     response = await getMoviesByGenre(activeCategory, currentPage);
                     console.log("RESPONSE BY GENRE: ", response);
-                    setMovies(response);
+                    setMovies(response.movies);
                 }
 
                 setTotalPages(response?.pagination?.total_pages || 1);

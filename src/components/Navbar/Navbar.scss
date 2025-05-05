@@ -1,6 +1,6 @@
 .navbar-container {
     background-color: #121212;
-    width: 100%;
+    width: 200%;
     height: 60px;
     padding: 5px 15px;
     display: flex;
@@ -68,15 +68,6 @@
     width: 100%;
     height: 100%;
 
-    .MuiOutlinedInput-root {
-        height: 100%;
-        border-radius: 5px;
-
-        &.Mui-focused fieldset {
-            border-color: #f5c518;
-        }
-    }
-
     input {
         padding: 10px;
         color: #333;
@@ -89,7 +80,8 @@
 }
 
 .search-icon {
-    cursor: pointer;
+    cursor: pointer; 
+    margin-left: 15px;
 }
 
 .navbar-options {
@@ -122,3 +114,10 @@ Link {
     text-decoration: none !important;
   }
 } 
+
+@media (min-width: 1200px) {
+    .MuiContainer-root {
+      max-width: none !important; 
+    }
+  }
+  

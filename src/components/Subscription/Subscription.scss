@@ -1,0 +1,220 @@
+// Yellow & Black Theme Variables
+$primary-yellow: #ffd700;
+$secondary-yellow: #ffcc00;
+$highlight-yellow: #ffe866;
+$primary-black: #000000;
+$dark-gray: #1a1a1a;
+$medium-gray: #333333;
+$light-gray: #444444;
+$text-white: #ffffff;
+$text-light: #eeeeee;
+
+.subscription-page {
+  background-color: $primary-black;
+  color: $text-white;
+  min-height: 100vh;
+  padding: 3rem 0;
+  
+  .subscription-header {
+    text-align: center;
+    margin-bottom: 3rem;
+    
+    .main-title {
+      color: $primary-yellow;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      font-size: 2.5rem;
+      
+      @media (max-width: 768px) {
+        font-size: 2rem;
+      }
+    }
+    
+    .subtitle {
+      color: $text-light;
+      margin-bottom: 2rem;
+      font-size: 1.1rem;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+  }
+  
+  .plans-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2rem;
+    margin-bottom: 3rem;
+    
+    @media (max-width: 1024px) {
+      flex-direction: column;
+      align-items: center;
+    }
+    
+    .plan-card {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 100%;
+      max-width: 330px;
+      padding: 2rem;
+      border-radius: 1rem;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      
+      &:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 10px 25px rgba($primary-yellow, 0.3);
+      }
+      
+      .plan-details {
+        margin-bottom: 1.5rem;
+      }
+      
+      .plan-title {
+        font-weight: 700;
+        margin-bottom: 1rem;
+        color: $primary-yellow;
+        font-size: 1.75rem;
+      }
+      
+      .plan-price {
+        font-weight: 700;
+        margin-bottom: 1.5rem;
+        font-size: 2.25rem;
+        color: $text-white;
+      }
+      
+      &.starter {
+        background: linear-gradient(135deg, $dark-gray, $medium-gray);
+        border: 1px solid $medium-gray;
+      }
+      
+      &.monthly {
+        background: linear-gradient(135deg, darken($primary-yellow, 30%), darken($primary-yellow, 40%));
+        border: 1px solid darken($primary-yellow, 25%);
+      }
+      
+      &.yearly {
+        background: linear-gradient(135deg, $dark-gray, rgba($primary-yellow, 0.2));
+        border: 1px solid $medium-gray;
+        position: relative;
+        
+        &::before {
+          content: 'Best Value';
+          position: absolute;
+          top: -12px;
+          right: 20px;
+          background-color: $primary-yellow;
+          color: $primary-black;
+          font-weight: 600;
+          font-size: 0.75rem;
+          padding: 4px 10px;
+          border-radius: 12px;
+        }
+      }
+      
+      .features-list {
+        padding: 0;
+        margin-bottom: 1.5rem;
+        
+        .feature-item {
+          padding: 4px 0;
+          
+          .feature-icon {
+            min-width: 36px;
+            
+            .MuiSvgIcon-root {
+              color: $primary-yellow;
+              font-size: 1.2rem;
+            }
+          }
+          
+          .MuiListItemText-primary {
+            font-size: 0.9rem;
+            color: $text-light;
+          }
+        }
+      }
+      
+      .plan-button {
+        background-color: $primary-yellow;
+        color: $primary-black;
+        font-weight: 600;
+        padding: 0.75rem;
+        border-radius: 8px;
+        text-transform: none;
+        
+        &:hover {
+          background-color: $secondary-yellow;
+          box-shadow: 0 4px 12px rgba($primary-yellow, 0.4);
+        }
+      }
+    }
+  }
+  
+  .footer-section {
+    text-align: center;
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid rgba($primary-yellow, 0.2);
+    
+    .partners-label {
+      color: $text-light;
+      margin-bottom: 0.5rem;
+      font-size: 0.9rem;
+    }
+    
+    .partners-description {
+      color: $text-white;
+      margin-bottom: 1.5rem;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    
+    .partners-list {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 2rem;
+      margin-bottom: 2rem;
+      
+      .partner {
+        color: rgba($primary-yellow, 0.8);
+        font-weight: 600;
+      }
+    }
+    
+    .back-button-container {
+      display: flex;
+      justify-content: center;
+      margin-top: 2rem;
+      
+      .back-button {
+        background: linear-gradient(to right, $dark-gray, $medium-gray);
+        color: $primary-yellow;
+        border-radius: 2rem;
+        padding: 0.5rem 1.5rem;
+        text-transform: none;
+        font-weight: 500;
+        
+        &:hover {
+          background: linear-gradient(to right, $medium-gray, $dark-gray);
+          box-shadow: 0 4px 12px rgba($primary-yellow, 0.2);
+        }
+        
+        .MuiSvgIcon-root {
+          color: $primary-yellow;
+        }
+      }
+    }
+  }
+}
+
+// MUI Overrides
+.MuiContainer-root {
+  @media (min-width: 1200px) {
+    max-width: 1200px;
+  }
+}

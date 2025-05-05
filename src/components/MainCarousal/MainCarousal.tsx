@@ -7,6 +7,7 @@ import 'slick-carousel/slick/slick-theme.css';
 import { ArrowBackIos, ArrowForwardIos } from '@mui/icons-material';
 import { getAllMoviesAPI } from '../../API';
 import { NavLink } from 'react-router-dom';
+import ShimmerMainCarousal from './ShimmerMainCarousal';
 
 interface ArrowProps {
     className?: string;
@@ -38,6 +39,7 @@ type Props = {
 type State = {
     allMovies: Movie[];
     isSmallScreen: boolean;
+    loading: boolean;
 }
 
 function NextArrow({ className, style, onClick }: ArrowProps) {
@@ -92,7 +94,8 @@ export class MainCarousal extends Component<Props, State> {
 
         this.state = {
             allMovies: [],
-            isSmallScreen: window.innerWidth < 500
+            isSmallScreen: window.innerWidth < 500,
+            loading: true
         };
     }
 
@@ -115,7 +118,9 @@ export class MainCarousal extends Component<Props, State> {
         const fetchMovies = async () => {
             let response = await getAllMoviesAPI(1);
             console.log("RESPONSE FROM API FETCH: ", response);
-            this.setState({ allMovies: response.movies });
+            this.setState({
+                allMovies: response.movies, loading: false
+            });
         }
 
         fetchMovies();
@@ -144,33 +149,39 @@ export class MainCarousal extends Component<Props, State> {
         return (
             <Box className='carousal-main-container'>
                 <Box className="main-carousal">
-                    <Slider {...settings}>
-                        {this.state.allMovies?.map((movie) => (
-                            <Box key={movie.id} className="carousel-item">
-                                <Box
-                                    className="banner-image"
-                                    sx={{ backgroundImage: `url(${movie.banner_url})` }}
-                                />
-                                <Box className="banner-content">
-                                    <NavLink to={`movie-details/${movie.id}`}>
-                                        <Box className="poster-container">
-                                            <img src={movie.poster_url} alt="Poster" className="poster-image" />
-                                        </Box>
-                                    </NavLink>
-                                    <Box className='info-main-container'>
-                                        <Box className="info-container">
-                                            <Typography variant="h3" className="movie-title">
-                                                {movie.title}
-                                            </Typography>
-                                            <Typography variant="body1" className="movie-description">
-                                                {this.truncateDescription(movie.description)}
-                                            </Typography>
+                    {
+                        this.state.loading ? (
+                            <ShimmerMainCarousal />
+                        ) : (
+                            <Slider {...settings}>
+                                {this.state.allMovies?.map((movie) => (
+                                    <Box key={movie.id} className="carousel-item">
+                                        <Box
+                                            className="banner-image"
+                                            sx={{ backgroundImage: `url(${movie.banner_url})` }}
+                                        />
+                                        <Box className="banner-content">
+                                            <NavLink to={`movie-details/${movie.id}`}>
+                                                <Box className="poster-container">
+                                                    <img src={movie.poster_url} alt="Poster" className="poster-image" />
+                                                </Box>
+                                            </NavLink>
+                                            <Box className='info-main-container'>
+                                                <Box className="info-container">
+                                                    <Typography variant="h3" className="movie-title">
+                                                        {movie.title}
+                                                    </Typography>
+                                                    <Typography variant="body1" className="movie-description">
+                                                        {this.truncateDescription(movie.description)}
+                                                    </Typography>
+                                                </Box>
+                                            </Box>
                                         </Box>
                                     </Box>
-                                </Box>
-                            </Box>
-                        ))}
-                    </Slider>
+                                ))}
+                            </Slider>
+                        )
+                    }
                 </Box>
             </Box>
         );

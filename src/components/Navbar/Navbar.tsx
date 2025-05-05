@@ -2,7 +2,7 @@ import './Navbar.scss';
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import { Search } from 'lucide-react';
+import { Search, CreditCard } from 'lucide-react';
 import ProfileMenu from '../ProfileMenu';
 import { useEffect, useRef } from 'react';
 import { NavLink, useNavigate, useLocation } from 'react-router-dom';
@@ -23,6 +23,10 @@ function Navbar() {
         navigate('/search');
     }
 
+    const handleSubscription=()=>{
+        navigate('/subscribe')
+    }
+
     return (
         <Container maxWidth={false} disableGutters className="navbar-container">
             <Box className='navbar-center-container' >
@@ -35,6 +39,7 @@ function Navbar() {
                 </NavLink>
                 <Box className='navbar-options'>
                         <Search className='search-icon' onClick={handleSearch} />
+                        <CreditCard className='search-icon' onClick={handleSubscription} />
                     <ProfileMenu role='admin' />
                 </Box>
             </Box>
