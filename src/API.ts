@@ -301,7 +301,7 @@ export const updateMovie = async (id: number, payload: {
 
 export const deleteMovie = async (id: number): Promise<boolean> => {
     try {
-        const token = localStorage.getItem("token");
+        const token = Cookies.get('authToken');
         console.log("Retrieved token:", token);
         if (!token) {
             toast.error("You need to sign in first.");

@@ -289,3 +289,18 @@ $transition-speed: 0.3s;
         min-width: 120px;
     }
 }
+
+.cancel-button {
+    color: #b0bec5;
+    border: 1px solid #b0bec5;
+    background-color: transparent;
+    text-transform: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+
+    &:hover {
+        background-color: #eceff1;
+        color: #37474f;
+        border: 1px solid #37474f;
+    }
+}

@@ -3,7 +3,7 @@ import {
     Box, TextField, Button, Typography, FormControl, FormControlLabel, Checkbox, FormGroup, FormLabel, Paper, SelectChangeEvent, Snackbar, Alert
 } from '@mui/material';
 import './AddMovie.scss';
-import { addMovieAdminAPI, movieDetailsAPI, updateMovie } from '../../API';
+import { addMovieAdminAPI, deleteMovie, movieDetailsAPI, updateMovie } from '../../API';
 import Navbar from '../../components/Navbar/Navbar';
 import AddMovieWrapper from '../../components/AddMovieWrapper';
 
@@ -244,6 +244,17 @@ class AddMovie extends Component<AddMovieProps, MovieFormState> {
         }
     }
 
+    handleDelete = async () => {
+        this.setState({ isSubmitting: true });
+
+        const { id } = this.props;
+        const response = await deleteMovie(Number(id));
+        console.log("RESPONSE OF EDIT MOVIE: ", response);
+
+        this.setState({ isSubmitting: false });
+
+    }
+
     render() {
         const {
             title, genre, release_year, rating, director, duration,
@@ -471,9 +482,9 @@ class AddMovie extends Component<AddMovieProps, MovieFormState> {
                                             size="large"
                                             className="cancel-button"
                                             color="error"
-                                            onClick={this.handleDeleteMovie}
+                                            onClick={this.handleDelete}
                                         >
-                                            Delete Movie
+                                            {isSubmitting ? 'Deleting...' : 'Delete Movie'}
                                         </Button>
                                     </>
                                 ) : (
