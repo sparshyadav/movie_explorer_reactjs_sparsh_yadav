@@ -1,0 +1,130 @@
+$primary-yellow: #ffd700;
+$secondary-yellow: #ffcc00;
+$primary-black: #000000;
+$dark-gray: #1a1a1a;
+$medium-gray: #333333;
+$light-gray: #444444;
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.shimmer-card {
+  opacity: 0.9;
+  
+  .shimmer-container {
+    position: relative;
+    width: 100%;
+    height: 0;
+    padding-bottom: 150%; 
+    overflow: hidden;
+    border-radius: 6px;
+    width: 200px;
+    height: 200px;
+    
+    .shimmer-badge {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+    }
+  }
+  
+  .shimmer-effect {
+    background: linear-gradient(
+      90deg,
+      $dark-gray 25%,
+      $medium-gray 50%,
+      $dark-gray 75%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite linear;
+    border-radius: 4px;
+  }
+  
+  .show-info {
+    padding: 12px;
+    
+    .rating-container {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+      
+      .rating-info {
+        width: 60px;
+        height: 20px;
+      }
+      
+      .bookmark-container {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+      }
+    }
+    
+    .title-row {
+      .title {
+        width: 100%;
+        height: 20px;
+        margin-bottom: 10px;
+      }
+    }
+    
+    .watch-options-btn {
+      width: 100%;
+      height: 36px;
+      margin-bottom: 10px;
+    }
+    
+    .action-buttons {
+      .watchlist-btn {
+        width: 100%;
+        height: 36px;
+      }
+    }
+  }
+}
+
+.shimmer-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  
+  @media (min-width: 600px) {
+    .shimmer-card {
+      width: calc(50% - 8px);
+    }
+  }
+  
+  @media (min-width: 960px) {
+    .shimmer-card {
+      width: calc(33.333% - 11px);
+    }
+  }
+  
+  @media (min-width: 1280px) {
+    .shimmer-card {
+      width: calc(25% - 12px);
+    }
+  }
+}
+
+.shimmer-card {
+  .shimmer-effect {
+    background: linear-gradient(
+      90deg,
+      $dark-gray 25%,
+      rgba($primary-yellow, 0.15) 50%,
+      $dark-gray 75%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite linear;
+  }
+}

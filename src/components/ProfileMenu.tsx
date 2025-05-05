@@ -11,7 +11,7 @@ import {
 } from '@mui/material';
 import Logout from '@mui/icons-material/Logout';
 import PersonAdd from '@mui/icons-material/PersonAdd';
-import { useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 
 type Props = {
   role: 'admin' | 'user';
@@ -100,9 +100,9 @@ const ProfileMenu: React.FC<Props> = () => {
         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
-        <MenuItem onClick={handleProfile}>
-          <Avatar /> Profile
-        </MenuItem>
+          <MenuItem onClick={handleProfile}>
+            <Avatar /> Profile
+          </MenuItem>
 
         {role === 'supervisor' && (
           <MenuItem onClick={handleCreateMovie}>

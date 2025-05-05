@@ -2,7 +2,7 @@ import Navbar from '../Navbar/Navbar';
 import Footer from '../Footer/Footer';
 import { Box, Container, Typography, Chip, TextField, InputAdornment, Grid, Pagination } from '@mui/material';
 import { Search as SearchIcon } from '@mui/icons-material';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './SearchResultPage.scss';
 import { getMoviesByGenre, searchMovieAPI } from '../../API';
 import MovieCard from '../MovieCard/MovieCard';
@@ -25,13 +25,11 @@ function SearchResultPage() {
     const [addingGenre, setAddingGenre] = useState(false);
     const [newGenreName, setNewGenreName] = useState('');
     const [hoveredGenre, setHoveredGenre] = useState<string | null>(null);
+    const [debounceTimeout, setDebounceTimeout] = useState<NodeJS.Timeout | null>(null);
 
     const handleSearchChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
         const value = event.target.value;
         setSearchQuery(value);
-        let response = await searchMovieAPI(1, value);
-        setSearchedMovies(response.movies);
-        console.log("RESULT OF SEARCH: ", response);
     };
 
     const handleFilter = async (genre: string) => {
@@ -39,6 +37,24 @@ function SearchResultPage() {
         console.log("RESPONSE FOR GENRE: ", response);
         setSearchedMovies(response.movies);
     }
+    
+    useEffect(() => {
+        if (debounceTimeout) {
+            clearTimeout(debounceTimeout);
+        }
+    
+        const timeout = setTimeout(async () => {
+            if (searchQuery.trim() !== '') {
+                const response = await searchMovieAPI(1, searchQuery);
+                setSearchedMovies(response.movies);
+                console.log('Debounced Search Result:', response);
+            }
+        }, 2500); 
+    
+        setDebounceTimeout(timeout);
+    
+        return () => clearTimeout(timeout);
+    }, [searchQuery]);
 
     return (
         <div className="search-result-page">

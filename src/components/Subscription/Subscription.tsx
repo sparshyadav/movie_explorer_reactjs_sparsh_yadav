@@ -1,13 +1,13 @@
 import React from 'react';
-import { useNavigate } from "react-router-dom";
-import { 
-  Box, 
-  Typography, 
-  Button, 
-  Container, 
-  List, 
-  ListItem, 
-  ListItemText, 
+import { NavLink, useNavigate } from "react-router-dom";
+import {
+  Box,
+  Typography,
+  Button,
+  Container,
+  List,
+  ListItem,
+  ListItemText,
   ListItemIcon
 } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
@@ -86,7 +86,7 @@ const Subscription: React.FC = () => {
 
         <Box className="plans-container">
           {plans.map((plan, index) => (
-            <Box 
+            <Box
               key={index}
               className={`plan-card ${plan.variant}`}
             >
@@ -97,7 +97,7 @@ const Subscription: React.FC = () => {
                 <Typography variant="h3" className="plan-price">
                   {plan.price}
                 </Typography>
-                
+
                 <List className="features-list">
                   {plan.features.map((feature, i) => (
                     <ListItem key={i} className="feature-item">
@@ -109,13 +109,15 @@ const Subscription: React.FC = () => {
                   ))}
                 </List>
               </Box>
-              
-              <Button 
-                variant="contained" 
-                className="plan-button"
-              >
-                {plan.buttonText}
-              </Button>
+
+              <NavLink to={'/payment'}>
+                <Button
+                  variant="contained"
+                  className="plan-button"
+                >
+                  {plan.buttonText}
+                </Button>
+              </NavLink>
             </Box>
           ))}
         </Box>
@@ -125,18 +127,18 @@ const Subscription: React.FC = () => {
           <Typography variant="subtitle2" className="partners-label">
             In great company
           </Typography>
-          
+
           <Typography variant="h6" className="partners-description">
             Our platform is the go-to movie service for successful and renowned brands
           </Typography>
-          
+
           <Box className="partners-list">
             <Typography variant="body1" className="partner">Shopify</Typography>
             <Typography variant="body1" className="partner">Stripe</Typography>
             <Typography variant="body1" className="partner">Cash App</Typography>
             <Typography variant="body1" className="partner">Verizon</Typography>
           </Box>
-          
+
           <Box className="back-button-container">
             <Button
               onClick={() => navigate("/")}
@@ -153,3 +155,8 @@ const Subscription: React.FC = () => {
 };
 
 export default Subscription;
+
+
+
+
+
