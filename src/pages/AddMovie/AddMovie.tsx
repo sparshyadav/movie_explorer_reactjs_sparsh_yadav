@@ -3,10 +3,12 @@ import {
     Box, TextField, Button, Typography, FormControl, FormControlLabel, Checkbox, FormGroup, FormLabel, Paper, SelectChangeEvent, Snackbar, Alert
 } from '@mui/material';
 import './AddMovie.scss';
-import { addMovieAdminAPI } from '../../API';
+import { addMovieAdminAPI, movieDetailsAPI, updateMovie } from '../../API';
 import Navbar from '../../components/Navbar/Navbar';
+import AddMovieWrapper from '../../components/AddMovieWrapper';
 
 interface MovieFormState {
+    id?: string;
     title: string;
     genre: string;
     release_year: string;
@@ -22,11 +24,18 @@ interface MovieFormState {
     posterPreview: string;
     bannerPreview: string;
     isSubmitting: boolean;
+    isEditing: boolean;
     submitSuccess: boolean;
+    submitEdit: boolean;
     submitError: boolean;
 }
 
-class AddMovie extends Component<object, MovieFormState> {
+interface AddMovieProps {
+    id?: string;
+}
+
+
+class AddMovie extends Component<AddMovieProps, MovieFormState> {
     constructor(props: object) {
         super(props);
         this.state = {
@@ -45,10 +54,13 @@ class AddMovie extends Component<object, MovieFormState> {
             posterPreview: '',
             bannerPreview: '',
             isSubmitting: false,
+            isEditing: false,
             submitSuccess: false,
+            submitEdit: false,
             submitError: false
         };
     }
+
 
     handleTextChange = (e: ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
@@ -145,11 +157,98 @@ class AddMovie extends Component<object, MovieFormState> {
         });
     }
 
+    componentDidMount(): void {
+        const { id } = this.props;
+        console.log("ID OF MOVIE TO EDIT: ", id);
+
+        if (id !== undefined) {
+            const fetchMovieDetails = async () => {
+                if (!id) return;
+                try {
+                    const response = await movieDetailsAPI(Number(id));
+                    console.log("RESPNSE TO EDIT MOVIE: ", response);
+
+                    this.setState({
+                        title: response.title,
+                        genre: response.genre,
+                        release_year: response.release_year,
+                        rating: response.rating,
+                        director: response.director,
+                        duration: response.duration,
+                        main_lead: response.main_lead,
+                        streaming_platform: response.streaming_platform,
+                        poster: response.poster_url,
+                        banner: response.banner_url,
+                        description: response.description,
+                        premium: response.premium,
+                        posterPreview: response.poster_url,
+                        bannerPreview: response.banner_url,
+                    })
+                } catch (error) {
+                    console.error("Error fetching movie details:", error);
+                }
+            };
+
+            fetchMovieDetails();
+        }
+    }
+
+    handleEdit = async () => {
+        this.setState({ isEditing: true });
+
+        const payload = new FormData();
+        payload.append("movie[title]", this.state.title);
+        payload.append("movie[genre]", this.state.genre);
+        payload.append("movie[release_year]", this.state.release_year);
+        payload.append("movie[director]", this.state.director);
+        payload.append("movie[duration]", String(this.state.duration));
+        payload.append("movie[description]", this.state.description);
+        payload.append("movie[main_lead]", this.state.main_lead);
+        payload.append("movie[streaming_platform]", this.state.streaming_platform);
+        payload.append("movie[rating]", this.state.rating);
+        payload.append("movie[premium]", String(this.state.premium))
+        payload.append("movie[poster]", this.state.poster);
+        payload.append("movie[banner]", this.state.banner);
+
+        try {
+            const { id } = this.props;
+            const response = await updateMovie(id, payload);
+            console.log("RESPONSE OF EDIT MOVIE: ", response);
+
+            this.setState({
+                isSubmitting: false,
+                submitSuccess: false,
+                isEditing: false,
+                submitEdit: true,
+                title: '',
+                genre: '',
+                release_year: '',
+                rating: '',
+                director: '',
+                duration: 0,
+                streaming_platform: '',
+                description: '',
+                main_lead: '',
+                poster: null,
+                banner: null,
+                premium: false,
+                posterPreview: '',
+                bannerPreview: ''
+            });
+        } catch (error) {
+            console.error('Error submitting form:', error);
+            this.setState({
+                isSubmitting: false,
+                submitError: true
+            });
+        }
+    }
+
     render() {
         const {
             title, genre, release_year, rating, director, duration,
             premium, streaming_platform, main_lead,
-            description,
+            description, submitEdit,
             posterPreview, bannerPreview, isSubmitting,
             submitSuccess, submitError
         } = this.state;
@@ -353,7 +452,30 @@ class AddMovie extends Component<object, MovieFormState> {
                                 </FormControl>
                             </Box>
 
-                            <Box className="form-actions">
+                            {/* <Box className="form-actions">
+                                {
+                                    this.props.id ? (
+                                        <Button
+                                            type="button"
+                                            variant="contained"
+                                            size="large"
+                                            className="submit-button"
+                                            disabled={isSubmitting}
+                                        >
+                                            {isSubmitting ? 'Editing...' : 'Edit Movie'}
+                                        </Button>
+                                    ) : (
+                                        <Button
+                                            type="submit"
+                                            variant="contained"
+                                            size="large"
+                                            className="submit-button"
+                                            disabled={isSubmitting}
+                                        >
+                                            {isSubmitting ? 'Submitting...' : 'Add Movie'}
+                                        </Button>
+                                    )
+                                }
                                 <Button
                                     type="submit"
                                     variant="contained"
@@ -371,7 +493,55 @@ class AddMovie extends Component<object, MovieFormState> {
                                 >
                                     Cancel
                                 </Button>
+                            </Box> */}
+                            <Box className="form-actions">
+                                {this.props.id ? (
+                                    <>
+                                        <Button
+                                            type="button"
+                                            variant="contained"
+                                            size="large"
+                                            className="submit-button"
+                                            disabled={isSubmitting}
+                                            onClick={this.handleEdit}
+                                        >
+                                            {isSubmitting ? 'Editing...' : 'Edit Movie'}
+                                        </Button>
+                                        <Button
+                                            type="button"
+                                            variant="outlined"
+                                            size="large"
+                                            className="cancel-button"
+                                            color="error"
+                                            onClick={this.handleDeleteMovie}
+                                        >
+                                            Delete Movie
+                                        </Button>
+                                    </>
+                                ) : (
+                                    <>
+                                        <Button
+                                            type="submit"
+                                            variant="contained"
+                                            size="large"
+                                            className="submit-button"
+                                            disabled={isSubmitting}
+                                        >
+                                            {isSubmitting ? 'Submitting...' : 'Add Movie'}
+                                        </Button>
+                                        <Button
+                                            type="button"
+                                            variant="outlined"
+                                            size="large"
+                                            className="cancel-button"
+                                            onClick={() => window.history.back()}
+                                        >
+                                            Cancel
+                                        </Button>
+                                    </>
+                                )}
                             </Box>
+
                         </form>
                     </Paper>
 
@@ -383,6 +553,17 @@ class AddMovie extends Component<object, MovieFormState> {
                     >
                         <Alert onClose={this.handleCloseSnackbar} severity="success">
                             Movie added successfully!
+                        </Alert>
+                    </Snackbar>
+
+                    <Snackbar
+                        open={submitEdit}
+                        autoHideDuration={6000}
+                        onClose={this.handleCloseSnackbar}
+                        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+                    >
+                        <Alert onClose={this.handleCloseSnackbar} severity="success">
+                            Movie edited successfully!
                         </Alert>
                     </Snackbar>
 
@@ -402,4 +583,4 @@ class AddMovie extends Component<object, MovieFormState> {
     }
 }
 
-export default AddMovie;
+export default AddMovieWrapper(AddMovie);

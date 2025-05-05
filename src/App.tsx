@@ -7,6 +7,7 @@ import MovieDetails from './components/MovieDetails/MovieDetails';
 import AllMoviesPage from './pages/AllMoviesPage/AllMoviesPage';
 import SearchResultPage from './components/SearchResultPage/SearchResultPage';
 import SubscriptionPage from './pages/SubscriptionPage/SubscriptionPage';
+// import AddMovieWrapper from './components/AddMovieWrapper';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path='/create-movie' element={<AddMovie />} />
         <Route path='/' element={<Home />} />
         <Route path='/movie-details/:id' element={<MovieDetails />} />
+        <Route path='/edit-movie/:id' element={<AddMovie />} />
         <Route path='/all-movies' element={<AllMoviesPage />} />
         <Route path='/search' element={<SearchResultPage />} />
         <Route path='/subscribe' element={<SubscriptionPage />} />

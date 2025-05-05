@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './MovieCard.scss';
 import { Add, Check } from '@mui/icons-material';
 import Box from '@mui/material/Box';
-import { useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { Pencil, Crown } from 'lucide-react';
 
 interface ShowCardProps {
@@ -60,7 +60,7 @@ const MovieCard: React.FC<ShowCardProps> = ({
 
                 {role === 'supervisor' ? (
                     <Box className="poster-actions">
-                        <button className="edit-btn admin-btn" onClick={() => console.log(`Edit ${id}`)}><Pencil /></button>
+                        <NavLink to={`/edit-movie/${id}`}><button className="edit-btn admin-btn" onClick={() => console.log(`Edit ${id}`)}><Pencil /></button></NavLink>
                     </Box>
                 ) : (
                     <></>

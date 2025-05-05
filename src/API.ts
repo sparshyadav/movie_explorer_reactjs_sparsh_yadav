@@ -127,7 +127,7 @@ export const addMovieAdminAPI = async (payload: {
     premium: boolean,
 }) => {
     try {
-        const token = Cookies.get('authToken'); 
+        const token = Cookies.get('authToken');
         console.log("TOKEN: ", token);
         const response = await axios.post(`${BASE_URL}/api/v1/movies`, payload, {
             headers: {
@@ -257,6 +257,74 @@ export const searchMovieAPI = async (page: number = 1, title: string, genre?: st
     }
 };
 
+export const updateMovie = async (id: number, payload: {
+    title: string;
+    genre: string;
+    release_year: string;
+    rating: string;
+    director: string;
+    duration: number;
+    main_lead: string;
+    streaming_platform: string;
+    description: string;
+    poster: File | null;
+    banner: File | null;
+    premium: boolean,
+}) => {
+    try {
+        const token = Cookies.get('authToken');
+        console.log("Retrieved token:", token);
+
+        if (!token) {
+            toast.error("You need to sign in first.");
+            throw new Error("No authentication token found");
+        }
+
+        const response = await axios.patch(`${BASE_URL}/api/v1/movies/${id}`, payload, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "multipart/form-data",
+                Accept: "application/json",
+            },
+        });
+
+        console.log("RESPONSE API: ", response);
+        const movie = response.status;
+        return movie;
+    } catch (error: any) {
+        console.error("Error updating movie:", error.message, error.response?.data);
+        const errorMessage = error.response?.data?.error || "Failed to update movie";
+        toast.error(errorMessage);
+        return null;
+    }
+};
+
+export const deleteMovie = async (id: number): Promise<boolean> => {
+    try {
+        const token = localStorage.getItem("token");
+        console.log("Retrieved token:", token);
+        if (!token) {
+            toast.error("You need to sign in first.");
+            throw new Error("No authentication token found");
+        }
+
+        await axios.delete(`${BASE_URL}/api/v1/movies/${id}`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+                Accept: "application/json",
+            },
+        });
+
+        console.log(`Movie with ID ${id} deleted successfully`);
+        toast.success("Movie deleted successfully!");
+        return true;
+    } catch (error: any) {
+        console.error("Error deleting movie:", error.message, error.response?.data);
+        const errorMessage = error.response?.data?.error || "Failed to delete movie";
+        toast.error(errorMessage);
+        return false;
+    }
+};
 
 
 
