@@ -194,7 +194,7 @@ class AddMovie extends Component<AddMovieProps, MovieFormState> {
     }
 
     handleEdit = async () => {
-        this.setState({ isEditing: true });
+        this.setState({ isSubmitting: true });
 
         const payload = new FormData();
         payload.append("movie[title]", this.state.title);
@@ -452,48 +452,6 @@ class AddMovie extends Component<AddMovieProps, MovieFormState> {
                                 </FormControl>
                             </Box>
 
-                            {/* <Box className="form-actions">
-                                {
-                                    this.props.id ? (
-                                        <Button
-                                            type="button"
-                                            variant="contained"
-                                            size="large"
-                                            className="submit-button"
-                                            disabled={isSubmitting}
-                                        >
-                                            {isSubmitting ? 'Editing...' : 'Edit Movie'}
-                                        </Button>
-                                    ) : (
-                                        <Button
-                                            type="submit"
-                                            variant="contained"
-                                            size="large"
-                                            className="submit-button"
-                                            disabled={isSubmitting}
-                                        >
-                                            {isSubmitting ? 'Submitting...' : 'Add Movie'}
-                                        </Button>
-                                    )
-                                }
-                                <Button
-                                    type="submit"
-                                    variant="contained"
-                                    size="large"
-                                    className="submit-button"
-                                    disabled={isSubmitting}
-                                >
-                                    {isSubmitting ? 'Submitting...' : 'Add Movie'}
-                                </Button>
-                                <Button
-                                    type="button"
-                                    variant="outlined"
-                                    size="large"
-                                    className="cancel-button"
-                                >
-                                    Cancel
-                                </Button>
-                            </Box> */}
                             <Box className="form-actions">
                                 {this.props.id ? (
                                     <>
