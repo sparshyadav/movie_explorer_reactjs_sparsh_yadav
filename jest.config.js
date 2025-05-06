@@ -5,4 +5,5 @@ export default {
     "\\.(css|scss|sass)$": "identity-obj-proxy"
   },
   setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
+  collectCoverage: true, 
 };
