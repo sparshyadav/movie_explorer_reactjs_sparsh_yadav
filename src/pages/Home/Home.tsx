@@ -9,10 +9,7 @@ import BornToday from '../../components/BornToday/BornToday';
 import Box from '@mui/material/Box';
 
 class Home extends Component {
-  
-
   render() {
-
     return (
       <Box>
         <Navbar />
@@ -27,5 +24,3 @@ class Home extends Component {
 }
 
 export default Home;
-
-

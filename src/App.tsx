@@ -12,7 +12,24 @@ import { loadStripe } from '@stripe/stripe-js';
 
 const stripePromise = loadStripe('pk_test_51RLMBhI8TMsg84IIxvXPopZCBmDkUO20fAdCirw2DNvUt1jQAMOthJd2EjPjbg3qD62Zp8vnZYsr2j2dFx9SndGc009ItOLYgQ');
 
+import { generateToken, messaging } from './Notifications/firebase';
+import { onMessage } from 'firebase/messaging';
+import toast from 'react-hot-toast';
+import { useEffect } from 'react';
+
 function App() {
+  useEffect(() => {
+    generateToken();
+
+    onMessage(messaging, (payload) => {
+      console.log('Foreground message in App.tsx:', payload);
+
+      const title = payload.notification?.title || 'New Notification';
+      const body = payload.notification?.body || 'You have a new message';
+      toast.success(`${title}: ${body}`); 
+    });
+  }, []);
+  
   return (
     <Router>
       <Elements stripe={stripePromise}>

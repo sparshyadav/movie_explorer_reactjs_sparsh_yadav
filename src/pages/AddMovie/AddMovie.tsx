@@ -61,7 +61,6 @@ class AddMovie extends Component<AddMovieProps, MovieFormState> {
         };
     }
 
-
     handleTextChange = (e: ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
         this.setState({ ...this.state, [name]: value });

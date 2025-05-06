@@ -42,7 +42,8 @@ export class StreamingPlatform extends Component<StreamingPlatformProps, Streami
     images: string[] = [
         'https://images.ctfassets.net/y2ske730sjqp/5QQ9SVIdc1tmkqrtFnG9U1/de758bba0f65dcc1c6bc1f31f161003d/BrandAssets_Logos_02-NSymbol.jpg?w=940',
         'https://yt3.googleusercontent.com/BE8oLlRJ4gzMqNyS5c0OnkuVsGH3tCWN6Zo5XjkR-BiPZObABCuQ-NDq-8sroOEMtX4kPv-9rg=s900-c-k-c0x00ffffff-no-rj',
-        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSmPmYVyCxBcDrsDxutlkSxHZYA2auvv81jiA&s'
+        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSmPmYVyCxBcDrsDxutlkSxHZYA2auvv81jiA&s', 
+        'https://greenhouse.hulu.com/app/uploads/sites/12/2023/10/logo-gradient-3up.svg'
     ];
 
     constructor(props: StreamingPlatformProps) {
@@ -125,6 +126,7 @@ export class StreamingPlatform extends Component<StreamingPlatformProps, Streami
             if (index === 0) return mov.streaming_platform === 'Netflix';
             if (index === 1) return mov.streaming_platform === 'Amazon';
             if (index === 2) return mov.streaming_platform === 'HBO';
+            if (index === 3) return mov.streaming_platform === 'Hulu';
             return false;
         });
         
