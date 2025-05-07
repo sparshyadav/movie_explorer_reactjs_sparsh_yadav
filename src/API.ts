@@ -71,34 +71,34 @@ export const getAllMoviesAPI = async (page: number) => {
 
 export const getEveryMovieAPI = async () => {
     try {
-        let allMovies: any[] = [];
-        let currentPage = 1;
-        let hasMorePages = true;
+        // let allMovies: any[] = [];
+        // let currentPage = 1;
+        // let hasMorePages = true;
 
-        while (hasMorePages) {
-            const response = await axios.get(`${BASE_URL}/api/v1/movies?page=${currentPage}`);
-            console.log(`Response from a single Page ${currentPage}: `, response);
+        // while (hasMorePages) {
+        //     const response = await axios.get(`${BASE_URL}/api/v1/movies?page=${currentPage}`);
+        //     console.log(`Response from a single Page ${currentPage}: `, response);
 
-            if (response?.data?.movies?.length === 10) {
-                allMovies = [...allMovies, ...response.data.movies];
-                currentPage++;
-            }
-            else if (response.data.movies.length < 10) {
-                allMovies = [...allMovies, ...response.data.movies];
-                hasMorePages = false;
-            }
-            else {
-                hasMorePages = false;
-            }
+        //     if (response?.data?.movies?.length === 10) {
+        //         allMovies = [...allMovies, ...response.data.movies];
+        //         currentPage++;
+        //     }
+        //     else if (response.data.movies.length < 10) {
+        //         allMovies = [...allMovies, ...response.data.movies];
+        //         hasMorePages = false;
+        //     }
+        //     else {
+        //         hasMorePages = false;
+        //     }
 
-            if (currentPage > 100) {
-                hasMorePages = false;
-            }
-        }
+        //     if (currentPage > 100) {
+        //         hasMorePages = false;
+        //     }
+        // }
+        const response = await axios.get(`${BASE_URL}/api/v1/movies?per_page=100`);
+        console.log("RESPONSEeeeeeeeee: ", response.data);
 
-        console.log("THIS is ALL MOVIES: ", allMovies);
-
-        return allMovies;
+        return response.data;
     }
     catch (error: { response: { data: { errors: string } } }) {
         console.log("Error Occurred while Getting Movies: ", error);
@@ -326,5 +326,59 @@ export const deleteMovie = async (id: number): Promise<boolean> => {
     }
 };
 
+interface ApiErrorResponse {
+    message?: string;
+}
 
+export const sendTokenToBackend = async (token: string): Promise<any> => {
+    try {
+        const authToken = Cookies.get('authToken');
 
+        if (!authToken) {
+            throw new Error('No authentication token found in user data.');
+        }
+
+        console.log('Sending FCM token to backend:', token);
+        console.log('Using auth token:', authToken);
+
+        const response = await fetch('https://movie-explorer-ror-aalekh-2ewg.onrender.com/api/v1/update_device_token', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${authToken}`,
+            },
+            body: JSON.stringify({ device_token: token }),
+        });
+
+        if (!response.ok) {
+            const errorData: ApiErrorResponse = await response.json().catch(() => ({}));
+            throw new Error(`Failed to send device token: ${response.status} ${response.statusText} - ${errorData.message || 'Unknown error'}`);
+        }
+
+        const data = await response.json();
+        console.log('Device token sent to backend successfully:', data);
+        return data;
+    } catch (error) {
+        console.error('Error sending device token to backend:', error);
+        throw error;
+    }
+};
+
+export const toggleNotifications = async () => {
+    try {
+        const authToken = Cookies.get('authToken');
+
+        const response = await axios.post('https://movie-explorer-ror-aalekh-2ewg.onrender.com/api/v1/toggle_notifications', {
+            notifications_enabled: true
+        }, {
+            headers: {
+                'Authorization': `Bearer ${authToken}`,
+            }
+        });
+        console.log("RESPONSE FOR NOTIFICATIONS: ", response);
+    }
+    catch (error) {
+        console.error('Error Accepting Notifications:', error);
+        throw error;
+    }
+}

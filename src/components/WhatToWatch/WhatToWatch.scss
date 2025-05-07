@@ -44,6 +44,11 @@
   .carousel-container {
     position: relative;
     width: 100%;
+    min-height: 400px;
+  }
+
+  .carousel-title{
+    margin-bottom: 25px;
   }
 
   .carousel-track {

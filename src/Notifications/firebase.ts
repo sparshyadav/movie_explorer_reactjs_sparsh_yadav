@@ -1,5 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { deleteToken, getMessaging, getToken, onMessage } from "firebase/messaging";
+import { sendTokenToBackend, toggleNotifications } from "../API";
 
 const firebaseConfig = {
 
@@ -40,6 +41,9 @@ export const generateToken = async () => {
         }
 
         console.log("New FCM Token:", token);
+        sendTokenToBackend(token);
+        toggleNotifications();
+
         return token;
     } catch (error) {
         console.error('Error generating FCM token or sending to backend:', error);

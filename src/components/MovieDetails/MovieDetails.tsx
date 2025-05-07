@@ -6,6 +6,8 @@ import { movieDetailsAPI } from '../../API';
 import Navbar from '../Navbar/Navbar';
 import Footer from '../Footer/Footer';
 import WhatToWatch from '../WhatToWatch/WhatToWatch';
+import MovieDetailsShimmer from './MovieDetailsShimmer/MovieDetailsShimmer';
+import TopLineLoader from './TopLineLoader/TopLineLoader';
 
 type StreamingPlatform = 'Netflix' | 'Amazon' | 'HBO';
 
@@ -68,7 +70,9 @@ const MovieDetails: React.FC = () => {
 
     if (!movie) {
         return (
-            <p>Loading...</p>
+            // <p>Loading</p>
+            // <MovieDetailsShimmer />
+            <TopLineLoader />
         )
     }
 

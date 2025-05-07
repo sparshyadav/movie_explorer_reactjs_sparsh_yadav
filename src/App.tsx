@@ -16,6 +16,8 @@ import { generateToken, messaging } from './Notifications/firebase';
 import { onMessage } from 'firebase/messaging';
 import toast from 'react-hot-toast';
 import { useEffect } from 'react';
+import PlatformPageList from './components/PlatformPageList/PlatformPageList';
+import AllPlatformPage from './pages/AllPlatformPage/AllPlatformPage';
 
 function App() {
   useEffect(() => {
@@ -43,6 +45,7 @@ function App() {
           <Route path='/all-movies' element={<AllMoviesPage />} />
           <Route path='/search' element={<SearchResultPage />} />
           <Route path='/subscribe' element={<SubscriptionPage />} />
+          <Route path='/platforms' element={<AllPlatformPage />} />
           {/* <Route path='/payment' element={<Payment />} /> */}
         </Routes>
       </Elements>

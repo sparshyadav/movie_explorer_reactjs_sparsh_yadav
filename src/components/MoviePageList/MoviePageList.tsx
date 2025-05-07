@@ -4,6 +4,7 @@ import './MoviePageList.scss';
 import { getAllMoviesAPI, getMoviesByGenre } from '../../API';
 import MovieCard from '../MovieCard/MovieCard';
 import { useSearchParams } from 'react-router-dom';
+import CircularProgress from '@mui/material/CircularProgress';
 
 interface Movie {
     id: string;
@@ -107,7 +108,9 @@ const MoviePageList: React.FC = () => {
             <Box className="movies-container">
                 {loading ? (
                     <Box className="loading">
-                        <Typography variant="h5">Loading...</Typography>
+                        <Box sx={{ display: 'flex' }}>
+                            <CircularProgress />
+                        </Box>
                     </Box>
                 ) : movies.length === 0 ? (
                     <Box className="no-movies">

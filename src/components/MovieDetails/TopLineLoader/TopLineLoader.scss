@@ -1,0 +1,25 @@
+.loader-page {
+    background-color: #141414;
+    min-height: 100vh;
+}
+
+.top-line-loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 4px;
+    background: linear-gradient(to right, #4e86f7 0%, #2e2e2e 50%, #4e86f7 100%);
+    background-size: 200% 100%;
+    animation: loader 1.5s infinite;
+    z-index: 1000;
+}
+
+@keyframes loader {
+    0% {
+        background-position: 0 0;
+    }
+    100% {
+        background-position: 200% 0;
+    }
+}

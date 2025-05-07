@@ -1,10 +1,12 @@
-import { Component, createRef } from 'react'
+import { Component, createRef } from 'react';
 import './StreamingPlatforlm.scss';
 import { ArrowBackIos, ArrowForwardIos } from '@mui/icons-material';
 import MovieCard from '../MovieCard/MovieCard';
+import MovieCardShimmer from '../MovieCardShimmer/MovieCardShimmer';
 import { ChevronRight } from 'lucide-react';
 import Box from '@mui/material/Box';
 import { getEveryMovieAPI } from '../../API';
+import { NavLink } from 'react-router-dom';
 
 interface Movie {
     id: string;
@@ -29,21 +31,22 @@ interface StreamingPlatformState {
     selectedIndex: number;
     allMovies: Movie[];
     selectedPlatformMovies: Movie[];
+    isLoading: boolean;
 }
 
 interface StreamingPlatformProps { }
 
 export class StreamingPlatform extends Component<StreamingPlatformProps, StreamingPlatformState> {
-    carouselRef = createRef<HTMLBRElement>();
-    cardWidth = 250;
+    carouselRef = createRef<HTMLDivElement>();
+    cardWidth = 350; // Updated to match doubled width from previous request
     visibleCards = 5;
     scrollAmount = this.cardWidth * this.visibleCards;
 
     images: string[] = [
         'https://images.ctfassets.net/y2ske730sjqp/5QQ9SVIdc1tmkqrtFnG9U1/de758bba0f65dcc1c6bc1f31f161003d/BrandAssets_Logos_02-NSymbol.jpg?w=940',
         'https://yt3.googleusercontent.com/BE8oLlRJ4gzMqNyS5c0OnkuVsGH3tCWN6Zo5XjkR-BiPZObABCuQ-NDq-8sroOEMtX4kPv-9rg=s900-c-k-c0x00ffffff-no-rj',
-        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSmPmYVyCxBcDrsDxutlkSxHZYA2auvv81jiA&s', 
-        'https://greenhouse.hulu.com/app/uploads/sites/12/2023/10/logo-gradient-3up.svg'
+        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSmPmYVyCxBcDrsDxutlkSxHZYA2auvv81jiA&s',
+        'https://greenhouse.hulu.com/app/uploads/sites/12/2023/10/logo-gradient-3up.svg',
     ];
 
     constructor(props: StreamingPlatformProps) {
@@ -54,19 +57,22 @@ export class StreamingPlatform extends Component<StreamingPlatformProps, Streami
             showControls: false,
             selectedIndex: 0,
             allMovies: [],
-            selectedPlatformMovies: []
+            selectedPlatformMovies: [],
+            isLoading: true,
         };
     }
 
     componentDidMount(): void {
         const fetchMovies = async () => {
+            this.setState({ isLoading: true });
             let response = await getEveryMovieAPI();
-            console.log("RESPONSE FROM API FETCH: ", response);
+            console.log("RESPONSE FROM API FETCHiiiii: ", response);
             this.setState({
                 allMovies: response,
-                selectedPlatformMovies: response.filter(movie => movie.streaming_platform === 'Netflix')
-            });   
-        }
+                selectedPlatformMovies: response.filter((movie: Movie) => movie.streaming_platform === 'Netflix'),
+                isLoading: false,
+            });
+        };
 
         fetchMovies();
 
@@ -91,10 +97,10 @@ export class StreamingPlatform extends Component<StreamingPlatformProps, Streami
 
             this.setState({
                 scrollPosition: newPosition,
-                maxScrollReached: newPosition >= maxScroll - 20
-            })
+                maxScrollReached: newPosition >= maxScroll - 20,
+            });
         }
-    }
+    };
 
     handleScroll = (direction: 'left' | 'right') => {
         const { scrollPosition } = this.state;
@@ -118,37 +124,62 @@ export class StreamingPlatform extends Component<StreamingPlatformProps, Streami
     };
 
     handleImageClick = (index: number) => {
-        this.setState({ selectedIndex: index });
+        this.setState({ selectedIndex: index, isLoading: true });
 
-        let filteredMovies: Movie[] = [];
-
-        filteredMovies = this.state.allMovies.filter((mov) => {
+        let filteredMovies: Movie[] = this.state.allMovies.filter((mov) => {
             if (index === 0) return mov.streaming_platform === 'Netflix';
             if (index === 1) return mov.streaming_platform === 'Amazon';
             if (index === 2) return mov.streaming_platform === 'HBO';
             if (index === 3) return mov.streaming_platform === 'Hulu';
             return false;
         });
-        
 
-        this.setState({ selectedPlatformMovies: filteredMovies });
+        this.setState({ selectedPlatformMovies: filteredMovies, isLoading: false });
+    };
+
+    renderShimmerCards = () => {
+        const shimmerItems = Array(8).fill(0);
+        return shimmerItems.map((_, index) => (
+            <Box className="carousel-item" key={`shimmer-${index}`}>
+                <MovieCardShimmer />
+            </Box>
+        ));
+    };
+
+    renderMovieCards = () => {
+        return this.state.selectedPlatformMovies.map((movie) => (
+            <Box className="carousel-item" key={movie.id}>
+                <MovieCard
+                    premium={movie.premium}
+                    id={movie.id}
+                    title={movie.title}
+                    posterImage={movie.poster_url}
+                    rating={Number(movie.rating)}
+                />
+            </Box>
+        ));
     };
 
     render() {
-        const { scrollPosition, showControls } = this.state;
+        const { scrollPosition, showControls, isLoading } = this.state;
 
         const canScrollLeft = scrollPosition > 0;
-        const canScrollRight = scrollPosition < (this.state.allMovies.length - this.visibleCards) * this.cardWidth;
+        const canScrollRight = scrollPosition < (this.state.selectedPlatformMovies.length - this.visibleCards) * this.cardWidth;
 
         return (
-            <Box className='main-container'>
+            <Box className="main-container">
                 <Box
                     className="netflix-card-carousel"
                     onMouseEnter={() => this.setState({ showControls: true })}
+                    onMouseLeave={() => this.setState({ showControls: false })}
                 >
-                    <h2 className="carousel-title">Explore What's Streaming <span className='title-icon'><ChevronRight className='next-icon' /></span></h2>
+                    <NavLink to={'/platforms'}>
+                        <h2 className="carousel-title">
+                            Explore What's Streaming <span className="title-icon"><ChevronRight className="next-icon" /></span>
+                        </h2>
+                    </NavLink>
 
-                    <Box className='platform-options'>
+                    <Box className="platform-options">
                         {this.images.map((src, index) => (
                             <img
                                 key={index}
@@ -172,17 +203,7 @@ export class StreamingPlatform extends Component<StreamingPlatformProps, Streami
                         )}
 
                         <Box className="carousel-track" ref={this.carouselRef}>
-                            {this.state.selectedPlatformMovies.map((movie) => (
-                                <Box className="carousel-item" key={movie.id}>
-                                    <MovieCard
-                                        premium={movie.premium}
-                                        id={movie.id}
-                                        title={movie.title}
-                                        posterImage={movie.poster_url}
-                                        rating={Number(movie.rating)}
-                                    />
-                                </Box>
-                            ))}
+                            {isLoading ? this.renderShimmerCards() : this.renderMovieCards()}
                         </Box>
 
                         {showControls && canScrollRight && (
@@ -197,7 +218,7 @@ export class StreamingPlatform extends Component<StreamingPlatformProps, Streami
                     </Box>
                 </Box>
             </Box>
-        )
+        );
     }
 }
 
