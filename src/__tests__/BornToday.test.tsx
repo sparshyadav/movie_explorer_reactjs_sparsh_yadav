@@ -3,7 +3,6 @@ import { render, screen, fireEvent, act } from '@testing-library/react';
 import BornToday from '../components/BornToday/BornToday';
 
 beforeAll(() => {
-  // Mock scrollTo globally if not defined
   if (!HTMLElement.prototype.scrollTo) {
     HTMLElement.prototype.scrollTo = function (options?: ScrollToOptions | number, y?: number) {
       if (typeof options === 'object') {
