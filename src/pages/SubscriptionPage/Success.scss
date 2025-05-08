@@ -1,0 +1,134 @@
+$primary-color: #ffc107; 
+$secondary-color: #000000; 
+$success-color: #4caf50; 
+$error-color: #f44336; 
+$text-color: #ffffff; 
+$dark-bg: #111111; 
+$border-radius: 8px;
+
+.success-page {
+  background-color: $secondary-color;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  
+  .success-container {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    
+    .success-card {
+      width: 100%;
+      max-width: 480px;
+      background-color: $dark-bg;
+      border-radius: $border-radius;
+      padding: 32px;
+      text-align: center;
+      box-shadow: 0 6px 24px rgba($primary-color, 0.15);
+      border: 1px solid rgba($primary-color, 0.2);
+      color: $text-color;
+      
+      .title {
+        color: $primary-color;
+        font-size: 24px;
+        font-weight: 600;
+        margin-bottom: 16px;
+      }
+      
+      .description {
+        color: rgba($text-color, 0.7);
+        margin-bottom: 24px;
+        line-height: 1.5;
+        
+        .plan-name {
+          display: inline;
+          color: $primary-color;
+          font-weight: 600;
+        }
+      }
+      
+      .action-button {
+        background-color: $primary-color;
+        color: $secondary-color;
+        border: none;
+        border-radius: $border-radius;
+        padding: 12px 24px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        width: 100%;
+        transition: all 0.3s ease;
+        
+        &:hover {
+          background-color: darken($primary-color, 10%);
+          transform: translateY(-2px);
+          box-shadow: 0 4px 8px rgba($primary-color, 0.3);
+        }
+      }
+      
+      .loading-state {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        
+        .spinner {
+          width: 48px;
+          height: 48px;
+          border: 4px solid rgba($primary-color, 0.3);
+          border-radius: 50%;
+          border-top-color: $primary-color;
+          animation: spin 1s linear infinite;
+          margin-bottom: 16px;
+        }
+        
+        @keyframes spin {
+          to {
+            transform: rotate(360deg);
+          }
+        }
+      }
+      
+      .error-state {
+        .error-message {
+          color: $error-color;
+          margin-bottom: 24px;
+        }
+      }
+      
+      .success-state {
+        .check-icon-container {
+          width: 64px;
+          height: 64px;
+          background-color: $success-color;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin: 0 auto 24px;
+          
+          .check-icon {
+            width: 36px;
+            height: 36px;
+            color: $text-color;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .success-container {
+    padding: 16px;
+    
+    .success-card {
+      padding: 24px;
+      
+      .title {
+        font-size: 20px;
+      }
+    }
+  }
+}

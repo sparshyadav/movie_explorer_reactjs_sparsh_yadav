@@ -1,5 +1,5 @@
-import React from 'react';
-import { NavLink, useNavigate } from "react-router-dom";
+import React, { useState } from 'react';
+import { useNavigate } from "react-router-dom";
 import {
   Box,
   Typography,
@@ -8,60 +8,63 @@ import {
   List,
   ListItem,
   ListItemText,
-  ListItemIcon
+  ListItemIcon,
 } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import CheckIcon from '@mui/icons-material/Check';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import './Subscription.scss';
-
-interface PlanFeature {
-  text: string;
-}
+import { createSubscription } from '../../API'; 
 
 interface Plan {
   title: string;
   price: string;
-  features: PlanFeature[];
+  features: string[];
   buttonText: string;
   variant: 'starter' | 'monthly' | 'yearly';
+  id: string; // Add this to map to backend subscription IDs
 }
 
 const plans: Plan[] = [
   {
-    title: 'Starter',
-    price: 'Free',
+    id: '1_day',
+    title: '1 Day Premium',
+    price: '$1.99',
     features: [
-      { text: 'Trailer access across all devices' },
-      { text: 'Security & browsing freedom' },
-      { text: 'Limited movie access' },
-      { text: '720p streaming' },
-      { text: 'Ads supported' },
+      'Full access to all movies',
+      'Unlimited streaming',
+      'HD quality',
+      'No ads',
     ],
     buttonText: 'Get started',
     variant: 'starter',
   },
   {
-    title: 'Basic',
-    price: '$199',
+    id: '1_months',
+    title: '7 Day Premium',
+    price: '$7.99',
     features: [
-      { text: 'Personal account, for daily use' },
-      { text: 'Unlimited access to all movies' },
-      { text: 'No ads, HD content' },
-      { text: '720p, 1080p & 4K streaming' },
-      { text: 'Lifetime access' },
+      'Full access to all movies',
+      'Unlimited streaming',
+      'HD & 4K quality',
+      'No ads',
+      'Offline downloads',
     ],
     buttonText: 'Get started',
     variant: 'monthly',
   },
   {
-    title: 'Premium',
-    price: '$499',
+    id: '3_months',
+    title: '1 Month Premium',
+    price: '$19.99',
     features: [
-      { text: '5 user accounts' },
-      { text: 'Unlimited access across all devices' },
-      { text: 'Exclusive admin & reporting features' },
-      { text: '720p, 1080p & 4K streaming' },
-      { text: 'Lifetime access' },
+      'Full access to all movies',
+      'Unlimited streaming',
+      'HD & 4K quality',
+      'No ads',
+      'Offline downloads',
+      'Priority customer support',
+      'Early access to new releases',
     ],
     buttonText: 'Get started',
     variant: 'yearly',
@@ -70,6 +73,52 @@ const plans: Plan[] = [
 
 const Subscription: React.FC = () => {
   const navigate = useNavigate();
+  const [selectedPlan, setSelectedPlan] = useState<string | null>(null);
+  const [isProcessing, setIsProcessing] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [showSuccess, setShowSuccess] = useState(false);
+
+  const handleSubscribe = async () => {
+    if (!selectedPlan) {
+      setError('Please select a plan.');
+      return;
+    }
+
+    setIsProcessing(true);
+    setError(null);
+
+    try {
+      const checkoutUrl = await createSubscription(selectedPlan);
+      if (checkoutUrl) {
+        window.location.href = checkoutUrl;
+      } else {
+        throw new Error('No checkout URL returned from server.');
+      }
+    } catch (err: any) {
+      setError(err.message || 'Failed to initiate subscription.');
+    } finally {
+      setIsProcessing(false);
+    }
+  };
+
+  if (showSuccess) {
+    return (
+      <Box className="subscription-page success-state">
+        <Container maxWidth="sm">
+          <Box className="success-card">
+            <CheckCircleIcon color="success" sx={{ fontSize: 64 }} />
+            <Typography variant="h4">Subscription Activated!</Typography>
+            <Typography>
+              Your {plans.find(p => p.id === selectedPlan)?.title} plan has been activated.
+            </Typography>
+            <Button variant="contained" onClick={() => navigate('/home')}>
+              Start Exploring
+            </Button>
+          </Box>
+        </Container>
+      </Box>
+    );
+  }
 
   return (
     <Box className="subscription-page">
@@ -78,7 +127,6 @@ const Subscription: React.FC = () => {
           <Typography variant="h2" className="main-title">
             Pay once, enjoy forever!
           </Typography>
-
           <Typography variant="subtitle1" className="subtitle">
             No recurring fees. Pay once and unlock a lifetime of usage
           </Typography>
@@ -88,7 +136,8 @@ const Subscription: React.FC = () => {
           {plans.map((plan, index) => (
             <Box
               key={index}
-              className={`plan-card ${plan.variant}`}
+              className={`plan-card ${plan.variant} ${selectedPlan === plan.id ? 'selected' : ''}`}
+              onClick={() => setSelectedPlan(plan.id)}
             >
               <Box className="plan-details">
                 <Typography variant="h4" className="plan-title">
@@ -97,54 +146,59 @@ const Subscription: React.FC = () => {
                 <Typography variant="h3" className="plan-price">
                   {plan.price}
                 </Typography>
-
                 <List className="features-list">
                   {plan.features.map((feature, i) => (
                     <ListItem key={i} className="feature-item">
                       <ListItemIcon className="feature-icon">
                         <CheckIcon />
                       </ListItemIcon>
-                      <ListItemText primary={feature.text} />
+                      <ListItemText primary={feature} />
                     </ListItem>
                   ))}
                 </List>
-              </Box>
 
-              <NavLink to={'/payment'}>
-                <Button
-                  variant="contained"
-                  className="plan-button"
-                >
-                  {plan.buttonText}
-                </Button>
-              </NavLink>
+              </Box>
+              <Button variant="contained" className="plan-button" onClick={handleSubscribe}>
+                {selectedPlan === plan.id ? 'Selected' : plan.buttonText}
+              </Button>
             </Box>
           ))}
         </Box>
 
-        {/* Footer Section */}
+        {/* {selectedPlan && (
+          <Box className="confirm-section">
+            <Typography variant="h5" gutterBottom>
+              Confirm Your Subscription
+            </Typography>
+            <Typography>
+              You selected the {plans.find(p => p.id === selectedPlan)?.title} plan.
+            </Typography>
+            {error && <Typography color="error">{error}</Typography>}
+            <Button
+              variant="contained"
+              disabled={isProcessing}
+              onClick={handleSubscribe}
+            >
+              {isProcessing ? <CircularProgress size={20} /> : 'Subscribe Now'}
+            </Button>
+          </Box>
+        )} */}
+
         <Box className="footer-section">
           <Typography variant="subtitle2" className="partners-label">
             In great company
           </Typography>
-
           <Typography variant="h6" className="partners-description">
             Our platform is the go-to movie service for successful and renowned brands
           </Typography>
-
           <Box className="partners-list">
-            <Typography variant="body1" className="partner">Shopify</Typography>
-            <Typography variant="body1" className="partner">Stripe</Typography>
-            <Typography variant="body1" className="partner">Cash App</Typography>
-            <Typography variant="body1" className="partner">Verizon</Typography>
+            <Typography className="partner">Shopify</Typography>
+            <Typography className="partner">Stripe</Typography>
+            <Typography className="partner">Cash App</Typography>
+            <Typography className="partner">Verizon</Typography>
           </Box>
-
           <Box className="back-button-container">
-            <Button
-              onClick={() => navigate("/")}
-              startIcon={<ArrowBackIcon />}
-              className="back-button"
-            >
+            <Button onClick={() => navigate("/")} startIcon={<ArrowBackIcon />}>
               Back to Home
             </Button>
           </Box>
@@ -155,8 +209,3 @@ const Subscription: React.FC = () => {
 };
 
 export default Subscription;
-
-
-
-
-

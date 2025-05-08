@@ -17,6 +17,8 @@ import { onMessage } from 'firebase/messaging';
 import toast from 'react-hot-toast';
 import { useEffect } from 'react';
 import AllPlatformPage from './pages/AllPlatformPage/AllPlatformPage';
+import PremiumMoviesPage from './pages/PremiumMoviesPage/PremiumMoviesPage';
+import Success from './pages/SubscriptionPage/Success';
 
 function App() {
   useEffect(() => {
@@ -45,6 +47,8 @@ function App() {
           <Route path='/search' element={<SearchResultPage />} />
           <Route path='/subscribe' element={<SubscriptionPage />} />
           <Route path='/platforms' element={<AllPlatformPage />} />
+          <Route path='/premium-movies' element={<PremiumMoviesPage />} />
+          <Route path='/success' element={<Success />} />
         </Routes>
       </Elements>
     </Router>

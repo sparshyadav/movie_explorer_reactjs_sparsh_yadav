@@ -35,6 +35,13 @@ const MovieCard: React.FC<ShowCardProps> = ({
     };
 
     const handleDetails = () => {
+        const userPlan=localStorage.getItem('userPlan');
+
+        if(userPlan!=='premium' && premium){
+            navigate('/subscribe');
+            return;
+        }
+
         navigate(`/movie-details/${id}`)
         scrollToTop();
     }
