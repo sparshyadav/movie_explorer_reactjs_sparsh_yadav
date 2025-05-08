@@ -128,7 +128,6 @@ class Login extends React.Component<Props> {
         }
     };
 
-
     render() {
         const { showPassword, formFields, errors } = this.state;
 
