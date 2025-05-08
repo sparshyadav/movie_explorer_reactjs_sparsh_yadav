@@ -71,30 +71,6 @@ export const getAllMoviesAPI = async (page: number) => {
 
 export const getEveryMovieAPI = async () => {
     try {
-        // let allMovies: any[] = [];
-        // let currentPage = 1;
-        // let hasMorePages = true;
-
-        // while (hasMorePages) {
-        //     const response = await axios.get(`${BASE_URL}/api/v1/movies?page=${currentPage}`);
-        //     console.log(`Response from a single Page ${currentPage}: `, response);
-
-        //     if (response?.data?.movies?.length === 10) {
-        //         allMovies = [...allMovies, ...response.data.movies];
-        //         currentPage++;
-        //     }
-        //     else if (response.data.movies.length < 10) {
-        //         allMovies = [...allMovies, ...response.data.movies];
-        //         hasMorePages = false;
-        //     }
-        //     else {
-        //         hasMorePages = false;
-        //     }
-
-        //     if (currentPage > 100) {
-        //         hasMorePages = false;
-        //     }
-        // }
         const response = await axios.get(`${BASE_URL}/api/v1/movies?per_page=100`);
         console.log("RESPONSEeeeeeeeee: ", response.data);
 

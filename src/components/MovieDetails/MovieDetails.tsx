@@ -105,7 +105,7 @@ const MovieDetails: React.FC = () => {
                                     <div className="movie-meta">
                                         <span>{movie.release_year}</span>
                                         <span className="separator">•</span>
-                                        <span>{movie.duration}</span>
+                                        <span>{movie.duration} mins</span>
                                     </div>
                                 </div>
 
