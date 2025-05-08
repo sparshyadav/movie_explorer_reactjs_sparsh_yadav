@@ -51,16 +51,19 @@ export const signupAPI = async (payload: { email: string, password: string, name
     }
 }
 
-export const signoutAPI = async (token: string): Promise<any> => {
+export const signoutAPI = async (): Promise<any> => {
+    const authToken = Cookies.get('authToken');
     try {
-        const response = await axios.post(`${BASE_URL}/users/sign_out`, { user: { email, password } },
+        const response = await axios.delete(`${BASE_URL}/users/sign_out`,
             {
                 headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
+                    'Authorization': `Bearer ${authToken}`
                 }
             }
         );
+        
+        Cookies.remove('authToken');
+        localStorage.removeItem('role');
 
         return response;
     }

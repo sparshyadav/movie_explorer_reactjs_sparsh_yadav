@@ -24,18 +24,18 @@ interface WhatToWatchState {
     isLoading: boolean;
 }
 
-interface WhatToWatchProps {
-    movies: Movie[];
-    fetchMovies: () => void;
-}
+// interface WhatToWatchProps {
+//     movies: Movie[];
+//     fetchMovies: () => void;
+// }
 
-class WhatToWatch extends Component<WhatToWatchProps, WhatToWatchState> {
+class WhatToWatch extends Component<{}, WhatToWatchState> {
     carouselRef = createRef<HTMLDivElement>();
     cardWidth = 250;
     visibleCards = 5;
     scrollAmount = this.cardWidth * this.visibleCards;
 
-    constructor(props: WhatToWatchProps) {
+    constructor(props: object) {
         super(props);
         this.state = {
             scrollPosition: 0,

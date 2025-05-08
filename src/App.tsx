@@ -16,7 +16,6 @@ import { generateToken, messaging } from './Notifications/firebase';
 import { onMessage } from 'firebase/messaging';
 import toast from 'react-hot-toast';
 import { useEffect } from 'react';
-import PlatformPageList from './components/PlatformPageList/PlatformPageList';
 import AllPlatformPage from './pages/AllPlatformPage/AllPlatformPage';
 
 function App() {

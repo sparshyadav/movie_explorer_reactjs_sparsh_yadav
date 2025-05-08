@@ -31,10 +31,10 @@ type Movie = {
     banner_url: string;
 }
 
-type Props = {
-    movies: Movie[];
-    fetchMovies: () => void;
-}
+// type Props = {
+//     movies: Movie[];
+//     fetchMovies: () => void;
+// }
 
 type State = {
     allMovies: Movie[];
@@ -88,8 +88,8 @@ function PrevArrow({ className, style, onClick }: ArrowProps) {
     );
 }
 
-export class MainCarousal extends Component<Props, State> {
-    constructor(props: Props) {
+export class MainCarousal extends Component<{}, State> {
+    constructor(props: object) {
         super(props);
 
         this.state = {

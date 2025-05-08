@@ -11,7 +11,9 @@ import {
 } from '@mui/material';
 import Logout from '@mui/icons-material/Logout';
 import PersonAdd from '@mui/icons-material/PersonAdd';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { signoutAPI } from '../API';
+import Cookies from 'js-cookie';
 
 type Props = {
   role: 'admin' | 'user';
@@ -22,6 +24,7 @@ const ProfileMenu: React.FC<Props> = () => {
   const open = Boolean(anchorEl);
   const navigate = useNavigate();
   const role = localStorage.getItem("role");
+  const isLoggedIn = !!Cookies.get('authToken');
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -34,6 +37,7 @@ const ProfileMenu: React.FC<Props> = () => {
   const handleLogout = () => {
     handleClose();
     localStorage.clear();
+    signoutAPI();
     navigate('/login');
   };
 
@@ -100,9 +104,9 @@ const ProfileMenu: React.FC<Props> = () => {
         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
-          <MenuItem onClick={handleProfile}>
-            <Avatar /> Profile
-          </MenuItem>
+        <MenuItem onClick={handleProfile}>
+          <Avatar /> Profile
+        </MenuItem>
 
         {role === 'supervisor' && (
           <MenuItem onClick={handleCreateMovie}>
@@ -119,7 +123,7 @@ const ProfileMenu: React.FC<Props> = () => {
           <ListItemIcon>
             <Logout fontSize="small" />
           </ListItemIcon>
-          Logout
+          {isLoggedIn? "Logout" : "Login"}
         </MenuItem>
       </Menu>
     </>
