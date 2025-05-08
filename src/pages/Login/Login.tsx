@@ -88,7 +88,6 @@ class Login extends React.Component<Props> {
         if (isValid) {
             this.setState({ isLoading: true });
             const response = await loginAPI({ email, password });
-            console.log("Response in LOGIN: ", response);
 
             if (response && response.data) {
                 this.props.userContext.setUser({
@@ -110,22 +109,32 @@ class Login extends React.Component<Props> {
 
             localStorage.setItem("role", response?.data.role);
 
-            this.props.navigate('/')
-
             if (response?.status === 200) {
+                this.props.navigate('/')
                 toast.success("Login Successfull");
             }
 
-            this.setState({ isLoading: false });
+            if (response === undefined) {
+                this.setState({ isLoading: false });
+                this.state.formFields.email = '';
+                this.state.formFields.password = '';
+            }
         }
     };
+
+    handleKeyDown = (e: React.KeyboardEvent) => {
+        if (e.key === 'Enter') {
+            this.handleSubmit();
+        }
+    };
+
 
     render() {
         const { showPassword, formFields, errors } = this.state;
 
         return (
             <Box className="login-container">
-                <Box className="login-card">
+                <Box className="login-card" onKeyDown={this.handleKeyDown}>
                     <h1 className="login-title">Login</h1>
 
                     <Box className="form-group">

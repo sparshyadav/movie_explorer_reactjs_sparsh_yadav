@@ -4,7 +4,7 @@ import Cookies from 'js-cookie';
 
 const BASE_URL = 'https://movie-explorer-ror-aalekh-2ewg.onrender.com';
 
-export const loginAPI = async (payload: { email: string, password: string }) => {
+export const loginAPI = async (payload: { email: string, password: string }): Promise<any> => {
     const { email, password } = payload;
 
     try {
@@ -19,13 +19,13 @@ export const loginAPI = async (payload: { email: string, password: string }) => 
 
         return response;
     }
-    catch (error: { response: { data: { errors: string } } }) {
+    catch (error: any) {
         console.log("Error Occurred while Signing In: ", error);
-        toast.error(error?.response?.data?.errors);
+        toast.error(error?.response?.data?.error);
     }
 }
 
-export const signupAPI = async (payload: { email: string, password: string, name: string, mobile_number: string }) => {
+export const signupAPI = async (payload: { email: string, password: string, name: string, mobile_number: string }): Promise<any> => {
     const { email, password, name, mobile_number } = payload;
 
     try {
@@ -40,7 +40,7 @@ export const signupAPI = async (payload: { email: string, password: string, name
 
         return response;
     }
-    catch (error: { response: { data: { errors: string } } }) {
+    catch (error: any) {
         console.log("Error Occurred while Signing Up: ", error);
         if (error?.response?.data?.errors.length > 1) {
             toast.error(error?.response?.data?.errors[0]);
@@ -51,6 +51,25 @@ export const signupAPI = async (payload: { email: string, password: string, name
     }
 }
 
+export const signoutAPI = async (token: string): Promise<any> => {
+    try {
+        const response = await axios.post(`${BASE_URL}/users/sign_out`, { user: { email, password } },
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                }
+            }
+        );
+
+        return response;
+    }
+    catch (error: any) {
+        console.log("Error Occurred while Signing In: ", error);
+        toast.error(error?.response?.data?.error);
+    }
+}
+
 export const getAllMoviesAPI = async (page: number) => {
     try {
         const response = await axios.get(`${BASE_URL}/api/v1/movies?page=${page}`);
@@ -58,7 +77,7 @@ export const getAllMoviesAPI = async (page: number) => {
 
         return response.data;
     }
-    catch (error: { response: { data: { errors: string } } }) {
+    catch (error: any) {
         console.log("Error Occurred while Getting Movies: ", error);
         if (error?.response?.data?.errors.length > 1) {
             toast.error(error?.response?.data?.errors[0]);
@@ -76,7 +95,7 @@ export const getEveryMovieAPI = async () => {
 
         return response.data;
     }
-    catch (error: { response: { data: { errors: string } } }) {
+    catch (error: any) {
         console.log("Error Occurred while Getting Movies: ", error);
         if (error?.response?.data?.errors.length > 1) {
             toast.error(error?.response?.data?.errors[0]);
@@ -113,7 +132,7 @@ export const addMovieAdminAPI = async (payload: {
 
         return response;
     }
-    catch (error: { response: { data: { errors: string } } }) {
+    catch (error: any) {
         console.log("Error Occurred while Adding Movies via Admin: ", error);
         if (error?.response?.data?.errors.length > 1) {
             toast.error(error?.response?.data?.errors[0]);
@@ -136,7 +155,7 @@ export const movieDetailsAPI = async (id: number) => {
         console.log("Response from API: ", response);
         return response.data;
     }
-    catch (error: { response: { data: { errors: string } } }) {
+    catch (error: any) {
         console.log("Error Occurred Fetching Movie Details ", error);
         if (error?.response?.data?.errors.length > 1) {
             toast.error(error?.response?.data?.errors[0]);

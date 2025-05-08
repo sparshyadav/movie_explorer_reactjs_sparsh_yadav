@@ -68,8 +68,8 @@ export class StreamingPlatform extends Component<StreamingPlatformProps, Streami
             let response = await getEveryMovieAPI();
             console.log("RESPONSE FROM API FETCHiiiii: ", response);
             this.setState({
-                allMovies: response,
-                selectedPlatformMovies: response.filter((movie: Movie) => movie.streaming_platform === 'Netflix'),
+                allMovies: response.movies,
+                selectedPlatformMovies: response.movies.filter((movie: Movie) => movie.streaming_platform === 'Netflix'),
                 isLoading: false,
             });
         };

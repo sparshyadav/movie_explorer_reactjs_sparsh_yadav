@@ -140,7 +140,7 @@ class WhatToWatch extends Component<WhatToWatchProps, WhatToWatchState> {
                     onMouseLeave={() => this.setState({ showControls: false })}
                 >
                     <NavLink to={'/all-movies'}>
-                        <h2 className="carousel-title">
+                        <h2 className="carousel-title main-title">
                             What to Watch
                             <span className='title-icon'>
                                 <ChevronRight className='next-icon' />

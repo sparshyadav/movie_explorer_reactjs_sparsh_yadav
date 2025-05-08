@@ -46,7 +46,6 @@ function App() {
           <Route path='/search' element={<SearchResultPage />} />
           <Route path='/subscribe' element={<SubscriptionPage />} />
           <Route path='/platforms' element={<AllPlatformPage />} />
-          {/* <Route path='/payment' element={<Payment />} /> */}
         </Routes>
       </Elements>
     </Router>
