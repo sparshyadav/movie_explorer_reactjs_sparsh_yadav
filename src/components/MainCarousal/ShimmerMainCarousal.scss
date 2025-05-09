@@ -1,87 +1,3 @@
-// .shimmer-carousel-wrapper {
-//     position: relative;
-//     height: 500px;
-//     background-color: #111;
-//     padding: 0 60px;
-//     display: flex;
-//     align-items: flex-end;
-//     overflow: hidden;
-//   }
-  
-//   .shimmer-banner {
-//     position: absolute;
-//     top: 0;
-//     left: 0;
-//     right: 0;
-//     height: 100%;
-//     background: linear-gradient(90deg, #222 25%, #333 50%, #222 75%);
-//     background-size: 1000px 100%;
-//     animation: shimmer 1.5s infinite;
-//     z-index: 1;
-//   }
-  
-//   .shimmer-content {
-//     display: flex;
-//     gap: 30px;
-//     z-index: 2;
-//     position: relative;
-//     margin-bottom: 40px;
-//   }
-  
-//   .shimmer-poster {
-//     width: 200px;
-//     height: 300px;
-//     border-radius: 8px;
-//     background: #333;
-//     animation: shimmer 1.5s infinite;
-//     background-image: linear-gradient(90deg, #333 25%, #444 50%, #333 75%);
-//     background-size: 1000px 100%;
-//   }
-  
-//   .shimmer-info {
-//     display: flex;
-//     flex-direction: column;
-//     justify-content: center;
-//   }
-  
-//   .shimmer-title,
-//   .shimmer-description {
-//     height: 20px;
-//     background: #333;
-//     animation: shimmer 1.5s infinite;
-//     margin-bottom: 10px;
-//     border-radius: 4px;
-//     background-image: linear-gradient(90deg, #333 25%, #444 50%, #333 75%);
-//     background-size: 1000px 100%;
-//   }
-  
-//   .shimmer-title {
-//     width: 60%;
-//     height: 28px;
-//   }
-  
-//   .shimmer-description {
-//     width: 90%;
-//     height: 18px;
-//   }
-  
-//   .shimmer-description.short {
-//     width: 70%;
-//   }
-  
-//   @keyframes shimmer {
-//     0% {
-//       background-position: -1000px 0;
-//     }
-//     100% {
-//       background-position: 1000px 0;
-//     }
-//   }
-  
-
-
-
-
 .shimmer-carousel-wrapper {
     position: relative;
     height: 500px;
@@ -142,7 +58,7 @@
 
 .shimmer-title {
     width: 60%;
-    height: 28px; /* Increased height for better visibility */
+    height: 28px; 
 }
 
 .shimmer-description {

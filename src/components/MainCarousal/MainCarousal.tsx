@@ -31,11 +31,6 @@ type Movie = {
     banner_url: string;
 }
 
-// type Props = {
-//     movies: Movie[];
-//     fetchMovies: () => void;
-// }
-
 type State = {
     allMovies: Movie[];
     isSmallScreen: boolean;
@@ -99,7 +94,6 @@ export class MainCarousal extends Component<{}, State> {
         };
     }
 
-
     truncateDescription(description: string) {
         if (this.state.isSmallScreen && description.length > 50) {
             return description.slice(0, 50) + "...";
@@ -117,7 +111,6 @@ export class MainCarousal extends Component<{}, State> {
     componentDidMount() {
         const fetchMovies = async () => {
             let response = await getAllMoviesAPI(1);
-            console.log("RESPONSE FROM API FETCH: ", response);
             this.setState({
                 allMovies: response.movies, loading: false
             });
