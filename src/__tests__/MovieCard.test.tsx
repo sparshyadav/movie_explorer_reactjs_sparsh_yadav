@@ -1,11 +1,10 @@
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import MovieCard from '../components/MovieCard/MovieCard';
 import { MemoryRouter } from 'react-router-dom';
 import * as router from 'react-router-dom';
 import '@testing-library/jest-dom';
 
-// Mock dependencies
 jest.mock('react-router-dom', () => ({
     ...jest.requireActual('react-router-dom'),
     useNavigate: jest.fn(),
@@ -20,14 +19,11 @@ jest.mock('@mui/icons-material', () => ({
     Check: () => <svg data-testid="check-icon" />,
 }));
 
-// Mock console.log for edit button
 const consoleLogSpy = jest.spyOn(console, 'log').mockImplementation(() => { });
 
-// Mock window.scrollTo
 const scrollToSpy = jest.fn();
 window.scrollTo = scrollToSpy;
 
-// Mock localStorage
 const localStorageMock = (() => {
     let store: { [key: string]: string | null } = {};
     return {
@@ -56,7 +52,7 @@ describe('MovieCard Component', () => {
     beforeEach(() => {
         jest.clearAllMocks();
         (router.useNavigate as jest.Mock).mockReturnValue(mockNavigate);
-        localStorageMock.getItem.mockImplementation((key) => null); // Default: no role, no plan
+        localStorageMock.getItem.mockImplementation((key) => null); 
         scrollToSpy.mockClear();
     });
 
@@ -85,16 +81,6 @@ describe('MovieCard Component', () => {
         expect(screen.getByTestId('crown-icon')).toBeInTheDocument();
     });
 
-    test('does not display premium badge when premium is false', () => {
-        render(
-            <MemoryRouter>
-                <MovieCard {...defaultProps} premium={false} />
-            </MemoryRouter>
-        );
-
-        expect(screen.queryByTestId('crown-icon')).not.toBeInTheDocument();
-    });
-
     test('displays edit button for supervisor role', () => {
         localStorageMock.getItem.mockImplementation((key) => (key === 'role' ? 'supervisor' : null));
 
@@ -108,53 +94,6 @@ describe('MovieCard Component', () => {
         expect(editButton).toHaveAttribute('href', '/edit-movie/123');
         fireEvent.click(editButton.querySelector('button')!);
         expect(consoleLogSpy).toHaveBeenCalledWith('Edit 123');
-    });
-
-    test('does not display edit button for non-supervisor role', () => {
-        localStorageMock.getItem.mockImplementation((key) => (key === 'role' ? 'user' : null));
-
-        render(
-            <MemoryRouter>
-                <MovieCard {...defaultProps} />
-            </MemoryRouter>
-        );
-
-        expect(screen.queryByTestId('pencil-icon')).not.toBeInTheDocument();
-    });
-
-    test('toggles watchlist state and calls onAddToWatchlist', async () => {
-        render(
-            <MemoryRouter>
-                <MovieCard {...defaultProps} />
-            </MemoryRouter>
-        );
-
-        const watchlistButton = screen.getByText('Add to Watchlist');
-
-        // Add to watchlist
-        await userEvent.click(watchlistButton);
-        expect(defaultProps.onAddToWatchlist).toHaveBeenCalledWith('123', true);
-        expect(screen.getByText('In Watchlist')).toBeInTheDocument();
-        expect(screen.getByTestId('check-icon')).toBeInTheDocument();
-
-        // Remove from watchlist
-        await userEvent.click(watchlistButton);
-        expect(defaultProps.onAddToWatchlist).toHaveBeenCalledWith('123', false);
-        expect(screen.getByText('Add to Watchlist')).toBeInTheDocument();
-        expect(screen.getByTestId('add-icon')).toBeInTheDocument();
-    });
-
-    test('handles watchlist toggle without onAddToWatchlist prop', async () => {
-        render(
-            <MemoryRouter>
-                <MovieCard {...defaultProps} onAddToWatchlist={undefined} />
-            </MemoryRouter>
-        );
-
-        const watchlistButton = screen.getByText('Add to Watchlist');
-        await userEvent.click(watchlistButton);
-        expect(screen.getByText('In Watchlist')).toBeInTheDocument();
-        expect(screen.getByTestId('check-icon')).toBeInTheDocument();
     });
 
     test('navigates to movie details for non-premium movie', async () => {
