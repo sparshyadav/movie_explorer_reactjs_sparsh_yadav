@@ -149,14 +149,17 @@ export const addMovieAdminAPI = async (payload: {
 
 export const movieDetailsAPI = async (id: number) => {
     try {
+        const token = Cookies.get('authToken');
+
         const response = await axios.get(`${BASE_URL}/api/v1/movies/${id}`, {
             headers: {
                 'Content-Type': 'application/json',
-                'Accept': 'application/json'
+                'Accept': 'application/json',
+                'Authorization': `Bearer ${token}`
             }
         });
 
-        console.log("Response from API: ", response);
+        console.log("Response from API GET MOVIE DETAILS: ", response);
         return response.data;
     }
     catch (error: any) {

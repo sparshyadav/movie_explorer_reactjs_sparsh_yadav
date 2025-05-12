@@ -51,6 +51,10 @@ const ProfileMenu: React.FC<Props> = () => {
     navigate('/create-movie');
   };
 
+  const handleLogin=()=>{
+    navigate('/login');
+  }
+
   return (
     <>
       <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
@@ -119,12 +123,21 @@ const ProfileMenu: React.FC<Props> = () => {
 
         <Divider />
 
-        <MenuItem onClick={handleLogout}>
-          <ListItemIcon>
-            <Logout fontSize="small" />
-          </ListItemIcon>
-          {isLoggedIn? "Logout" : "Login"}
-        </MenuItem>
+        {isLoggedIn ? (
+          <MenuItem onClick={handleLogout}>
+            <ListItemIcon>
+              <Logout fontSize="small" />
+            </ListItemIcon>
+            Logout
+          </MenuItem>
+        ) : (
+          <MenuItem onClick={handleLogin}>
+            <ListItemIcon>
+              <Logout fontSize="small" />
+            </ListItemIcon>
+            Login
+          </MenuItem>
+        )}
       </Menu>
     </>
   );
