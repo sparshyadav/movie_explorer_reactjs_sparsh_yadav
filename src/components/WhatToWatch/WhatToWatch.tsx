@@ -44,7 +44,6 @@ class WhatToWatch extends Component<{}, WhatToWatchState> {
         const fetchMovies = async () => {
             this.setState({ isLoading: true });
             let response = await getAllMoviesAPI(2);
-            console.log("RESPONSE FROM API FETCH: ", response);
             this.setState({
                 allMovies: response.movies,
                 isLoading: false

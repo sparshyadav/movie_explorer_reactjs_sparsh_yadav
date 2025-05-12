@@ -43,7 +43,6 @@ const PlatformPageList: React.FC = () => {
             try {
                 setLoading(true);
                 const response = await getEveryMovieAPI();
-                console.log("RESPONSE BY PLATFORM: ", response);
                 const moviesFromAPI = response?.movies || [];
                 setAllMovies(moviesFromAPI);
 

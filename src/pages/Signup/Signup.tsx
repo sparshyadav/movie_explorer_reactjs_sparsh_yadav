@@ -117,7 +117,6 @@ class Signup extends React.Component<Props> {
         if (isValid) {
             this.setState({ isLoading: true });
             const response = await signupAPI({ name: username, email, password, mobile_number: phoneNumber });
-            console.log("Response in Signup: ", response);
 
             if (response?.status === 201) {
                 toast.success("Sign Up Successfull");

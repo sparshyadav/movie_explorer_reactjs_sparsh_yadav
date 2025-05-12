@@ -52,7 +52,6 @@ const MovieDetails: React.FC = () => {
             if (!id) return;
             try {
                 const response = await movieDetailsAPI(Number(id));
-                console.log("RESPONSE IN THE DETAILS COMPONENT: ", response);
                 setMovie(response);
 
                 if (response.streaming_platform in streaming_platform_url) {

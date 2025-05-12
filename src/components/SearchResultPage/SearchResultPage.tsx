@@ -34,7 +34,6 @@ function SearchResultPage() {
 
     const handleFilter = async (genre: string) => {
         let response = await getMoviesByGenre(genre, 1);
-        console.log("RESPONSE FOR GENRE: ", response);
         setSearchedMovies(response.movies);
     }
     
@@ -47,7 +46,6 @@ function SearchResultPage() {
             if (searchQuery.trim() !== '') {
                 const response = await searchMovieAPI(1, searchQuery);
                 setSearchedMovies(response.movies);
-                console.log('Debounced Search Result:', response);
             }
         }, 2500); 
     

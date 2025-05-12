@@ -116,8 +116,6 @@ class AddMovie extends Component<AddMovieProps, MovieFormState> {
         payload.append("movie[streaming_platform]", this.state.streaming_platform);
         payload.append("movie[rating]", this.state.rating);
         payload.append("movie[premium]", String(this.state.premium))
-        // payload.append("movie[poster]", this.state.poster);
-        // payload.append("movie[banner]", this.state.banner);
 
         if (this.state.poster) {
             payload.append("movie[poster]", this.state.poster);
@@ -128,8 +126,7 @@ class AddMovie extends Component<AddMovieProps, MovieFormState> {
 
 
         try {
-            const response = await addMovieAdminAPI(payload);
-            console.log("RESPONSE IN AMDIN PANEL: ", response);
+            await addMovieAdminAPI(payload);
 
             this.setState({
                 isSubmitting: false,
@@ -167,14 +164,12 @@ class AddMovie extends Component<AddMovieProps, MovieFormState> {
 
     componentDidMount(): void {
         const { id } = this.props;
-        console.log("ID OF MOVIE TO EDIT: ", id);
 
         if (id !== undefined) {
             const fetchMovieDetails = async () => {
                 if (!id) return;
                 try {
                     const response = await movieDetailsAPI(Number(id));
-                    console.log("RESPNSE TO EDIT MOVIE: ", response);
 
                     this.setState({
                         title: response.title,
@@ -215,8 +210,6 @@ class AddMovie extends Component<AddMovieProps, MovieFormState> {
         payload.append("movie[streaming_platform]", this.state.streaming_platform);
         payload.append("movie[rating]", this.state.rating);
         payload.append("movie[premium]", String(this.state.premium))
-        // payload.append("movie[poster]", this.state.poster);
-        // payload.append("movie[banner]", this.state.banner);
 
         if (this.state.poster) {
             payload.append("movie[poster]", this.state.poster);
@@ -228,8 +221,7 @@ class AddMovie extends Component<AddMovieProps, MovieFormState> {
         try {
             const { id } = this.props;
             if(!id) return;
-            const response = await updateMovie(Number(id), payload);
-            console.log("RESPONSE OF EDIT MOVIE: ", response);
+            await updateMovie(Number(id), payload);
 
             this.setState({
                 isSubmitting: false,
@@ -264,10 +256,10 @@ class AddMovie extends Component<AddMovieProps, MovieFormState> {
         this.setState({ isDeleting: true });
 
         const { id } = this.props;
-        const response = await deleteMovie(Number(id));
-        console.log("RESPONSE OF EDIT MOVIE: ", response);
+        await deleteMovie(Number(id));
 
         this.setState({ isDeleting: false });
+        
     }
 
     render() {

@@ -18,10 +18,8 @@ export const messaging = getMessaging(app);
 export const generateToken = async () => {
     try {
         const registration = await navigator.serviceWorker.register('/firebase-messaging-sw.js');
-        console.log("Service Worker registered:", registration);
 
         const permission = await Notification.requestPermission();
-        console.log("Notification permission:", permission);
         if (permission !== "granted") {
             console.warn('Notification permission not granted:', permission);
             return null;
@@ -39,7 +37,6 @@ export const generateToken = async () => {
             return null;
         }
 
-        console.log("New FCM Token:", token);
         sendTokenToBackend(token);
         toggleNotifications();
 
@@ -55,10 +52,8 @@ export const monitorToken = async () => {
         const vapidKey = "BB-kLe4vRvnBrHpgtnGuaVLdXTLRKbxJMmX3Ja7Tw92tW9NDKoGzQW1WXZDOII2ObL_bjPzBQvLOL9L6PnkbYxw";
         const token = await getToken(messaging, { vapidKey }).catch(async (error) => {
             if (error.code === 'messaging/token-unsubscribed' || error.code === 'messaging/invalid-token') {
-                console.log('Token invalid or unsubscribed, generating new token');
                 await deleteToken(messaging).catch(() => console.log('No token to delete'));
                 const newToken = await getToken(messaging, { vapidKey });
-                console.log('New FCM Token (refreshed):', newToken);
                 return newToken;
             }
             throw error;
@@ -68,7 +63,6 @@ export const monitorToken = async () => {
                 console.warn("Monitored token appears invalid");
                 return null;
             }
-            console.log('Token validated:', token);
         }
         return token;
     } catch (error) {

@@ -77,7 +77,6 @@ export const signoutAPI = async (): Promise<any> => {
 export const getAllMoviesAPI = async (page: number) => {
     try {
         const response = await axios.get(`${BASE_URL}/api/v1/movies?page=${page}`);
-        console.log("RESPONSE: ", response);
 
         return response.data;
     }
@@ -95,7 +94,6 @@ export const getAllMoviesAPI = async (page: number) => {
 export const getEveryMovieAPI = async () => {
     try {
         const response = await axios.get(`${BASE_URL}/api/v1/movies?per_page=100`);
-        console.log("RESPONSEeeeeeeeee: ", response.data);
 
         return response.data;
     }
@@ -114,7 +112,6 @@ export const getEveryMovieAPI = async () => {
 export const addMovieAdminAPI = async (payload: FormData) => {
     try {
         const token = Cookies.get('authToken');
-        console.log("TOKEN: ", token);
         const response = await axios.post(`${BASE_URL}/api/v1/movies`, payload, {
             headers: {
                 'Authorization': `Bearer ${token}`
@@ -146,7 +143,6 @@ export const movieDetailsAPI = async (id: number) => {
             }
         });
 
-        console.log("Response from API GET MOVIE DETAILS: ", response);
         return response.data;
     }
     catch (error: any) {
@@ -183,7 +179,6 @@ export const getMoviesByGenre = async (genre: string, page: number = 1): Promise
             },
         };
 
-        console.log(`Fetched movies for genre ${genre}, page ${page}:`, movieData);
         return movieData;
     } catch (error: any) {
         console.error(`Error fetching movies for genre ${genre}, page ${page}:`, error.message);
@@ -209,8 +204,6 @@ export const searchMovieAPI = async (page: number = 1, title: string, genre?: st
         params.genre = genre;
     }
 
-    console.log("PARAMS: ", params);
-
     try {
         const response = await axios.get(`${BASE_URL}/api/v1/movies`, {
             params,
@@ -230,7 +223,6 @@ export const searchMovieAPI = async (page: number = 1, title: string, genre?: st
             },
         };
 
-        console.log(`Fetched movies for genre ${genre}, page ${page}:`, movieData);
         return movieData;
     } catch (error: any) {
         console.error(`Error fetching movies for genre ${genre}, page ${page}:`, error.message);
@@ -249,7 +241,6 @@ export const searchMovieAPI = async (page: number = 1, title: string, genre?: st
 export const updateMovie = async (id: number, payload: FormData) => {
     try {
         const token = Cookies.get('authToken');
-        console.log("Retrieved token:", token);
 
         if (!token) {
             toast.error("You need to sign in first.");
@@ -264,7 +255,6 @@ export const updateMovie = async (id: number, payload: FormData) => {
             },
         });
 
-        console.log("RESPONSE API: ", response);
         const movie = response.status;
         return movie;
     } catch (error: any) {
@@ -278,7 +268,6 @@ export const updateMovie = async (id: number, payload: FormData) => {
 export const deleteMovie = async (id: number): Promise<boolean> => {
     try {
         const token = Cookies.get('authToken');
-        console.log("Retrieved token:", token);
         if (!token) {
             toast.error("You need to sign in first.");
             throw new Error("No authentication token found");
@@ -291,7 +280,6 @@ export const deleteMovie = async (id: number): Promise<boolean> => {
             },
         });
 
-        console.log(`Movie with ID ${id} deleted successfully`);
         toast.success("Movie deleted successfully!");
         return true;
     } catch (error: any) {
@@ -314,9 +302,6 @@ export const sendTokenToBackend = async (token: string): Promise<any> => {
             throw new Error('No authentication token found in user data.');
         }
 
-        console.log('Sending FCM token to backend:', token);
-        console.log('Using auth token:', authToken);
-
         const response = await fetch('https://movie-explorer-ror-aalekh-2ewg.onrender.com/api/v1/update_device_token', {
             method: 'POST',
             headers: {
@@ -332,7 +317,6 @@ export const sendTokenToBackend = async (token: string): Promise<any> => {
         }
 
         const data = await response.json();
-        console.log('Device token sent to backend successfully:', data);
         return data;
     } catch (error) {
         console.error('Error sending device token to backend:', error);
@@ -351,7 +335,6 @@ export const toggleNotifications = async () => {
                 'Authorization': `Bearer ${authToken}`,
             }
         });
-        console.log("RESPONSE FOR NOTIFICATIONS: ", response);
     }
     catch (error) {
         console.error('Error Accepting Notifications:', error);
@@ -367,7 +350,6 @@ export const toggleNotifications = async () => {
 export const createSubscription = async (planType: string): Promise<string> => {
     try {
         const token = Cookies.get('authToken');
-        console.log("Retrieved token:", token);
         if (!token) {
             throw new Error("No authentication token found");
         }
@@ -382,8 +364,6 @@ export const createSubscription = async (planType: string): Promise<string> => {
                 },
             }
         );
-
-        console.log('API Response:', response.data);
 
         if (response.data.error) {
             throw new Error(response.data.error);
