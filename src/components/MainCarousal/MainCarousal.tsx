@@ -31,11 +31,6 @@ type Movie = {
     banner_url: string;
 }
 
-type Props = {
-    movies: Movie[];
-    fetchMovies: () => void;
-}
-
 type State = {
     allMovies: Movie[];
     isSmallScreen: boolean;
@@ -88,8 +83,8 @@ function PrevArrow({ className, style, onClick }: ArrowProps) {
     );
 }
 
-export class MainCarousal extends Component<Props, State> {
-    constructor(props: Props) {
+export class MainCarousal extends Component<{}, State> {
+    constructor(props: object) {
         super(props);
 
         this.state = {
@@ -98,7 +93,6 @@ export class MainCarousal extends Component<Props, State> {
             loading: true
         };
     }
-
 
     truncateDescription(description: string) {
         if (this.state.isSmallScreen && description.length > 50) {
@@ -117,7 +111,6 @@ export class MainCarousal extends Component<Props, State> {
     componentDidMount() {
         const fetchMovies = async () => {
             let response = await getAllMoviesAPI(1);
-            console.log("RESPONSE FROM API FETCH: ", response);
             this.setState({
                 allMovies: response.movies, loading: false
             });

@@ -16,20 +16,32 @@ import { generateToken, messaging } from './Notifications/firebase';
 import { onMessage } from 'firebase/messaging';
 import toast from 'react-hot-toast';
 import { useEffect } from 'react';
+import AllPlatformPage from './pages/AllPlatformPage/AllPlatformPage';
+import PremiumMoviesPage from './pages/PremiumMoviesPage/PremiumMoviesPage';
+import Success from './pages/SubscriptionPage/Success';
 
 function App() {
+  let toastShown = false;
+
   useEffect(() => {
     generateToken();
 
     onMessage(messaging, (payload) => {
-      console.log('Foreground message in App.tsx:', payload);
+      if (toastShown) return; 
+
+      toastShown = true;
 
       const title = payload.notification?.title || 'New Notification';
       const body = payload.notification?.body || 'You have a new message';
-      toast.success(`${title}: ${body}`); 
+      toast.success(`${title}: ${body}`);
+
+      setTimeout(() => {
+        toastShown = false; 
+      }, 3000);
     });
   }, []);
-  
+
+
   return (
     <Router>
       <Elements stripe={stripePromise}>
@@ -43,7 +55,9 @@ function App() {
           <Route path='/all-movies' element={<AllMoviesPage />} />
           <Route path='/search' element={<SearchResultPage />} />
           <Route path='/subscribe' element={<SubscriptionPage />} />
-          {/* <Route path='/payment' element={<Payment />} /> */}
+          <Route path='/platforms' element={<AllPlatformPage />} />
+          <Route path='/premium-movies' element={<PremiumMoviesPage />} />
+          <Route path='/success' element={<Success />} />
         </Routes>
       </Elements>
     </Router>

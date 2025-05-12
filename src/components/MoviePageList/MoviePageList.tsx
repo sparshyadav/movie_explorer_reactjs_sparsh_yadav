@@ -108,7 +108,6 @@ const MoviePageList: React.FC = () => {
             <Box className="movies-container">
                 {loading ? (
                     <Box className="loading">
-                        {/* <Typography variant="h5">Loading...</Typography> */}
                         <Box sx={{ display: 'flex' }}>
                             <CircularProgress />
                         </Box>

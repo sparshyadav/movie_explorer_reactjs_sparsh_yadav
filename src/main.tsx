@@ -11,7 +11,9 @@ createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <Provider store={store}>
       <UserProvider>
-        <Toaster />
+        <Toaster toastOptions={{
+          duration: 5000, 
+        }} />
         <App />
       </UserProvider>
     </Provider>

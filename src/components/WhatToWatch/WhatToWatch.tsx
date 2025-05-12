@@ -2,10 +2,11 @@ import { Component, createRef } from 'react';
 import './WhatToWatch.scss';
 import { ArrowBackIos, ArrowForwardIos } from '@mui/icons-material';
 import MovieCard from '../../components/MovieCard/MovieCard';
-import MovieCardShimmer from '../../components/MovieCard/MovieCardShimmer/MovieCardShimmer';
+import MovieCardShimmer from '../../components/MovieCardShimmer/MovieCardShimmer';
 import { ChevronRight } from 'lucide-react';
 import { NavLink } from 'react-router-dom';
 import { getAllMoviesAPI } from '../../API';
+import { Box, CircularProgress } from '@mui/material';
 
 interface Movie {
     id: string;
@@ -23,18 +24,18 @@ interface WhatToWatchState {
     isLoading: boolean;
 }
 
-interface WhatToWatchProps {
-    movies: Movie[];
-    fetchMovies: () => void;
-}
+// interface WhatToWatchProps {
+//     movies: Movie[];
+//     fetchMovies: () => void;
+// }
 
-class WhatToWatch extends Component<WhatToWatchProps, WhatToWatchState> {
+class WhatToWatch extends Component<{}, WhatToWatchState> {
     carouselRef = createRef<HTMLDivElement>();
     cardWidth = 250;
     visibleCards = 5;
     scrollAmount = this.cardWidth * this.visibleCards;
 
-    constructor(props: WhatToWatchProps) {
+    constructor(props: object) {
         super(props);
         this.state = {
             scrollPosition: 0,
@@ -101,7 +102,6 @@ class WhatToWatch extends Component<WhatToWatchProps, WhatToWatchState> {
     };
 
     renderShimmerCards = () => {
-        // Create array of placeholder items for the shimmer effect
         const shimmerItems = Array(8).fill(0);
 
         return shimmerItems.map((_, index) => (
@@ -140,7 +140,7 @@ class WhatToWatch extends Component<WhatToWatchProps, WhatToWatchState> {
                     onMouseLeave={() => this.setState({ showControls: false })}
                 >
                     <NavLink to={'/all-movies'}>
-                        <h2 className="carousel-title">
+                        <h2 className="carousel-title main-title">
                             What to Watch
                             <span className='title-icon'>
                                 <ChevronRight className='next-icon' />

@@ -5,9 +5,9 @@ import Footer from '../../components/Footer/Footer'
 function SubscriptionPage() {
   return (
     <div>
-        <Navbar />
-        <Subscription />
-        <Footer />
+      <Navbar />
+      <Subscription />
+      <Footer />
     </div>
   )
 }
