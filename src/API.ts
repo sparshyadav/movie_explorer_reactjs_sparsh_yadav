@@ -427,13 +427,13 @@ export const createSubscription = async (planType: string): Promise<string> => {
     }
 };
 
-export const getSubscriptionStatus = async (token: string): Promise<SubscriptionStatus> => {
+export const getSubscriptionStatus = async (token: string) => {
     try {
         if (!token) {
             throw new Error('No authentication token found');
         }
 
-        const response: AxiosResponse<SubscriptionStatus | ApiError> = await axios.get(
+        const response = await axios.get(
             `${BASE_URL}/api/v1/subscriptions/status`,
             {
                 headers: {
