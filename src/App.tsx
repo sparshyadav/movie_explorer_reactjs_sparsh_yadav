@@ -29,6 +29,8 @@ function App() {
     onMessage(messaging, (payload) => {
       if (toastShown) return; 
 
+      console.log("inside onmessage")
+
       toastShown = true;
 
       const title = payload.notification?.title || 'New Notification';
