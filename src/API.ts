@@ -111,20 +111,7 @@ export const getEveryMovieAPI = async () => {
     }
 }
 
-export const addMovieAdminAPI = async (payload: {
-    title: string;
-    genre: string;
-    release_year: string;
-    rating: string;
-    director: string;
-    duration: number;
-    main_lead: string;
-    streaming_platform: string;
-    description: string;
-    poster: File | null;
-    banner: File | null;
-    premium: boolean,
-}) => {
+export const addMovieAdminAPI = async (payload: FormData) => {
     try {
         const token = Cookies.get('authToken');
         console.log("TOKEN: ", token);
@@ -259,20 +246,7 @@ export const searchMovieAPI = async (page: number = 1, title: string, genre?: st
     }
 };
 
-export const updateMovie = async (id: number, payload: {
-    title: string;
-    genre: string;
-    release_year: string;
-    rating: string;
-    director: string;
-    duration: number;
-    main_lead: string;
-    streaming_platform: string;
-    description: string;
-    poster: File | null;
-    banner: File | null;
-    premium: boolean,
-}) => {
+export const updateMovie = async (id: number, payload: FormData) => {
     try {
         const token = Cookies.get('authToken');
         console.log("Retrieved token:", token);

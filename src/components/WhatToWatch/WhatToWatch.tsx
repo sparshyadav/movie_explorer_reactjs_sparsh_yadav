@@ -6,7 +6,6 @@ import MovieCardShimmer from '../../components/MovieCardShimmer/MovieCardShimmer
 import { ChevronRight } from 'lucide-react';
 import { NavLink } from 'react-router-dom';
 import { getAllMoviesAPI } from '../../API';
-import { Box, CircularProgress } from '@mui/material';
 
 interface Movie {
     id: string;

@@ -8,7 +8,7 @@ import Navbar from '../../components/Navbar/Navbar';
 import AddMovieWrapper from '../../components/AddMovieWrapper';
 
 interface MovieFormState {
-    id?: string;
+    id?: number;
     title: string;
     genre: string;
     release_year: string;
@@ -227,7 +227,8 @@ class AddMovie extends Component<AddMovieProps, MovieFormState> {
 
         try {
             const { id } = this.props;
-            const response = await updateMovie(id, payload);
+            if(!id) return;
+            const response = await updateMovie(Number(id), payload);
             console.log("RESPONSE OF EDIT MOVIE: ", response);
 
             this.setState({
