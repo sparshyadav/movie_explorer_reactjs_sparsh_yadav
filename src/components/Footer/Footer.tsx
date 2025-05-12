@@ -1,4 +1,3 @@
-import React from 'react';
 import './Footer.scss';
 import { Container, Box, Typography } from '@mui/material';
 import { Facebook, Instagram, Twitter, Youtube } from 'lucide-react';

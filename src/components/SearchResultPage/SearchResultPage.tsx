@@ -152,7 +152,7 @@ function SearchResultPage() {
                                     }}
 
                                     variant="outlined"
-                                    size="extra-small"
+                                    size="small"
                                     autoFocus
                                     sx={{
                                         input: {

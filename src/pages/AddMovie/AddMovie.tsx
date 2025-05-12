@@ -116,8 +116,15 @@ class AddMovie extends Component<AddMovieProps, MovieFormState> {
         payload.append("movie[streaming_platform]", this.state.streaming_platform);
         payload.append("movie[rating]", this.state.rating);
         payload.append("movie[premium]", String(this.state.premium))
-        payload.append("movie[poster]", this.state.poster);
-        payload.append("movie[banner]", this.state.banner);
+        // payload.append("movie[poster]", this.state.poster);
+        // payload.append("movie[banner]", this.state.banner);
+
+        if (this.state.poster) {
+            payload.append("movie[poster]", this.state.poster);
+          }
+          if (this.state.banner) {
+            payload.append("movie[banner]", this.state.banner);
+          }
 
 
         try {
@@ -208,8 +215,15 @@ class AddMovie extends Component<AddMovieProps, MovieFormState> {
         payload.append("movie[streaming_platform]", this.state.streaming_platform);
         payload.append("movie[rating]", this.state.rating);
         payload.append("movie[premium]", String(this.state.premium))
-        payload.append("movie[poster]", this.state.poster);
-        payload.append("movie[banner]", this.state.banner);
+        // payload.append("movie[poster]", this.state.poster);
+        // payload.append("movie[banner]", this.state.banner);
+
+        if (this.state.poster) {
+            payload.append("movie[poster]", this.state.poster);
+          }
+          if (this.state.banner) {
+            payload.append("movie[banner]", this.state.banner);
+          }
 
         try {
             const { id } = this.props;

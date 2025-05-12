@@ -14,27 +14,26 @@ function Navbar() {
     const navigate = useNavigate();
     const inputRef = useRef<HTMLInputElement>(null);
     const location = useLocation();
-    const [userPlan, setUserPlan]=useState<string>('');
-    
-    useEffect(() => {
-        if (location.pathname === '/search') {
-            inputRef.current?.focus();
-        }
-
-        const plan=localStorage.getItem('userPlan');
-        setUserPlan(plan);
-    }, [location.pathname]);
+    const [userPlan, setUserPlan] = useState<string>('');
 
     useEffect(() => {
         const getUserPlan = async () => {
             const token = Cookies.get('authToken');
+            if (!token) return;
             const subResult = await getSubscriptionStatus(token);
             localStorage.setItem('userPlan', subResult.plan_type);
-            console.log("SUBSCRIPTION TYPE RESPONSE NAVBARRRRRRRRRRRRRRR: ", subResult);
-        }
+            setUserPlan(subResult.plan_type);
+        };
 
         getUserPlan();
     }, []);
+
+    useEffect(() => {
+        if (location.pathname === '/search') {
+            inputRef.current?.focus();
+        }
+    }, [location.pathname]);
+
 
     const handleSearch = () => {
         navigate('/search');
@@ -59,7 +58,7 @@ function Navbar() {
                     </Box>
                 </NavLink>
                 <Box className='navbar-options'>
-                    {userPlan==='premium' && <Crown className='search-icon' onClick={handlePremium} />}
+                    {userPlan === 'premium' && <Crown className='search-icon' onClick={handlePremium} />}
                     <Search className='search-icon' onClick={handleSearch} />
                     <CreditCard className='search-icon' onClick={handleSubscription} />
                     <ProfileMenu role='admin' />

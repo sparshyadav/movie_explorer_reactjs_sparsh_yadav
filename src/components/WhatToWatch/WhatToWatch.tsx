@@ -24,11 +24,6 @@ interface WhatToWatchState {
     isLoading: boolean;
 }
 
-// interface WhatToWatchProps {
-//     movies: Movie[];
-//     fetchMovies: () => void;
-// }
-
 class WhatToWatch extends Component<{}, WhatToWatchState> {
     carouselRef = createRef<HTMLDivElement>();
     cardWidth = 250;

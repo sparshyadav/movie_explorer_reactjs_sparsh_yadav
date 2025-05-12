@@ -12,7 +12,6 @@ import {
 } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import CheckIcon from '@mui/icons-material/Check';
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import './Subscription.scss';
 import { createSubscription } from '../../API'; 
 
@@ -22,7 +21,7 @@ interface Plan {
   features: string[];
   buttonText: string;
   variant: 'starter' | 'monthly' | 'yearly';
-  id: string; // Add this to map to backend subscription IDs
+  id: string; 
 }
 
 const plans: Plan[] = [
@@ -74,18 +73,18 @@ const plans: Plan[] = [
 const Subscription: React.FC = () => {
   const navigate = useNavigate();
   const [selectedPlan, setSelectedPlan] = useState<string | null>(null);
-  const [isProcessing, setIsProcessing] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [showSuccess, setShowSuccess] = useState(false);
+  // const [isProcessing, setIsProcessing] = useState(false);
+  // const [error, setError] = useState<string | null>(null);
+  // const [showSuccess, setShowSuccess] = useState(false);
 
   const handleSubscribe = async () => {
     if (!selectedPlan) {
-      setError('Please select a plan.');
+      // setError('Please select a plan.');
       return;
     }
 
-    setIsProcessing(true);
-    setError(null);
+    // setIsProcessing(true);
+    // setError(null);
 
     try {
       const checkoutUrl = await createSubscription(selectedPlan);
@@ -95,30 +94,12 @@ const Subscription: React.FC = () => {
         throw new Error('No checkout URL returned from server.');
       }
     } catch (err: any) {
-      setError(err.message || 'Failed to initiate subscription.');
-    } finally {
-      setIsProcessing(false);
-    }
+      // setError(err.message || 'Failed to initiate subscription.');
+    } 
+    // finally {
+    //   setIsProcessing(false);
+    // }
   };
-
-  if (showSuccess) {
-    return (
-      <Box className="subscription-page success-state">
-        <Container maxWidth="sm">
-          <Box className="success-card">
-            <CheckCircleIcon color="success" sx={{ fontSize: 64 }} />
-            <Typography variant="h4">Subscription Activated!</Typography>
-            <Typography>
-              Your {plans.find(p => p.id === selectedPlan)?.title} plan has been activated.
-            </Typography>
-            <Button variant="contained" onClick={() => navigate('/home')}>
-              Start Exploring
-            </Button>
-          </Box>
-        </Container>
-      </Box>
-    );
-  }
 
   return (
     <Box className="subscription-page">
@@ -164,25 +145,6 @@ const Subscription: React.FC = () => {
             </Box>
           ))}
         </Box>
-
-        {/* {selectedPlan && (
-          <Box className="confirm-section">
-            <Typography variant="h5" gutterBottom>
-              Confirm Your Subscription
-            </Typography>
-            <Typography>
-              You selected the {plans.find(p => p.id === selectedPlan)?.title} plan.
-            </Typography>
-            {error && <Typography color="error">{error}</Typography>}
-            <Button
-              variant="contained"
-              disabled={isProcessing}
-              onClick={handleSubscribe}
-            >
-              {isProcessing ? <CircularProgress size={20} /> : 'Subscribe Now'}
-            </Button>
-          </Box>
-        )} */}
 
         <Box className="footer-section">
           <Typography variant="subtitle2" className="partners-label">
