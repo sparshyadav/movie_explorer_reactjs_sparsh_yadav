@@ -73,18 +73,11 @@ const plans: Plan[] = [
 const Subscription: React.FC = () => {
   const navigate = useNavigate();
   const [selectedPlan, setSelectedPlan] = useState<string | null>(null);
-  // const [isProcessing, setIsProcessing] = useState(false);
-  // const [error, setError] = useState<string | null>(null);
-  // const [showSuccess, setShowSuccess] = useState(false);
 
   const handleSubscribe = async () => {
     if (!selectedPlan) {
-      // setError('Please select a plan.');
       return;
     }
-
-    // setIsProcessing(true);
-    // setError(null);
 
     try {
       const checkoutUrl = await createSubscription(selectedPlan);
@@ -96,9 +89,6 @@ const Subscription: React.FC = () => {
     } catch (err: any) {
       // setError(err.message || 'Failed to initiate subscription.');
     } 
-    // finally {
-    //   setIsProcessing(false);
-    // }
   };
 
   return (
