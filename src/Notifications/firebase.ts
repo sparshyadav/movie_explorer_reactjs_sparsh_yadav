@@ -3,7 +3,6 @@ import { deleteToken, getMessaging, getToken, onMessage } from "firebase/messagi
 import { sendTokenToBackend, toggleNotifications } from "../API";
 
 const firebaseConfig = {
-
     apiKey: "AIzaSyCKt2wYuYzr0uKWe8o5jUE6p9wb-3lSK68",
     authDomain: "movie-explorer-5bc8a.firebaseapp.com",
     projectId: "movie-explorer-5bc8a",

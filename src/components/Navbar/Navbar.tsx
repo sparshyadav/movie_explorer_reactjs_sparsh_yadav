@@ -4,7 +4,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { Search, CreditCard } from 'lucide-react';
 import ProfileMenu from '../ProfileMenu';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { NavLink, useNavigate, useLocation } from 'react-router-dom';
 import { Crown } from 'lucide-react';
 import Cookies from 'js-cookie';
@@ -14,12 +14,15 @@ function Navbar() {
     const navigate = useNavigate();
     const inputRef = useRef<HTMLInputElement>(null);
     const location = useLocation();
-    const userPlan=localStorage.getItem('userPlan');
-
+    const [userPlan, setUserPlan]=useState<string>('');
+    
     useEffect(() => {
         if (location.pathname === '/search') {
             inputRef.current?.focus();
         }
+
+        const plan=localStorage.getItem('userPlan');
+        setUserPlan(plan);
     }, [location.pathname]);
 
     useEffect(() => {
@@ -56,7 +59,7 @@ function Navbar() {
                     </Box>
                 </NavLink>
                 <Box className='navbar-options'>
-                    {userPlan && <Crown className='search-icon' onClick={handlePremium} />}
+                    {userPlan==='premium' && <Crown className='search-icon' onClick={handlePremium} />}
                     <Search className='search-icon' onClick={handleSearch} />
                     <CreditCard className='search-icon' onClick={handleSubscription} />
                     <ProfileMenu role='admin' />

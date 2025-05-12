@@ -28,6 +28,7 @@ interface MovieFormState {
     submitSuccess: boolean;
     submitEdit: boolean;
     submitError: boolean;
+    isDeleting: boolean;
 }
 
 interface AddMovieProps {
@@ -57,7 +58,8 @@ class AddMovie extends Component<AddMovieProps, MovieFormState> {
             isEditing: false,
             submitSuccess: false,
             submitEdit: false,
-            submitError: false
+            submitError: false,
+            isDeleting: false
         };
     }
 
@@ -244,21 +246,20 @@ class AddMovie extends Component<AddMovieProps, MovieFormState> {
     }
 
     handleDelete = async () => {
-        this.setState({ isSubmitting: true });
+        this.setState({ isDeleting: true });
 
         const { id } = this.props;
         const response = await deleteMovie(Number(id));
         console.log("RESPONSE OF EDIT MOVIE: ", response);
 
-        this.setState({ isSubmitting: false });
-
+        this.setState({ isDeleting: false });
     }
 
     render() {
         const {
             title, genre, release_year, rating, director, duration,
             premium, streaming_platform, main_lead,
-            description, submitEdit,
+            description, submitEdit, isDeleting,
             posterPreview, bannerPreview, isSubmitting,
             submitSuccess, submitError
         } = this.state;
@@ -483,7 +484,7 @@ class AddMovie extends Component<AddMovieProps, MovieFormState> {
                                             color="error"
                                             onClick={this.handleDelete}
                                         >
-                                            {isSubmitting ? 'Deleting...' : 'Delete Movie'}
+                                            {isDeleting ? 'Deleting...' : 'Delete Movie'}
                                         </Button>
                                     </>
                                 ) : (

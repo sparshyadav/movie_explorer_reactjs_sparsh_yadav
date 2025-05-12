@@ -64,6 +64,7 @@ export const signoutAPI = async (): Promise<any> => {
 
         Cookies.remove('authToken');
         localStorage.removeItem('role');
+        localStorage.removeItem('userPlan');
 
         return response;
     }

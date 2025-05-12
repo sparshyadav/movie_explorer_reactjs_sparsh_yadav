@@ -21,18 +21,27 @@ import PremiumMoviesPage from './pages/PremiumMoviesPage/PremiumMoviesPage';
 import Success from './pages/SubscriptionPage/Success';
 
 function App() {
+  let toastShown = false;
+
   useEffect(() => {
     generateToken();
 
     onMessage(messaging, (payload) => {
-      console.log('Foreground message in App.tsx:', payload);
+      if (toastShown) return; 
+
+      toastShown = true;
 
       const title = payload.notification?.title || 'New Notification';
       const body = payload.notification?.body || 'You have a new message';
-      toast.success(`${title}: ${body}`); 
+      toast.success(`${title}: ${body}`);
+
+      setTimeout(() => {
+        toastShown = false; 
+      }, 3000);
     });
   }, []);
-  
+
+
   return (
     <Router>
       <Elements stripe={stripePromise}>
