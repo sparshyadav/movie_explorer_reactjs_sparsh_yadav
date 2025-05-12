@@ -38,7 +38,6 @@ const Success: React.FC = () => {
           }
         );
 
-        console.log('API Response:', response.data);
         setSubscriptionDetails(response.data);
         setLoading(false);
       } catch (err: any) {

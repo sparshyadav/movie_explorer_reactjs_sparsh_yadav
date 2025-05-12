@@ -6,7 +6,6 @@ import MovieCardShimmer from '../../components/MovieCardShimmer/MovieCardShimmer
 import { ChevronRight } from 'lucide-react';
 import { NavLink } from 'react-router-dom';
 import { getAllMoviesAPI } from '../../API';
-import { Box, CircularProgress } from '@mui/material';
 
 interface Movie {
     id: string;
@@ -23,11 +22,6 @@ interface WhatToWatchState {
     allMovies: Movie[];
     isLoading: boolean;
 }
-
-// interface WhatToWatchProps {
-//     movies: Movie[];
-//     fetchMovies: () => void;
-// }
 
 class WhatToWatch extends Component<{}, WhatToWatchState> {
     carouselRef = createRef<HTMLDivElement>();
@@ -50,7 +44,6 @@ class WhatToWatch extends Component<{}, WhatToWatchState> {
         const fetchMovies = async () => {
             this.setState({ isLoading: true });
             let response = await getAllMoviesAPI(2);
-            console.log("RESPONSE FROM API FETCH: ", response);
             this.setState({
                 allMovies: response.movies,
                 isLoading: false

@@ -89,15 +89,6 @@ class Login extends React.Component<Props> {
             this.setState({ isLoading: true });
             const response = await loginAPI({ email, password });
 
-            if (response && response.data) {
-                this.props.userContext.setUser({
-                    email: response.data.email,
-                    mobile_number: response.data.mobile_number,
-                    role: response.data.role,
-                    name: response.data.name
-                });
-            }
-
             const token = response?.data?.token;
             if (token) {
                 Cookies.set('authToken', token, {

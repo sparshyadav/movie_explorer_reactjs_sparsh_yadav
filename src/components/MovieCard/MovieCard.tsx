@@ -67,7 +67,7 @@ const MovieCard: React.FC<ShowCardProps> = ({
 
                 {role === 'supervisor' ? (
                     <Box className="poster-actions">
-                        <NavLink to={`/edit-movie/${id}`}><button className="edit-btn admin-btn" onClick={() => console.log(`Edit ${id}`)}><Pencil /></button></NavLink>
+                        <NavLink to={`/edit-movie/${id}`}><button className="edit-btn admin-btn"><Pencil /></button></NavLink>
                     </Box>
                 ) : (
                     <></>

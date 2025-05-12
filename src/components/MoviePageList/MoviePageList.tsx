@@ -56,11 +56,9 @@ const MoviePageList: React.FC = () => {
 
                 if (activeCategory === 'All Movies') {
                     response = await getAllMoviesAPI(currentPage);
-                    console.log("RESPONSE FOR ALL MOVIES: ", response);
                     setMovies(response.movies);
                 } else {
                     response = await getMoviesByGenre(activeCategory, currentPage);
-                    console.log("RESPONSE BY GENRE: ", response);
                     setMovies(response.movies);
                 }
 

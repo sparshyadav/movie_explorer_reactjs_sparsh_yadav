@@ -1,4 +1,3 @@
-// Yellow & Black Theme Variables
 $primary-yellow: #ffd700;
 $secondary-yellow: #ffcc00;
 $highlight-yellow: #ffe866;
@@ -212,7 +211,6 @@ $text-light: #eeeeee;
   }
 }
 
-// MUI Overrides
 .MuiContainer-root {
   @media (min-width: 1200px) {
     max-width: 1200px;

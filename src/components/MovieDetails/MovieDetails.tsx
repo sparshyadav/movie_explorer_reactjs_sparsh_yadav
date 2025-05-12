@@ -6,7 +6,6 @@ import { movieDetailsAPI } from '../../API';
 import Navbar from '../Navbar/Navbar';
 import Footer from '../Footer/Footer';
 import WhatToWatch from '../WhatToWatch/WhatToWatch';
-import MovieDetailsShimmer from './MovieDetailsShimmer/MovieDetailsShimmer';
 import TopLineLoader from './TopLineLoader/TopLineLoader';
 
 type StreamingPlatform = 'Netflix' | 'Amazon' | 'HBO';
@@ -30,7 +29,7 @@ const MovieDetails: React.FC = () => {
     const [inWatchlist, setInWatchlist] = useState(false);
     const [hoverRating, setHoverRating] = useState<number | null>(null);
     const [movie, setMovie] = useState<Movie | null>(null);
-    const [imageUrl, setImageUrl] = useState<string>(''); 
+    const [imageUrl, setImageUrl] = useState<string>('');
     const { id } = useParams();
 
     const handleRating = (rating: number) => {
@@ -58,7 +57,7 @@ const MovieDetails: React.FC = () => {
                 if (response.streaming_platform in streaming_platform_url) {
                     setImageUrl(streaming_platform_url[response.streaming_platform as StreamingPlatform]);
                 } else {
-                    setImageUrl(''); 
+                    setImageUrl('');
                 }
             } catch (error) {
                 console.error("Error fetching movie details:", error);
@@ -70,8 +69,6 @@ const MovieDetails: React.FC = () => {
 
     if (!movie) {
         return (
-            // <p>Loading</p>
-            // <MovieDetailsShimmer />
             <TopLineLoader />
         )
     }
