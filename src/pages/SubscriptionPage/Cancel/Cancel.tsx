@@ -12,10 +12,9 @@ interface CancellationDetails {
 
 const Cancel: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
   const [cancellationDetails, setCancellationDetails] = useState<CancellationDetails | null>(null);
   const location = useLocation();
-  const navigate=useNavigate();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const verifyCancellation = async () => {
@@ -26,9 +25,6 @@ const Cancel: React.FC = () => {
         setLoading(false);
       } catch (err: any) {
         console.error('Error verifying cancellation:', err);
-        setError(
-          err.response?.data?.error || 'Failed to verify cancellation. Please try again.'
-        );
         setLoading(false);
       }
     };
@@ -84,7 +80,7 @@ const Cancel: React.FC = () => {
                 </button>
               </div>
             </div>
-          )} 
+          )}
         </div>
       </div>
     </div>
