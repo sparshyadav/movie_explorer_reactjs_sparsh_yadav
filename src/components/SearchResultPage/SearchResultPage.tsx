@@ -1,6 +1,6 @@
 import Navbar from '../Navbar/Navbar';
 import Footer from '../Footer/Footer';
-import { Box, Container, Typography, TextField, InputAdornment, Grid, Pagination } from '@mui/material';
+import { Box, Container, Typography, TextField, InputAdornment, Grid } from '@mui/material';
 import { Search as SearchIcon } from '@mui/icons-material';
 import { useEffect, useState } from 'react';
 import './SearchResultPage.scss';
