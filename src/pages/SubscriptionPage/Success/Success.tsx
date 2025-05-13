@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import axios from 'axios';
 import CheckCircleIcon from './CheckCirlceIcon'; 
 import './Success.scss';
+import { verifySubscriptionStatusAPI } from '../../../API';
 
 interface SubscriptionDetails {
   plan_name?: string;
@@ -27,18 +27,10 @@ const Success: React.FC = () => {
       }
 
       try {
-        const authToken = localStorage.getItem('token');
-        const response = await axios.get(
-          `https://movie-explorer-ror-aalekh-2ewg.onrender.com/api/v1/subscriptions/success?session_id=${sessionId}`,
-          {
-            headers: {
-              'Content-Type': 'application/json',
-              Authorization: `Bearer ${authToken}`,
-            },
-          }
-        );
+        const response=await verifySubscriptionStatusAPI(sessionId);
+        console.log("RESULT OF API IN SUCCESS PAGE: ", response);
 
-        setSubscriptionDetails(response.data);
+        setSubscriptionDetails(response);
         setLoading(false);
       } catch (err: any) {
         console.error('Error verifying subscription:', err);

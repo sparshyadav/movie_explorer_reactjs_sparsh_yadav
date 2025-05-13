@@ -33,6 +33,7 @@ interface MovieFormState {
 
 interface AddMovieProps {
     id?: string;
+    navigate: (path:string) => void;
 }
 
 
@@ -223,6 +224,8 @@ class AddMovie extends Component<AddMovieProps, MovieFormState> {
             if(!id) return;
             await updateMovie(Number(id), payload);
 
+            this.props.navigate('/');
+
             this.setState({
                 isSubmitting: false,
                 submitSuccess: false,
@@ -257,6 +260,8 @@ class AddMovie extends Component<AddMovieProps, MovieFormState> {
 
         const { id } = this.props;
         await deleteMovie(Number(id));
+
+        this.props.navigate('/');
 
         this.setState({ isDeleting: false });
         

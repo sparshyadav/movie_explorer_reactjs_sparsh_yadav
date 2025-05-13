@@ -408,3 +408,41 @@ export const getSubscriptionStatus = async (token: string) => {
         throw new Error('An unexpected error occurred');
     }
 };
+
+export const verifySubscriptionStatusAPI = async (sessionId: string) => {
+    try {
+        const authToken = localStorage.getItem('token');
+        const response = await axios.get(
+            `${BASE_URL}/api/v1/subscriptions/success?session_id=${sessionId}`,
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${authToken}`,
+                },
+            }
+        );
+
+        return response;
+    } catch (err: any) {
+        console.error('Error verifying subscription:', err);
+    }
+}
+
+export const verifyCancellationStatusAPI = async (sessionId: string) => {
+    try {
+        const authToken = localStorage.getItem('token');
+        const response = await axios.get(
+            `${BASE_URL}/api/v1/subscriptions/success?session_id=${sessionId}`,
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${authToken}`,
+                },
+            }
+        );
+
+        return response;
+    } catch (err: any) {
+        console.error('Error verifying subscription:', err);
+    }
+}

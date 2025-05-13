@@ -52,8 +52,8 @@ function Navbar() {
             <Box className='navbar-center-container' >
                 <NavLink to={'/'}>
                     <Box className='navbar-icon'>
-                        <Typography variant="h4" fontWeight="bold">
-                            IMDB
+                        <Typography variant="h4" fontWeight="bold" className='site-title'>
+                            BINGE
                         </Typography>
                     </Box>
                 </NavLink>

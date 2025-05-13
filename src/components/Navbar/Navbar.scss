@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap');
+
 .navbar-container {
     background-color: #121212;
     width: 200%;
@@ -30,6 +32,10 @@
     display: flex;
     align-items: center;
     font-weight: bold;
+
+    .site-title{
+        font-family: "Orbitron", sans-serif;
+    }
 
     @media screen and (max-width: 768px) {
         width: auto;
@@ -80,7 +86,7 @@
 }
 
 .search-icon {
-    cursor: pointer; 
+    cursor: pointer;
     margin-left: 15px;
 }
 
@@ -100,7 +106,7 @@
     }
 }
 
-.search-icon{
+.search-icon {
     color: white;
 }
 
@@ -108,16 +114,15 @@ a,
 .nav-link,
 NavLink,
 Link {
-  text-decoration: none !important;
-
-  &:hover {
     text-decoration: none !important;
-  }
-} 
+
+    &:hover {
+        text-decoration: none !important;
+    }
+}
 
 @media (min-width: 1200px) {
     .MuiContainer-root {
-      max-width: none !important; 
+        max-width: none !important;
     }
-  }
-  
+}

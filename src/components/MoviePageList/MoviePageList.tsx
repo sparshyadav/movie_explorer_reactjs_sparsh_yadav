@@ -88,7 +88,7 @@ const MoviePageList: React.FC = () => {
     return (
         <Box className="movie-page">
             <Typography variant="h3" className="page-title">
-                What to Watch - IMDb
+                What to Watch 
             </Typography>
 
             <Box className="categories-container">

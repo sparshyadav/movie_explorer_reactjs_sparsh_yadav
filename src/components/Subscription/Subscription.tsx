@@ -40,7 +40,7 @@ const plans: Plan[] = [
     variant: 'starter',
   },
   {
-    id: '1_months',
+    id: '7_days',
     title: '7 Day Premium',
     price: '$7.99',
     features: [
@@ -54,7 +54,7 @@ const plans: Plan[] = [
     variant: 'monthly',
   },
   {
-    id: '3_months',
+    id: '1_month',
     title: '1 Month Premium',
     price: '$19.99',
     features: [
@@ -79,7 +79,7 @@ const Subscription: React.FC = () => {
     if (!selectedPlan) {
       return;
     }
-
+    console.log("PLAN SELECTED: ", selectedPlan);
     try {
       const checkoutUrl = await createSubscription(selectedPlan);
       if (checkoutUrl) {
