@@ -30,7 +30,7 @@ const Success: React.FC = () => {
         const response=await verifySubscriptionStatusAPI(sessionId);
         console.log("RESULT OF API IN SUCCESS PAGE: ", response);
 
-        setSubscriptionDetails(response);
+        setSubscriptionDetails(response || null);
         setLoading(false);
       } catch (err: any) {
         console.error('Error verifying subscription:', err);

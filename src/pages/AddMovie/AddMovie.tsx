@@ -38,7 +38,7 @@ interface AddMovieProps {
 
 
 class AddMovie extends Component<AddMovieProps, MovieFormState> {
-    constructor(props: object) {
+    constructor(props: AddMovieProps) {
         super(props);
         this.state = {
             title: '',

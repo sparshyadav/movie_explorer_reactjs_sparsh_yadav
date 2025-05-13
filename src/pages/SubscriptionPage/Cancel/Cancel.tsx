@@ -32,7 +32,7 @@ const Cancel: React.FC = () => {
         const response = await verifyCancellationStatusAPI(subscriptionId);
         console.log("RESULT OF API IN CANCEL PAGE: ", response);
 
-        setCancellationDetails(response);
+        setCancellationDetails(response || null);
         setLoading(false);
       } catch (err: any) {
         console.error('Error verifying cancellation:', err);

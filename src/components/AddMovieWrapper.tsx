@@ -1,15 +1,20 @@
 import React from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, NavigateFunction } from 'react-router-dom';
 
-const AddMovieWrapper = (WrappedComponent: React.ComponentType<{ id?: string }>) => {
-    const ComponentWithParams = () => {
-        const { id } = useParams<{ id: string }>();
-        const navigate = useNavigate();
+interface WithRouterProps {
+  id?: string;
+  navigate: NavigateFunction;
+}
 
-        return <WrappedComponent id={id} navigate={navigate} />;
-    };
+const AddMovieWrapper = (WrappedComponent: React.ComponentType<WithRouterProps>) => {
+  const ComponentWithParams = () => {
+    const { id } = useParams<{ id: string }>();
+    const navigate = useNavigate();
 
-    return ComponentWithParams;
+    return <WrappedComponent id={id} navigate={navigate} />;
+  };
+
+  return ComponentWithParams;
 };
 
 export default AddMovieWrapper;
