@@ -170,7 +170,6 @@ export class StreamingPlatform extends Component<StreamingPlatformProps, Streami
                 <Box
                     className="netflix-card-carousel"
                     onMouseEnter={() => this.setState({ showControls: true })}
-                    onMouseLeave={() => this.setState({ showControls: false })}
                 >
                     <NavLink to={'/platforms'}>
                         <h2 className="carousel-title">

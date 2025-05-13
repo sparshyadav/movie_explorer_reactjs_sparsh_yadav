@@ -88,6 +88,10 @@
 .search-icon {
     cursor: pointer;
     margin-left: 15px;
+
+    &:hover{
+        color: #f5c518;
+    }
 }
 
 .navbar-options {
