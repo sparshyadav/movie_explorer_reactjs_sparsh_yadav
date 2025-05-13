@@ -19,18 +19,8 @@ const Cancel: React.FC = () => {
 
   useEffect(() => {
     const verifyCancellation = async () => {
-      const params = new URLSearchParams(location.search);
-      const subscriptionId = params.get('subscription_id');
-
-      if (!subscriptionId) {
-        setError('No subscription ID found in the URL.');
-        setLoading(false);
-        return;
-      }
-
       try {
-        const response = await verifyCancellationStatusAPI(subscriptionId);
-        console.log("RESULT OF API IN CANCEL PAGE: ", response);
+        const response = await verifyCancellationStatusAPI();
 
         setCancellationDetails(response || null);
         setLoading(false);
@@ -65,17 +55,6 @@ const Cancel: React.FC = () => {
               <div className="spinner"></div>
               <h2 className="title">Verifying your cancellation...</h2>
             </div>
-          ) : error ? (
-            <div className="error-state">
-              <h2 className="title">Cancellation Error</h2>
-              <p className="error-message">{error}</p>
-              <button
-                onClick={() => navigate('/subscribe')}
-                className="action-button"
-              >
-                Try Again
-              </button>
-            </div>
           ) : (
             <div className="cancel-state">
               <div className="icon-container">
@@ -105,7 +84,7 @@ const Cancel: React.FC = () => {
                 </button>
               </div>
             </div>
-          )}
+          )} 
         </div>
       </div>
     </div>

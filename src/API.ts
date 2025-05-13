@@ -428,19 +428,9 @@ export const verifySubscriptionStatusAPI = async (sessionId: string) => {
     }
 }
 
-export const verifyCancellationStatusAPI = async (sessionId: string) => {
+export const verifyCancellationStatusAPI = async () => {
     try {
-        const authToken = localStorage.getItem('token');
-        const response = await axios.get(
-            `${BASE_URL}/api/v1/subscriptions/success?session_id=${sessionId}`,
-            {
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: `Bearer ${authToken}`,
-                },
-            }
-        );
-
+        const response = await axios.get(`${BASE_URL}/api/v1/subscriptions/cancel`);
         return response;
     } catch (err: any) {
         console.error('Error verifying subscription:', err);
