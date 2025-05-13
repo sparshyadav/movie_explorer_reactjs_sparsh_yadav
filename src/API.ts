@@ -328,7 +328,7 @@ export const toggleNotifications = async () => {
     try {
         const authToken = Cookies.get('authToken');
 
-        const response = await axios.post('https://movie-explorer-ror-aalekh-2ewg.onrender.com/api/v1/toggle_notifications', {
+        await axios.post('https://movie-explorer-ror-aalekh-2ewg.onrender.com/api/v1/toggle_notifications', {
             notifications_enabled: true
         }, {
             headers: {
@@ -341,11 +341,6 @@ export const toggleNotifications = async () => {
         throw error;
     }
 }
-
-
-
-
-
 
 export const createSubscription = async (planType: string): Promise<string> => {
     try {

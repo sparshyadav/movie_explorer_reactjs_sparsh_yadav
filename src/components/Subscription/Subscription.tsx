@@ -13,7 +13,8 @@ import {
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import CheckIcon from '@mui/icons-material/Check';
 import './Subscription.scss';
-import { createSubscription } from '../../API'; 
+import { createSubscription } from '../../API';
+import CircularProgress from '@mui/material/CircularProgress';
 
 interface Plan {
   title: string;
@@ -21,7 +22,7 @@ interface Plan {
   features: string[];
   buttonText: string;
   variant: 'starter' | 'monthly' | 'yearly';
-  id: string; 
+  id: string;
 }
 
 const plans: Plan[] = [
@@ -87,8 +88,8 @@ const Subscription: React.FC = () => {
         throw new Error('No checkout URL returned from server.');
       }
     } catch (err: any) {
-      
-    } 
+
+    }
   };
 
   return (
@@ -130,7 +131,8 @@ const Subscription: React.FC = () => {
 
               </Box>
               <Button variant="contained" className="plan-button" onClick={handleSubscribe}>
-                {selectedPlan === plan.id ? 'Selected' : plan.buttonText}
+                {selectedPlan === plan.id ? <CircularProgress />
+                  : plan.buttonText}
               </Button>
             </Box>
           ))}

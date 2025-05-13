@@ -130,7 +130,6 @@ class WhatToWatch extends Component<{}, WhatToWatchState> {
                 <div
                     className="netflix-card-carousel"
                     onMouseEnter={() => this.setState({ showControls: true })}
-                    onMouseLeave={() => this.setState({ showControls: false })}
                 >
                     <NavLink to={'/all-movies'}>
                         <h2 className="carousel-title main-title">
