@@ -79,7 +79,6 @@ const Subscription: React.FC = () => {
     if (!selectedPlan) {
       return;
     }
-    console.log("PLAN SELECTED: ", selectedPlan);
     try {
       const checkoutUrl = await createSubscription(selectedPlan);
       if (checkoutUrl) {

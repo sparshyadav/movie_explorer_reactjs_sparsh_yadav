@@ -28,7 +28,6 @@ const Success: React.FC = () => {
 
       try {
         const response=await verifySubscriptionStatusAPI(sessionId);
-        console.log("RESULT OF API IN SUCCESS PAGE: ", response);
 
         setSubscriptionDetails(response || null);
         setLoading(false);
