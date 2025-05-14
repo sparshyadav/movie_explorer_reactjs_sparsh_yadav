@@ -15,10 +15,13 @@ $transition: all 0.3s ease;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-
+  
   .search-container {
     flex: 1;
     padding: 2rem 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     
     @media (min-width: 768px) {
       padding: 3rem 2rem;
@@ -27,6 +30,7 @@ $transition: all 0.3s ease;
   
   .search-header {
     margin-bottom: 2rem;
+    width: 88%;
     
     .search-title {
       color: $secondary-color;
@@ -112,6 +116,9 @@ $transition: all 0.3s ease;
   .search-results {
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
+    width: 88%;
+    min-height: 500px;
 
     .search-main-container{
       display: flex;
@@ -270,4 +277,9 @@ $transition: all 0.3s ease;
   width: 120px;
   margin-left: 8px;
   color: white;
+}
+
+.loading-circular{
+  display: flex;
+  justify-content: center;
 }

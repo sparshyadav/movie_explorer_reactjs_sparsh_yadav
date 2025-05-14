@@ -38,7 +38,7 @@ interface StreamingPlatformProps { }
 
 export class StreamingPlatform extends Component<StreamingPlatformProps, StreamingPlatformState> {
     carouselRef = createRef<HTMLDivElement>();
-    cardWidth = 350; // Updated to match doubled width from previous request
+    cardWidth = 350; 
     visibleCards = 5;
     scrollAmount = this.cardWidth * this.visibleCards;
 
@@ -170,7 +170,6 @@ export class StreamingPlatform extends Component<StreamingPlatformProps, Streami
                 <Box
                     className="netflix-card-carousel"
                     onMouseEnter={() => this.setState({ showControls: true })}
-                    onMouseLeave={() => this.setState({ showControls: false })}
                 >
                     <NavLink to={'/platforms'}>
                         <h2 className="carousel-title">

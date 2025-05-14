@@ -13,7 +13,8 @@ import {
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import CheckIcon from '@mui/icons-material/Check';
 import './Subscription.scss';
-import { createSubscription } from '../../API'; 
+import { createSubscription } from '../../API';
+import CircularProgress from '@mui/material/CircularProgress';
 
 interface Plan {
   title: string;
@@ -21,7 +22,7 @@ interface Plan {
   features: string[];
   buttonText: string;
   variant: 'starter' | 'monthly' | 'yearly';
-  id: string; 
+  id: string;
 }
 
 const plans: Plan[] = [
@@ -39,7 +40,7 @@ const plans: Plan[] = [
     variant: 'starter',
   },
   {
-    id: '1_months',
+    id: '7_days',
     title: '7 Day Premium',
     price: '$7.99',
     features: [
@@ -53,7 +54,7 @@ const plans: Plan[] = [
     variant: 'monthly',
   },
   {
-    id: '3_months',
+    id: '1_month',
     title: '1 Month Premium',
     price: '$19.99',
     features: [
@@ -78,7 +79,7 @@ const Subscription: React.FC = () => {
     if (!selectedPlan) {
       return;
     }
-
+    console.log("PLAN SELECTED: ", selectedPlan);
     try {
       const checkoutUrl = await createSubscription(selectedPlan);
       if (checkoutUrl) {
@@ -86,9 +87,7 @@ const Subscription: React.FC = () => {
       } else {
         throw new Error('No checkout URL returned from server.');
       }
-    } catch (err: any) {
-      
-    } 
+    } catch (err: any) { }
   };
 
   return (
@@ -130,7 +129,8 @@ const Subscription: React.FC = () => {
 
               </Box>
               <Button variant="contained" className="plan-button" onClick={handleSubscribe}>
-                {selectedPlan === plan.id ? 'Selected' : plan.buttonText}
+                {selectedPlan === plan.id ? <CircularProgress />
+                  : plan.buttonText}
               </Button>
             </Box>
           ))}

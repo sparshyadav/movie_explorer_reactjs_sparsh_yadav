@@ -33,11 +33,12 @@ interface MovieFormState {
 
 interface AddMovieProps {
     id?: string;
+    navigate: (path:string) => void;
 }
 
 
 class AddMovie extends Component<AddMovieProps, MovieFormState> {
-    constructor(props: object) {
+    constructor(props: AddMovieProps) {
         super(props);
         this.state = {
             title: '',
@@ -64,11 +65,6 @@ class AddMovie extends Component<AddMovieProps, MovieFormState> {
     }
 
     handleTextChange = (e: ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = e.target;
-        this.setState({ ...this.state, [name]: value });
-    }
-
-    handleSelectChange = (e: SelectChangeEvent) => {
         const { name, value } = e.target;
         this.setState({ ...this.state, [name]: value });
     }
@@ -223,6 +219,8 @@ class AddMovie extends Component<AddMovieProps, MovieFormState> {
             if(!id) return;
             await updateMovie(Number(id), payload);
 
+            this.props.navigate('/');
+
             this.setState({
                 isSubmitting: false,
                 submitSuccess: false,
@@ -257,6 +255,8 @@ class AddMovie extends Component<AddMovieProps, MovieFormState> {
 
         const { id } = this.props;
         await deleteMovie(Number(id));
+
+        this.props.navigate('/');
 
         this.setState({ isDeleting: false });
         

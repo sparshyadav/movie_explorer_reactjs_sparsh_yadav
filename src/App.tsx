@@ -18,7 +18,8 @@ import toast from 'react-hot-toast';
 import { useEffect } from 'react';
 import AllPlatformPage from './pages/AllPlatformPage/AllPlatformPage';
 import PremiumMoviesPage from './pages/PremiumMoviesPage/PremiumMoviesPage';
-import Success from './pages/SubscriptionPage/Success';
+import Success from './pages/SubscriptionPage/Success/Success';
+import Cancel from './pages/SubscriptionPage/Cancel/Cancel';
 
 function App() {
   let toastShown = false;
@@ -58,6 +59,7 @@ function App() {
           <Route path='/platforms' element={<AllPlatformPage />} />
           <Route path='/premium-movies' element={<PremiumMoviesPage />} />
           <Route path='/success' element={<Success />} />
+          <Route path='/cancel' element={<Cancel />} />
         </Routes>
       </Elements>
     </Router>

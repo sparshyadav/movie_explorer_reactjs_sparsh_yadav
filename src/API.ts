@@ -328,7 +328,7 @@ export const toggleNotifications = async () => {
     try {
         const authToken = Cookies.get('authToken');
 
-        const response = await axios.post('https://movie-explorer-ror-aalekh-2ewg.onrender.com/api/v1/toggle_notifications', {
+        await axios.post('https://movie-explorer-ror-aalekh-2ewg.onrender.com/api/v1/toggle_notifications', {
             notifications_enabled: true
         }, {
             headers: {
@@ -341,11 +341,6 @@ export const toggleNotifications = async () => {
         throw error;
     }
 }
-
-
-
-
-
 
 export const createSubscription = async (planType: string): Promise<string> => {
     try {
@@ -413,3 +408,31 @@ export const getSubscriptionStatus = async (token: string) => {
         throw new Error('An unexpected error occurred');
     }
 };
+
+export const verifySubscriptionStatusAPI = async (sessionId: string) => {
+    try {
+        const authToken = localStorage.getItem('token');
+        const response = await axios.get(
+            `${BASE_URL}/api/v1/subscriptions/success?session_id=${sessionId}`,
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${authToken}`,
+                },
+            }
+        );
+
+        return response;
+    } catch (err: any) {
+        console.error('Error verifying subscription:', err);
+    }
+}
+
+export const verifyCancellationStatusAPI = async () => {
+    try {
+        const response = await axios.get(`${BASE_URL}/api/v1/subscriptions/cancel`);
+        return response;
+    } catch (err: any) {
+        console.error('Error verifying subscription:', err);
+    }
+}

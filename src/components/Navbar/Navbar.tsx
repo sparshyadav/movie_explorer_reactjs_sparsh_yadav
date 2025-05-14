@@ -4,16 +4,14 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { Search, CreditCard } from 'lucide-react';
 import ProfileMenu from '../ProfileMenu';
-import { useEffect, useRef, useState } from 'react';
-import { NavLink, useNavigate, useLocation } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { Crown } from 'lucide-react';
 import Cookies from 'js-cookie';
 import { getSubscriptionStatus } from '../../API';
 
 function Navbar() {
     const navigate = useNavigate();
-    const inputRef = useRef<HTMLInputElement>(null);
-    const location = useLocation();
     const [userPlan, setUserPlan] = useState<string>('');
 
     useEffect(() => {
@@ -27,13 +25,6 @@ function Navbar() {
 
         getUserPlan();
     }, []);
-
-    useEffect(() => {
-        if (location.pathname === '/search') {
-            inputRef.current?.focus();
-        }
-    }, [location.pathname]);
-
 
     const handleSearch = () => {
         navigate('/search');
@@ -52,8 +43,8 @@ function Navbar() {
             <Box className='navbar-center-container' >
                 <NavLink to={'/'}>
                     <Box className='navbar-icon'>
-                        <Typography variant="h4" fontWeight="bold">
-                            IMDB
+                        <Typography variant="h4" fontWeight="bold" className='site-title'>
+                            BINGE
                         </Typography>
                     </Box>
                 </NavLink>
