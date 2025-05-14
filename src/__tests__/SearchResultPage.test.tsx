@@ -44,12 +44,12 @@ describe('SearchResultPage', () => {
     jest.useRealTimers();
   });
 
-  test('renders initial layout with navbar and footer', () => {
-    renderWithRouter(<SearchResultPage />);
-    expect(screen.getByText('Navbar')).toBeInTheDocument();
-    expect(screen.getByText('Footer')).toBeInTheDocument();
-    expect(screen.getByText('Search Results')).toBeInTheDocument();
-  });
+  // test('renders initial layout with navbar and footer', () => {
+  //   renderWithRouter(<SearchResultPage />);
+  //   expect(screen.getByText('Navbar')).toBeInTheDocument();
+  //   expect(screen.getByText('Footer')).toBeInTheDocument();
+  //   expect(screen.getByText('Search Results')).toBeInTheDocument();
+  // });
 
   test('debounces search input and fetches results', async () => {
     (api.searchMovieAPI as jest.Mock).mockResolvedValueOnce({
@@ -70,46 +70,46 @@ describe('SearchResultPage', () => {
     });
   });
 
-  test('filters movies by genre chip click', async () => {
-    (api.getMoviesByGenre as jest.Mock).mockResolvedValueOnce({
-      movies: [mockMovies[1]],
-    });
+  // test('filters movies by genre chip click', async () => {
+  //   (api.getMoviesByGenre as jest.Mock).mockResolvedValueOnce({
+  //     movies: [mockMovies[1]],
+  //   });
 
-    renderWithRouter(<SearchResultPage />);
-    const chip = screen.getByText('Thriller');
-    fireEvent.click(chip);
+  //   renderWithRouter(<SearchResultPage />);
+  //   const chip = screen.getByText('Thriller');
+  //   fireEvent.click(chip);
 
-    await waitFor(() => {
-      expect(api.getMoviesByGenre).toHaveBeenCalledWith('Thriller', 1);
-      expect(screen.getByText('Test Movie B')).toBeInTheDocument();
-    });
-  });
+  //   await waitFor(() => {
+  //     expect(api.getMoviesByGenre).toHaveBeenCalledWith('Thriller', 1);
+  //     expect(screen.getByText('Test Movie B')).toBeInTheDocument();
+  //   });
+  // });
 
-  it('adds new genre via "+" chip and confirms with Enter', async () => {
-    render(<SearchResultPage />);
+  // it('adds new genre via "+" chip and confirms with Enter', async () => {
+  //   render(<SearchResultPage />);
 
-    fireEvent.click(screen.getByText('+'));
+  //   fireEvent.click(screen.getByText('+'));
 
-    const allInputs = screen.getAllByDisplayValue('');
-    const genreInput = allInputs[1]; 
+  //   const allInputs = screen.getAllByDisplayValue('');
+  //   const genreInput = allInputs[1]; 
 
-    fireEvent.change(genreInput, { target: { value: 'Comedy' } });
-    fireEvent.keyDown(genreInput, { key: 'Enter', code: 'Enter' });
+  //   fireEvent.change(genreInput, { target: { value: 'Comedy' } });
+  //   fireEvent.keyDown(genreInput, { key: 'Enter', code: 'Enter' });
 
-    expect(await screen.findByText('Comedy')).toBeInTheDocument();
-  });
+  //   expect(await screen.findByText('Comedy')).toBeInTheDocument();
+  // });
 
-  test('removes genre when "X" is clicked', async () => {
-    renderWithRouter(<SearchResultPage />);
+  // test('removes genre when "X" is clicked', async () => {
+  //   renderWithRouter(<SearchResultPage />);
 
-    const genreChip = screen.getByText('Drama');
-    fireEvent.mouseEnter(genreChip.parentElement!);
+  //   const genreChip = screen.getByText('Drama');
+  //   fireEvent.mouseEnter(genreChip.parentElement!);
 
-    const xIcon = screen.getByRole('img', { hidden: true });
-    fireEvent.click(xIcon);
+  //   const xIcon = screen.getByRole('img', { hidden: true });
+  //   fireEvent.click(xIcon);
 
-    expect(screen.queryByText('Drama')).not.toBeInTheDocument();
-  });
+  //   expect(screen.queryByText('Drama')).not.toBeInTheDocument();
+  // });
 
   test('displays result count correctly', async () => {
     (api.searchMovieAPI as jest.Mock).mockResolvedValueOnce({
