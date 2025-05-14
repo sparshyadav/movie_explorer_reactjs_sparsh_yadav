@@ -54,7 +54,7 @@ export class StreamingPlatform extends Component<StreamingPlatformProps, Streami
         this.state = {
             scrollPosition: 0,
             maxScrollReached: false,
-            showControls: false,
+            showControls: true,
             selectedIndex: 0,
             allMovies: [],
             selectedPlatformMovies: [],
