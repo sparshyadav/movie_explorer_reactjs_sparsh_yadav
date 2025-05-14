@@ -87,9 +87,7 @@ const Subscription: React.FC = () => {
       } else {
         throw new Error('No checkout URL returned from server.');
       }
-    } catch (err: any) {
-
-    }
+    } catch (err: any) { }
   };
 
   return (

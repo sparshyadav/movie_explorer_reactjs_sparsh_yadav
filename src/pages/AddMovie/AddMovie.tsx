@@ -69,11 +69,6 @@ class AddMovie extends Component<AddMovieProps, MovieFormState> {
         this.setState({ ...this.state, [name]: value });
     }
 
-    handleSelectChange = (e: SelectChangeEvent) => {
-        const { name, value } = e.target;
-        this.setState({ ...this.state, [name]: value });
-    }
-
     handleCheckboxChange = (e: ChangeEvent<HTMLInputElement>) => {
         const { name, checked } = e.target;
         this.setState({ ...this.state, [name]: checked });
