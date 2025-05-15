@@ -1,12 +1,8 @@
-import { render, screen, waitFor, act } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { render, screen, waitFor } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import * as router from 'react-router-dom';
 import Success from '../pages/SubscriptionPage/Success//Success';
 import { verifySubscriptionStatusAPI } from '../API';
-// import CheckCircleIcon from '../pages/SubscriptionPage/Success/CheckCirlceIcon';
-
-// Mock dependencies
 jest.mock('../API', () => ({
   verifySubscriptionStatusAPI: jest.fn(),
 }));
@@ -16,14 +12,12 @@ jest.mock('react-router-dom', () => ({
 }));
 jest.mock('../pages/SubscriptionPage/Success/CheckCirlceIcon', () => jest.fn(() => <svg data-testid="check-circle-icon" />));
 
-// Mock window.location.href
 const mockAssign = jest.fn();
 Object.defineProperty(window, 'location', {
   value: { href: '', assign: mockAssign },
   writable: true,
 });
 
-// Mock console methods
 const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
 
 describe('Success Component', () => {
@@ -140,44 +134,6 @@ describe('Success Component', () => {
       expect(screen.getByText('Try Again')).toBeInTheDocument();
     });
   });
-
-//   test('navigates to subscription page on Try Again click in error state', async () => {
-//     (router.useLocation as jest.Mock).mockReturnValue({ search: '' });
-
-//     render(
-//       <MemoryRouter initialEntries={['/success']}>
-//         <Success />
-//       </MemoryRouter>
-//     );
-
-//     await waitFor(() => {
-//       expect(screen.getByText('Try Again')).toBeInTheDocument();
-//     });
-
-//     await act(async () => {
-//       await userEvent.click(screen.getByText('Try Again'));
-//     });
-
-//     expect(mockAssign).toHaveBeenCalledWith('/user/subscription');
-//   });
-
-//   test('navigates to home page on Start Exploring Movies click in success state', async () => {
-//     render(
-//       <MemoryRouter initialEntries={['/success?session_id=cs_test_123']}>
-//         <Success />
-//       </MemoryRouter>
-//     );
-
-//     await waitFor(() => {
-//       expect(screen.getByText('Start Exploring Movies')).toBeInTheDocument();
-//     });
-
-//     await act(async () => {
-//       await userEvent.click(screen.getByText('Start Exploring Movies'));
-//     });
-
-//     expect(mockAssign).toHaveBeenCalledWith('/');
-//   });
 
   test('handles unexpected API response structure', async () => {
     (verifySubscriptionStatusAPI as jest.Mock).mockResolvedValue(null);

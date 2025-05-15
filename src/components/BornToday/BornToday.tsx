@@ -81,7 +81,6 @@ export class BornToday extends Component<object, BornTodayState> {
         }
     ];
 
-
     constructor(props: object) {
         super(props);
         this.state = {
