@@ -83,7 +83,7 @@ function SearchResultPage() {
                         ) : (
                             <>
                                 <Typography variant="body2" className="results-count">
-                                    Found {searchedMovies.length} results
+                                    Found {searchedMovies?.length} results
                                 </Typography>
 
                                 <Box className='search-main-container'>
