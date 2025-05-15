@@ -67,7 +67,8 @@ const ProfileMenu: React.FC<Props> = () => {
             aria-haspopup="true"
             aria-expanded={open ? 'true' : undefined}
           >
-            <Avatar sx={{ width: 32, height: 32 }}>U</Avatar>
+            {/* <Avatar sx={{ width: 32, height: 32 }}>U</Avatar> */}
+            <Avatar sx={{ width: 32, height: 32 }} />
           </IconButton>
         </Tooltip>
       </Box>

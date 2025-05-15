@@ -20,6 +20,7 @@ import AllPlatformPage from './pages/AllPlatformPage/AllPlatformPage';
 import PremiumMoviesPage from './pages/PremiumMoviesPage/PremiumMoviesPage';
 import Success from './pages/SubscriptionPage/Success/Success';
 import Cancel from './pages/SubscriptionPage/Cancel/Cancel';
+import FallbackPage from './pages/FallbackPage/FallbackPage';
 
 function App() {
   let toastShown = false;
@@ -58,6 +59,7 @@ function App() {
           <Route path='/subscribe' element={<SubscriptionPage />} />
           <Route path='/platforms' element={<AllPlatformPage />} />
           <Route path='/premium-movies' element={<PremiumMoviesPage />} />
+          <Route path="*" element={<FallbackPage/>} />
           <Route path='/success' element={<Success />} />
           <Route path='/cancel' element={<Cancel />} />
         </Routes>

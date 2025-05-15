@@ -1,0 +1,318 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap');
+
+$primary-color: #FFD700; 
+$secondary-color: #1976d2; 
+$background-color: #121212; 
+$paper-color: #1E1E1E; 
+$text-color: #FFFFFF;
+$transition-time: 0.5s;
+
+.fallback-page {
+  background-color: $background-color;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem;
+  overflow: hidden;
+  position: relative;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: -10%;
+    right: -5%;
+    width: 40%;
+    height: 40%;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba($secondary-color, 0.1) 0%, rgba($secondary-color, 0) 70%);
+    z-index: 0;
+  }
+  
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -15%;
+    left: -10%;
+    width: 60%;
+    height: 60%;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba($primary-color, 0.05) 0%, rgba($primary-color, 0) 70%);
+    z-index: 0;
+  }
+
+  .fallback-container {
+    width: 100%;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity $transition-time ease, transform $transition-time ease;
+    z-index: 1;
+    position: relative;
+    
+    &.loaded {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .fallback-content {
+    background-color: $paper-color;
+    border-radius: 16px;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba($primary-color, 0.1);
+    
+    @media (min-width: 600px) {
+      padding: 3rem;
+    }
+  }
+
+  .header-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 2rem;
+    width: 100%;
+    
+    .movie-icon {
+      color: $primary-color;
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      animation: pulse 2s infinite ease-in-out;
+      
+      @media (min-width: 600px) {
+        font-size: 4rem;
+      }
+    }
+    
+    h1 {
+      color: $primary-color;
+      font-size: 4rem;
+      margin: 0;
+      text-shadow: 0 0 10px rgba($primary-color, 0.5);
+      
+      @media (min-width: 600px) {
+        font-size: 6rem;
+      }
+    }
+    
+    .subtitle {
+      color: $text-color;
+      margin-top: 0.5rem;
+      text-align: center;
+      font-size: 1.5rem;
+      
+      @media (min-width: 600px) {
+        font-size: 2rem;
+      }
+    }
+  }
+
+  .message-section {
+    text-align: center;
+    margin-bottom: 2rem;
+    width: 100%;
+    max-width: 600px;
+    
+    p {
+      color: $text-color;
+      margin-bottom: 1rem;
+      font-size: 1.1rem;
+      
+      @media (min-width: 600px) {
+        font-size: 1.25rem;
+      }
+    }
+    
+    .secondary-message {
+      color: rgba($text-color, 0.7);
+      font-size: 1rem;
+    }
+  }
+
+  .divider-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin: 1.5rem 0;
+    
+    .film-strip {
+      display: flex;
+      width: 80%;
+      max-width: 400px;
+      height: 40px;
+      background-color: rgba($primary-color, 0.2);
+      position: relative;
+      overflow: hidden;
+      
+      &::before, &::after {
+        content: '';
+        position: absolute;
+        height: 100%;
+        width: 10px;
+        background-color: $paper-color;
+        z-index: 2;
+      }
+      
+      &::before {
+        left: 0;
+      }
+      
+      &::after {
+        right: 0;
+      }
+      
+      .film-cell {
+        flex: 1;
+        height: 100%;
+        border-left: 2px solid $paper-color;
+        border-right: 2px solid $paper-color;
+        box-sizing: border-box;
+        position: relative;
+        
+        &::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 50%;
+          transform: translateX(-50%);
+          width: 8px;
+          height: 8px;
+          background-color: $paper-color;
+          border-radius: 50%;
+        }
+        
+        &::after {
+          content: '';
+          position: absolute;
+          bottom: 0;
+          left: 50%;
+          transform: translateX(-50%);
+          width: 8px;
+          height: 8px;
+          background-color: $paper-color;
+          border-radius: 50%;
+        }
+      }
+    }
+  }
+
+  .animation-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 2rem;
+    width: 100%;
+    position: relative;
+    height: 50px;
+    
+    .projector-light {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background-color: $primary-color;
+      border-radius: 50%;
+      box-shadow: 0 0 20px 10px rgba($primary-color, 0.5);
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      animation: moveLight 10s linear forwards;
+      
+      &.complete {
+        left: calc(100% - 20px);
+      }
+    }
+    
+    .countdown {
+      color: rgba($text-color, 0.7);
+      font-size: 0.9rem;
+      margin-top: 30px;
+    }
+  }
+
+  .actions-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 2rem;
+    width: 100%;
+    gap: 1rem;
+    
+    @media (min-width: 600px) {
+      flex-direction: row;
+      justify-content: center;
+    }
+    
+    .action-button {
+      min-width: 200px;
+      
+      &:first-child {
+        background-color: $primary-color;
+        color: $paper-color;
+        font-weight: 600;
+        
+        &:hover {
+          background-color: darken($primary-color, 10%);
+        }
+      }
+      
+      &:last-child {
+        color: $primary-color;
+        border-color: $primary-color;
+        
+        &:hover {
+          background-color: rgba($primary-color, 0.1);
+        }
+      }
+    }
+  }
+
+  .footer-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin-top: 1rem;
+    
+    .footer-icon {
+      margin-bottom: 0.5rem;
+      color: $primary-color;
+      transition: transform 0.3s ease;
+      
+      &:hover {
+        transform: scale(1.2);
+      }
+    }
+    
+    .footer-text {
+      color: rgba($text-color, 0.5);
+      font-size: 0.875rem;
+    }
+  }
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes moveLight {
+  0% {
+    left: 0;
+  }
+  100% {
+    left: calc(100% - 20px);
+  }
+}
