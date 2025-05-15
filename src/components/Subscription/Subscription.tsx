@@ -29,7 +29,7 @@ const plans: Plan[] = [
   {
     id: '1_day',
     title: '1 Day Premium',
-    price: '$1.99',
+    price: '$2.66',
     features: [
       'Full access to all movies',
       'Unlimited streaming',
@@ -42,7 +42,7 @@ const plans: Plan[] = [
   {
     id: '7_days',
     title: '7 Day Premium',
-    price: '$7.99',
+    price: '$15.95',
     features: [
       'Full access to all movies',
       'Unlimited streaming',
@@ -56,7 +56,7 @@ const plans: Plan[] = [
   {
     id: '1_month',
     title: '1 Month Premium',
-    price: '$19.99',
+    price: '$66.44',
     features: [
       'Full access to all movies',
       'Unlimited streaming',
