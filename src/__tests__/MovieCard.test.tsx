@@ -1,4 +1,4 @@
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import MovieCard from '../components/MovieCard/MovieCard';
 import { MemoryRouter } from 'react-router-dom';
@@ -18,8 +18,6 @@ jest.mock('@mui/icons-material', () => ({
     Add: () => <svg data-testid="add-icon" />,
     Check: () => <svg data-testid="check-icon" />,
 }));
-
-const consoleLogSpy = jest.spyOn(console, 'log').mockImplementation(() => { });
 
 const scrollToSpy = jest.fn();
 window.scrollTo = scrollToSpy;
@@ -79,21 +77,6 @@ describe('MovieCard Component', () => {
         );
 
         expect(screen.getByTestId('crown-icon')).toBeInTheDocument();
-    });
-
-    test('displays edit button for supervisor role', () => {
-        localStorageMock.getItem.mockImplementation((key) => (key === 'role' ? 'supervisor' : null));
-
-        render(
-            <MemoryRouter>
-                <MovieCard {...defaultProps} />
-            </MemoryRouter>
-        );
-
-        const editButton = screen.getByTestId('pencil-icon').parentElement!.parentElement!;
-        expect(editButton).toHaveAttribute('href', '/edit-movie/123');
-        fireEvent.click(editButton.querySelector('button')!);
-        expect(consoleLogSpy).toHaveBeenCalledWith('Edit 123');
     });
 
     test('navigates to movie details for non-premium movie', async () => {

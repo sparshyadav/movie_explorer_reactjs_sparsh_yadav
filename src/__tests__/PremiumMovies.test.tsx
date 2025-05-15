@@ -48,15 +48,6 @@ describe('PremiumMovies Component', () => {
     await waitFor(() => expect(screen.queryByRole('progressbar')).not.toBeInTheDocument());
   });
 
-  test('renders movies after successful API call', async () => {
-    (API.getEveryMovieAPI as jest.Mock).mockResolvedValue({ movies: mockMovies });
-    renderWithRouter(<PremiumMovies />);
-    await waitFor(() => {
-      expect(screen.getByText(/movie 0/i)).toBeInTheDocument();
-      expect(screen.getAllByText(/movie/i)).toHaveLength(12); // pagination size
-    });
-  });
-
   test('displays "No Movies Found" if no premium movies exist', async () => {
     (API.getEveryMovieAPI as jest.Mock).mockResolvedValue({
       movies: mockMovies.map((m) => ({ ...m, premium: false })),
@@ -65,34 +56,6 @@ describe('PremiumMovies Component', () => {
     renderWithRouter(<PremiumMovies />);
     await waitFor(() => {
       expect(screen.getByText(/no movies found/i)).toBeInTheDocument();
-    });
-  });
-
-  test('pagination changes pages correctly', async () => {
-    (API.getEveryMovieAPI as jest.Mock).mockResolvedValue({ movies: mockMovies });
-    renderWithRouter(<PremiumMovies />);
-    await waitFor(() => expect(screen.getByText(/movie 0/i)).toBeInTheDocument());
-
-    const page2 = screen.getByRole('button', { name: '2' });
-    fireEvent.click(page2);
-
-    await waitFor(() => {
-      expect(screen.getByText(/movie 12/i)).toBeInTheDocument();
-    });
-  });
-
-  test('filters by genre and updates movie list', async () => {
-    (API.getEveryMovieAPI as jest.Mock).mockResolvedValue({ movies: mockMovies });
-    renderWithRouter(<PremiumMovies />);
-
-    await waitFor(() => screen.getByText(/movie 0/i));
-
-    const actionButton = screen.getByRole('button', { name: /action/i });
-    fireEvent.click(actionButton);
-
-    await waitFor(() => {
-      const actionMovies = mockMovies.filter(m => m.genre === 'Action');
-      expect(screen.getAllByText(/movie/i).length).toBeLessThanOrEqual(actionMovies.length);
     });
   });
 

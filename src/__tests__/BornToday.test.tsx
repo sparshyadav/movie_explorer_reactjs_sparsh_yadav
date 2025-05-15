@@ -76,5 +76,4 @@ describe('BornToday Component', () => {
     const rightButton = screen.queryByLabelText('Scroll right');
     expect(rightButton).toBeInTheDocument();
   });
-
 });
