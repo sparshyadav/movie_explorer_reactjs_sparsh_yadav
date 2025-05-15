@@ -13,6 +13,7 @@ import { getSubscriptionStatus } from '../../API';
 function Navbar() {
     const navigate = useNavigate();
     const [userPlan, setUserPlan] = useState<string>('');
+    const role=localStorage.getItem('role');
 
     useEffect(() => {
         const getUserPlan = async () => {
@@ -51,7 +52,7 @@ function Navbar() {
                 <Box className='navbar-options'>
                     {userPlan === 'premium' && <Crown className='search-icon' onClick={handlePremium} />}
                     <Search className='search-icon' onClick={handleSearch} />
-                    <CreditCard className='search-icon' onClick={handleSubscription} />
+                    { role!=='supervisor' && <CreditCard className='search-icon' onClick={handleSubscription} />}
                     <ProfileMenu role='admin' />
                 </Box>
             </Box>

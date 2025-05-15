@@ -10,7 +10,7 @@ import {
   Tooltip,
 } from '@mui/material';
 import Logout from '@mui/icons-material/Logout';
-import PersonAdd from '@mui/icons-material/PersonAdd';
+import { Clapperboard } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { signoutAPI } from '../API';
 import Cookies from 'js-cookie';
@@ -67,8 +67,7 @@ const ProfileMenu: React.FC<Props> = () => {
             aria-haspopup="true"
             aria-expanded={open ? 'true' : undefined}
           >
-            {/* <Avatar sx={{ width: 32, height: 32 }}>U</Avatar> */}
-            <Avatar sx={{ width: 32, height: 32 }} />
+            <Avatar sx={{ width: 32, height: 32, bgcolor: '#F5C518', color: 'white' }} />
           </IconButton>
         </Tooltip>
       </Box>
@@ -116,7 +115,7 @@ const ProfileMenu: React.FC<Props> = () => {
         {role === 'supervisor' && (
           <MenuItem onClick={handleCreateMovie}>
             <ListItemIcon>
-              <PersonAdd fontSize="small" />
+              <Clapperboard />
             </ListItemIcon>
             Create Movie
           </MenuItem>
