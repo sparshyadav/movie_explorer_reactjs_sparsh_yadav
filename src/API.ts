@@ -304,7 +304,7 @@ export const sendTokenToBackend = async (token: string): Promise<any> => {
 
         const response = await fetch('https://movie-explorer-ror-aalekh-2ewg.onrender.com/api/v1/update_device_token', {
             method: 'POST',
-            headers: {
+            headers: {       
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${authToken}`,
             },
