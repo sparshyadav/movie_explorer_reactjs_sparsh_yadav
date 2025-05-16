@@ -6,4 +6,9 @@ export default {
   },
   setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
   collectCoverage: true, 
+  coveragePathIgnorePatterns: [
+    "/node_modules/",
+    "/path/to/ignore/",
+    "src/API.ts",
+  ],
 };
