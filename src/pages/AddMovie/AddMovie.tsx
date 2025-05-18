@@ -1,11 +1,12 @@
 import React, { Component, ChangeEvent } from 'react';
 import {
-    Box, TextField, Button, Typography, FormControl, FormControlLabel, Checkbox, FormGroup, FormLabel, Paper, SelectChangeEvent, Snackbar, Alert
+    Box, TextField, Button, Typography, FormControl, FormControlLabel, Checkbox, FormGroup, FormLabel, Paper, MenuItem, Snackbar, Alert
 } from '@mui/material';
 import './AddMovie.scss';
 import { addMovieAdminAPI, deleteMovie, movieDetailsAPI, updateMovie } from '../../API';
 import Navbar from '../../components/Navbar/Navbar';
 import AddMovieWrapper from '../../components/AddMovieWrapper';
+import toast from 'react-hot-toast';
 
 interface MovieFormState {
     id?: number;
@@ -33,7 +34,7 @@ interface MovieFormState {
 
 interface AddMovieProps {
     id?: string;
-    navigate: (path:string) => void;
+    navigate: (path: string) => void;
 }
 
 
@@ -115,11 +116,11 @@ class AddMovie extends Component<AddMovieProps, MovieFormState> {
 
         if (this.state.poster) {
             payload.append("movie[poster]", this.state.poster);
-          }
-          if (this.state.banner) {
+        }
+        if (this.state.banner) {
             payload.append("movie[banner]", this.state.banner);
-          }
-
+        }
+        console.log("THIS IS THE FINAL STATE: ", this.state);
 
         try {
             await addMovieAdminAPI(payload);
@@ -209,16 +210,17 @@ class AddMovie extends Component<AddMovieProps, MovieFormState> {
 
         if (this.state.poster) {
             payload.append("movie[poster]", this.state.poster);
-          }
-          if (this.state.banner) {
+        }
+        if (this.state.banner) {
             payload.append("movie[banner]", this.state.banner);
-          }
+        }
 
         try {
             const { id } = this.props;
-            if(!id) return;
+            if (!id) return;
             await updateMovie(Number(id), payload);
 
+            toast.success("Movie Updated Successfully");
             this.props.navigate('/');
 
             this.setState({
@@ -259,7 +261,7 @@ class AddMovie extends Component<AddMovieProps, MovieFormState> {
         this.props.navigate('/');
 
         this.setState({ isDeleting: false });
-        
+
     }
 
     render() {
@@ -311,6 +313,7 @@ class AddMovie extends Component<AddMovieProps, MovieFormState> {
                                 <Box className="form-row two-columns">
                                     <FormControl fullWidth className="form-field">
                                         <TextField
+                                            select
                                             label="Genre"
                                             name="genre"
                                             value={genre}
@@ -318,7 +321,17 @@ class AddMovie extends Component<AddMovieProps, MovieFormState> {
                                             fullWidth
                                             required
                                             className="form-field"
-                                        />
+                                        >
+                                            <MenuItem value="Action">Action</MenuItem>
+                                            <MenuItem value="Comedy">Comedy</MenuItem>
+                                            <MenuItem value="Drama">Drama</MenuItem>
+                                            <MenuItem value="Horror">Horror</MenuItem>
+                                            <MenuItem value="Romance">Romance</MenuItem>
+                                            <MenuItem value="Thriller">Thriller</MenuItem>
+                                            <MenuItem value="Sci-Fi">Sci-Fi</MenuItem>
+                                            <MenuItem value="Adventure">Adventure</MenuItem>
+                                            <MenuItem value="Actino">Animation</MenuItem> 
+                                        </TextField>
                                     </FormControl>
                                     <FormControl fullWidth className="form-field">
                                         <TextField
@@ -382,6 +395,7 @@ class AddMovie extends Component<AddMovieProps, MovieFormState> {
                                 </Box>
                                 <Box className="form-row">
                                     <TextField
+                                        select
                                         label="Streaming Platform"
                                         name="streaming_platform"
                                         value={streaming_platform}
@@ -389,7 +403,12 @@ class AddMovie extends Component<AddMovieProps, MovieFormState> {
                                         fullWidth
                                         required
                                         className="form-field"
-                                    />
+                                    >
+                                        <MenuItem value="Netflix">Netflix</MenuItem>
+                                        <MenuItem value="Amazon">Amazon </MenuItem>
+                                        <MenuItem value="Disney+">HBO</MenuItem>
+                                        <MenuItem value="Hulu">Hulu</MenuItem>
+                                    </TextField>
                                 </Box>
                             </Box>
 
