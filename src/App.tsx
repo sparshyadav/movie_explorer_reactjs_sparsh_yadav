@@ -21,6 +21,7 @@ import PremiumMoviesPage from './pages/PremiumMoviesPage/PremiumMoviesPage';
 import Success from './pages/SubscriptionPage/Success/Success';
 import Cancel from './pages/SubscriptionPage/Cancel/Cancel';
 import FallbackPage from './pages/FallbackPage/FallbackPage';
+import UserProfilePage from './pages/UserProfilePage/UserProfilePage';
 
 function App() {
   let toastShown = false;
@@ -62,6 +63,7 @@ function App() {
           <Route path="*" element={<FallbackPage/>} />
           <Route path='/success' element={<Success />} />
           <Route path='/cancel' element={<Cancel />} />
+          <Route path='/profile' element={<UserProfilePage />} />
         </Routes>
       </Elements>
     </Router>

@@ -120,7 +120,6 @@ class AddMovie extends Component<AddMovieProps, MovieFormState> {
         if (this.state.banner) {
             payload.append("movie[banner]", this.state.banner);
         }
-        console.log("THIS IS THE FINAL STATE: ", this.state);
 
         try {
             await addMovieAdminAPI(payload);

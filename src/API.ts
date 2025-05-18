@@ -436,3 +436,20 @@ export const verifyCancellationStatusAPI = async () => {
         console.error('Error verifying subscription:', err);
     }
 }
+
+export const getUserData=async()=>{
+    const token=Cookies.get("authToken");
+    try{
+        const response=await axios.get(`${BASE_URL}/api/v1/current_user`, {
+            headers: {
+                'accept': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        });
+
+        return response.data;
+    }
+    catch (err: any) {
+        console.error('Error verifying subscription:', err);
+    }
+}
