@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useNavigate } from "react-router-dom";
 import {
   Box,
@@ -14,7 +14,6 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import CheckIcon from '@mui/icons-material/Check';
 import './Subscription.scss';
 import { createSubscription } from '../../API';
-import CircularProgress from '@mui/material/CircularProgress';
 
 interface Plan {
   title: string;
@@ -73,13 +72,14 @@ const plans: Plan[] = [
 
 const Subscription: React.FC = () => {
   const navigate = useNavigate();
-  const [selectedPlan, setSelectedPlan] = useState<string | null>(null);
 
-  const handleSubscribe = async () => {
+  const handleSubscribe = async (selectedPlan:string) => {
     if (!selectedPlan) {
+      console.log("NOT SELECTED PLAN");
       return;
     }
     try {
+      console.log("I am inside the try part of the code");
       const checkoutUrl = await createSubscription(selectedPlan);
       if (checkoutUrl) {
         window.location.href = checkoutUrl;
@@ -105,8 +105,7 @@ const Subscription: React.FC = () => {
           {plans.map((plan, index) => (
             <Box
               key={index}
-              className={`plan-card ${plan.variant} ${selectedPlan === plan.id ? 'selected' : ''}`}
-              onClick={() => setSelectedPlan(plan.id)}
+              className={`plan-card ${plan.variant}`}
             >
               <Box className="plan-details">
                 <Typography variant="h4" className="plan-title">
@@ -127,9 +126,10 @@ const Subscription: React.FC = () => {
                 </List>
 
               </Box>
-              <Button variant="contained" className="plan-button" onClick={handleSubscribe}>
-                {selectedPlan === plan.id ? <CircularProgress />
-                  : plan.buttonText}
+              <Button variant="contained" className="plan-button" onClick={() => {
+                handleSubscribe(plan.id);
+              }}>
+                {plan.buttonText}
               </Button>
             </Box>
           ))}
@@ -154,8 +154,8 @@ const Subscription: React.FC = () => {
             </Button>
           </Box>
         </Box>
-      </Container>
-    </Box>
+      </Container >
+    </Box >
   );
 };
 
