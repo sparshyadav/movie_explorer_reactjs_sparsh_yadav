@@ -46,8 +46,6 @@ const MoviePageList: React.FC = () => {
         setSearchParams({ page: currentPage.toString() });
     }, [currentPage]);
 
-
-
     useEffect(() => {
         const fetchMovies = async () => {
             try {
