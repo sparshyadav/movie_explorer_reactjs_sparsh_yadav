@@ -67,6 +67,21 @@ class AddMovie extends Component<AddMovieProps, MovieFormState> {
 
     handleTextChange = (e: ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
+
+        if (name === "rating") {
+            const numericRating = parseFloat(value);
+            if (value && (isNaN(numericRating) || numericRating < 0 || numericRating > 10)) {
+                toast.error("Rating must be between 0 and 10.");
+            }
+        }
+
+        if (name === "release_year") {
+            const numericYear = parseInt(value, 10);
+            if (value.length === 4 && (isNaN(numericYear) || numericYear < 1950 || numericYear > 2025)) {
+                toast.error("Release year must be between 1950 and 2025.");
+            }
+        }
+
         this.setState({ ...this.state, [name]: value });
     }
 
@@ -100,6 +115,7 @@ class AddMovie extends Component<AddMovieProps, MovieFormState> {
 
     handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+
         this.setState({ isSubmitting: true });
 
         const payload = new FormData();
@@ -327,9 +343,9 @@ class AddMovie extends Component<AddMovieProps, MovieFormState> {
                                             <MenuItem value="Horror">Horror</MenuItem>
                                             <MenuItem value="Romance">Romance</MenuItem>
                                             <MenuItem value="Thriller">Thriller</MenuItem>
-                                            <MenuItem value="Sci-Fi">Sci-Fi</MenuItem>
+                                            <MenuItem value="Si-Fi">Si-Fi</MenuItem>
                                             <MenuItem value="Adventure">Adventure</MenuItem>
-                                            <MenuItem value="Actino">Animation</MenuItem> 
+                                            <MenuItem value="Actino">Animation</MenuItem>
                                         </TextField>
                                     </FormControl>
                                     <FormControl fullWidth className="form-field">
