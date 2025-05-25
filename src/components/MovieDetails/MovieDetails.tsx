@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Star, Plus, Check } from 'lucide-react';
 import './MovieDetails.scss';
 import { useParams } from 'react-router-dom';
-import { movieDetailsAPI } from '../../API';
+import { addToWatchlist, getWatchlist, movieDetailsAPI, removeFromWatchlist } from '../../API';
 import Navbar from '../Navbar/Navbar';
 import Footer from '../Footer/Footer';
 import WhatToWatch from '../WhatToWatch/WhatToWatch';
@@ -26,19 +26,30 @@ interface Movie {
 
 const MovieDetails: React.FC = () => {
     const [userRating, setUserRating] = useState<number | null>(null);
-    const [inWatchlist, setInWatchlist] = useState(false);
     const [hoverRating, setHoverRating] = useState<number | null>(null);
     const [movie, setMovie] = useState<Movie | null>(null);
     const [imageUrl, setImageUrl] = useState<string>('');
+    const [isWatchlisted, setIsWatchlisted] = useState<boolean>(false);
     const { id } = useParams();
 
     const handleRating = (rating: number) => {
         setUserRating(rating);
     };
 
-    const toggleWatchlist = () => {
-        setInWatchlist(!inWatchlist);
+    const toggleWatchlist = async () => {
+        try {
+            if (isWatchlisted) {
+                await handleRemoveWatchlist();
+                setIsWatchlisted(false);
+            } else {
+                await handleAddWatchlist();
+                setIsWatchlisted(true);
+            }
+        } catch (error) {
+            console.error("Failed to toggle watchlist:", error);
+        }
     };
+
 
     const streaming_platform_url = {
         Netflix: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/69/Netflix_logo.svg/2560px-Netflix_logo.svg.png',
@@ -64,8 +75,30 @@ const MovieDetails: React.FC = () => {
             }
         };
 
+        const allWatchlistedMovies = async () => {
+            const response = await getWatchlist();
+            const isInWatchlist = response.some((mov: any) => String(mov.id) === String(id));
+
+            if (isInWatchlist) {
+                setIsWatchlisted(true);
+            }
+
+            console.log("RESPONSE OF WATCHLIST MOVIES: ", response);
+        }
+
         fetchMovieDetails();
+        allWatchlistedMovies();
     }, [id]);
+
+    const handleAddWatchlist = async () => {
+        const response = await addToWatchlist(Number(id));
+        console.log('Response of watchlsit: ', response);
+    }
+
+    const handleRemoveWatchlist = async () => {
+        const response = await removeFromWatchlist(Number(id));
+        console.log('Response of watchlsit: ', response);
+    }
 
     if (!movie) {
         return (
@@ -108,20 +141,23 @@ const MovieDetails: React.FC = () => {
 
                                 <button
                                     onClick={toggleWatchlist}
-                                    className={`watchlist-btn ${inWatchlist ? 'watchlist-btn--added' : ''}`}
+                                    className={`watchlist-btn ${isWatchlisted ? 'watchlist-btn--added' : ''}`}
                                 >
-                                    {inWatchlist ? (
-                                        <>
-                                            <Check size={18} />
-                                            <span>In Watchlist</span>
-                                        </>
-                                    ) : (
-                                        <>
-                                            <Plus size={18} />
-                                            <span>Add to Watchlist</span>
-                                        </>
-                                    )}
+                                    <div className='wtchlst-btn'>
+                                        {isWatchlisted ? (
+                                            <>
+                                                <Check size={18} />
+                                                <span>In Watchlist</span>
+                                            </>
+                                        ) : (
+                                            <>
+                                                <Plus size={18} />
+                                                <span>Add to Watchlist</span>
+                                            </>
+                                        )}
+                                    </div>
                                 </button>
+
                             </div>
 
                             <div className="genre-tags">
@@ -189,8 +225,8 @@ const MovieDetails: React.FC = () => {
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
+                </div >
+            </div >
             <WhatToWatch />
             <Footer />
         </>

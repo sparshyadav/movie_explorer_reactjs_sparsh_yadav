@@ -304,7 +304,7 @@ export const sendTokenToBackend = async (token: string): Promise<any> => {
 
         const response = await fetch('https://movie-explorer-ror-aalekh-2ewg.onrender.com/api/v1/update_device_token', {
             method: 'POST',
-            headers: {       
+            headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${authToken}`,
             },
@@ -437,10 +437,10 @@ export const verifyCancellationStatusAPI = async () => {
     }
 }
 
-export const getUserData=async()=>{
-    const token=Cookies.get("authToken");
-    try{
-        const response=await axios.get(`${BASE_URL}/api/v1/current_user`, {
+export const getUserData = async () => {
+    const token = Cookies.get("authToken");
+    try {
+        const response = await axios.get(`${BASE_URL}/api/v1/current_user`, {
             headers: {
                 'accept': 'application/json',
                 'Authorization': `Bearer ${token}`
@@ -453,3 +453,77 @@ export const getUserData=async()=>{
         console.error('Error verifying subscription:', err);
     }
 }
+
+export const addToWatchlist = async (movieId: number): Promise<any> => {
+    try {
+        const authToken = Cookies.get('authToken');
+        if (!authToken) {
+            throw new Error("Auth token not found in cookies.");
+        }
+
+        const response = await axios.post(
+            `${BASE_URL}/api/v1/watchlists`,
+            { movie_id: movieId },
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${authToken}`,
+                    'Accept': 'application/json'
+                }
+            }
+        );
+
+        return response.data;
+
+    } catch (error) {
+        console.error("Error adding to watchlist:", error);
+        throw error;
+    }
+};
+
+export const removeFromWatchlist = async (movieId: number): Promise<any> => {
+  try {
+    const authToken = Cookies.get('authToken');
+    if (!authToken) {
+      throw new Error("Auth token not found in cookies.");
+    }
+
+    const response = await axios.delete(
+      `${BASE_URL}/api/v1/watchlists/${movieId}`,
+      {
+        headers: {
+          'Authorization': `Bearer ${authToken}`,
+          'Accept': 'application/json'
+        }
+      }
+    );
+
+    return response.data;
+
+  } catch (error) {
+    console.error("Error removing from watchlist:", error);
+    throw error;
+  }
+};
+
+export const getWatchlist = async (): Promise<any> => {
+  try {
+    const authToken = Cookies.get('authToken');
+    if (!authToken) {
+      throw new Error("Auth token not found in cookies.");
+    }
+
+    const response = await axios.get(`${BASE_URL}/api/v1/watchlists`, {
+      headers: {
+        'Authorization': `Bearer ${authToken}`,
+        'Accept': 'application/json'
+      }
+    });
+
+    return response.data.data;
+
+  } catch (error) {
+    console.error("Error fetching watchlist:", error);
+    throw error;
+  }
+};

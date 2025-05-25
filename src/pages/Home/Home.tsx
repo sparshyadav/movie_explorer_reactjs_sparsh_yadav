@@ -9,6 +9,7 @@ import BornToday from '../../components/BornToday/BornToday';
 import Box from '@mui/material/Box';
 import Cookies from 'js-cookie';
 import toast from 'react-hot-toast';
+import Watchlist from '../../components/Watchlist/Watchlist';
 
 class Home extends Component {
   render() {
@@ -22,6 +23,7 @@ class Home extends Component {
         <MainCarousal />
         <WhatToWatch />
         <StreamingPlatform />
+        <Watchlist />
         <BornToday />
         <Footer />
       </Box>
