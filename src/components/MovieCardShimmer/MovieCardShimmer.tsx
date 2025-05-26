@@ -25,9 +25,9 @@ const MovieCardShimmer: React.FC = () => {
 
                 <Box className="watch-options-btn shimmer-placeholder"></Box>
 
-                <Box className="action-buttons">
+                {/* <Box className="action-buttons">
                     <Box className="watchlist-btn shimmer-placeholder"></Box>
-                </Box>
+                </Box> */}
             </Box>
         </Box>
     );
