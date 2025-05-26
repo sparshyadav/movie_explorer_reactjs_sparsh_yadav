@@ -89,7 +89,7 @@ const MovieCard: React.FC<ShowCardProps> = ({
 
                 <button onClick={handleDetails} className="watch-options-btn">More Info</button>
 
-                <Box className="action-buttons">
+                {/* <Box className="action-buttons">
                     <button
                         className="watchlist-btn"
                         onClick={handleWatchlistToggle}
@@ -98,7 +98,7 @@ const MovieCard: React.FC<ShowCardProps> = ({
                         {isInWatchlist ? <Check /> : <Add />}
                         {isInWatchlist ? "In Watchlist" : "Add to Watchlist"}
                     </button>
-                </Box>
+                </Box> */}
             </Box>
         </Box>
     );

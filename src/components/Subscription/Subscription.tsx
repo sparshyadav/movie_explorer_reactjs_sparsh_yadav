@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import {
   Box,
@@ -72,6 +72,10 @@ const plans: Plan[] = [
 
 const Subscription: React.FC = () => {
   const navigate = useNavigate();
+
+  useEffect(()=>{
+    window.scrollTo(0, 0);
+  })
 
   const handleSubscribe = async (selectedPlan:string) => {
     if (!selectedPlan) {
