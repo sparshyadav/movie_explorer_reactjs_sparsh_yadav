@@ -76,7 +76,7 @@ export const signoutAPI = async (): Promise<any> => {
 
 export const getAllMoviesAPI = async (page: number) => {
     try {
-        const response = await axios.get(`${BASE_URL}/api/v1/movies?page=${page}`);
+        const response = await axios.get(`${BASE_URL}/api/v1/movies?page=${page}&per_page=12`);
 
         return response.data;
     }

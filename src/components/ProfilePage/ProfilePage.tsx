@@ -1,6 +1,6 @@
 import { Edit, User, Phone } from 'lucide-react';
 import './ProfilePage.scss';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { getSubscriptionStatus, getUserData } from '../../API';
 import Cookies from 'js-cookie';
 
@@ -41,7 +41,6 @@ const subscriptionPlans = [
 
 export default function ProfilePage() {
   const token = Cookies.get("authToken");
-  const randomImage = userImages[Math.floor(Math.random() * userImages.length)];
   const [subscriptionType, setSubscriptionType] = useState<string | null>(null);
   const [userData, setUserData] = useState({
     name: '',
@@ -50,8 +49,9 @@ export default function ProfilePage() {
     number: '',
   });
 
-
   useEffect(() => {
+    window.scrollTo(0, 0);
+
     const fetchUserData = async () => {
       const response = await getUserData();
       setUserData({
@@ -69,6 +69,10 @@ export default function ProfilePage() {
 
     fetchUserData();
     fetchSubscriptionStatus();
+  }, []);
+
+  const randomImage = useMemo(() => {
+    return userImages[Math.floor(Math.random() * userImages.length)];
   }, []);
 
   const currentPlan = subscriptionPlans.find(plan => plan.type === subscriptionType);
