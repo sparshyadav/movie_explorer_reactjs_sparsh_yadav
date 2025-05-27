@@ -6,14 +6,15 @@ import { Search, CreditCard } from 'lucide-react';
 import ProfileMenu from '../ProfileMenu';
 import { useEffect, useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { Crown } from 'lucide-react';
+import { Crown, AlignJustify } from 'lucide-react';
 import Cookies from 'js-cookie';
 import { getSubscriptionStatus } from '../../API';
+import Tooltip from '@mui/material/Tooltip';
 
-function Navbar() {
+function Navbar({ onMenuClick }: { onMenuClick: () => void }) {
     const navigate = useNavigate();
     const [userPlan, setUserPlan] = useState<string>('');
-    const role=localStorage.getItem('role');
+    const role = localStorage.getItem('role');
 
     useEffect(() => {
         const getUserPlan = async () => {
@@ -42,18 +43,23 @@ function Navbar() {
     return (
         <Container maxWidth={false} disableGutters className="navbar-container">
             <Box className='navbar-center-container' >
-                <NavLink to={'/'}>
-                    <Box className='navbar-icon'>
-                        <Typography variant="h4" fontWeight="bold" className='site-title'>
-                            BINGE
-                        </Typography>
+                <Box className='hamburger-container'>
+                    <AlignJustify className='search-icon hamburger-icon' onClick={onMenuClick}/>
+                </Box>
+                <Box className='right-container'>
+                    <NavLink to={'/'}>
+                        <Box className='navbar-icon'>
+                            <Typography variant="h4" fontWeight="bold" className='site-title'>
+                                BINGE
+                            </Typography>
+                        </Box>
+                    </NavLink>
+                    <Box className='navbar-options'>
+                        {userPlan === 'premium' && <Tooltip title="Premium Movies"><Crown className='search-icon icon-group' onClick={handlePremium} /></Tooltip>}
+                        <Tooltip title="Search"><Search className='search-icon icon-group' onClick={handleSearch} /></Tooltip>
+                        {role !== 'supervisor' && <Tooltip title="Subscription"><CreditCard className='search-icon icon-group' onClick={handleSubscription} /></Tooltip>}
+                        <ProfileMenu role='admin' />
                     </Box>
-                </NavLink>
-                <Box className='navbar-options'>
-                    {userPlan === 'premium' && <Crown className='search-icon' onClick={handlePremium} />}
-                    <Search className='search-icon' onClick={handleSearch} />
-                    { role!=='supervisor' && <CreditCard className='search-icon' onClick={handleSubscription} />}
-                    <ProfileMenu role='admin' />
                 </Box>
             </Box>
         </Container >

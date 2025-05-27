@@ -54,6 +54,7 @@ export default function ProfilePage() {
 
     const fetchUserData = async () => {
       const response = await getUserData();
+      console.log("USER: ", response);
       setUserData({
         name: response.name,
         email: response.email,

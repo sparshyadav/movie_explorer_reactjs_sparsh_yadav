@@ -4,7 +4,6 @@ import {
 } from '@mui/material';
 import './AddMovie.scss';
 import { addMovieAdminAPI, deleteMovie, movieDetailsAPI, updateMovie } from '../../API';
-import Navbar from '../../components/Navbar/Navbar';
 import AddMovieWrapper from '../../components/AddMovieWrapper';
 import toast from 'react-hot-toast';
 
@@ -289,8 +288,6 @@ class AddMovie extends Component<AddMovieProps, MovieFormState> {
         } = this.state;
 
         return (
-            <>
-                <Navbar />
                 <div className="admin-movie-page">
                     <Paper elevation={3} className="form-container">
                         <Typography variant="h4" className="form-title">
@@ -588,7 +585,6 @@ class AddMovie extends Component<AddMovieProps, MovieFormState> {
                         </Alert>
                     </Snackbar>
                 </div>
-            </>
         );
     }
 }

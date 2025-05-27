@@ -3,8 +3,6 @@ import { Star, Plus, Check } from 'lucide-react';
 import './MovieDetails.scss';
 import { useParams } from 'react-router-dom';
 import { addToWatchlist, getWatchlist, movieDetailsAPI, removeFromWatchlist } from '../../API';
-import Navbar from '../Navbar/Navbar';
-import Footer from '../Footer/Footer';
 import WhatToWatch from '../WhatToWatch/WhatToWatch';
 import TopLineLoader from './TopLineLoader/TopLineLoader';
 
@@ -108,7 +106,6 @@ const MovieDetails: React.FC = () => {
 
     return (
         <>
-            <Navbar />
             <div className="movie-page">
                 <div className="banner">
                     <div
@@ -228,7 +225,6 @@ const MovieDetails: React.FC = () => {
                 </div >
             </div >
             <WhatToWatch />
-            <Footer />
         </>
     );
 };

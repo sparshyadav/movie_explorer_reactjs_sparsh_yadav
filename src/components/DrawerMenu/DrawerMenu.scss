@@ -1,0 +1,145 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap');
+
+.drawer-container {
+  width: 280px;
+  height: 100vh;
+  background-color: #121212;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  color: white;
+}
+
+.drawer-header {
+  padding: 20px;
+  border-bottom: 1px solid #333;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  .drawer-title {
+    font-family: "Orbitron", sans-serif;
+    font-weight: bold;
+    color: #f5c518;
+    letter-spacing: 2px;
+  }
+}
+
+.drawer-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 20px 0;
+  gap: 8px;
+}
+
+.drawer-menu-item {
+  display: flex;
+  align-items: center;
+  padding: 15px 20px;
+  text-decoration: none;
+  color: white;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  
+  &:hover {
+    background-color: #1e1e1e;
+    color: #f5c518;
+    text-decoration: none;
+    
+    .menu-item-icon {
+      color: #f5c518;
+    }
+  }
+  
+  &.active {
+    background-color: #2a2a2a;
+    color: #f5c518;
+    border-right: 3px solid #f5c518;
+    
+    .menu-item-icon {
+      color: #f5c518;
+    }
+  }
+}
+
+.menu-item-icon {
+  width: 24px;
+  height: 24px;
+  margin-right: 15px;
+  color: white;
+  transition: color 0.3s ease;
+  flex-shrink: 0;
+}
+
+.menu-item-text {
+  font-size: 16px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.drawer-footer {
+  padding: 20px;
+  border-top: 1px solid #333;
+  display: flex;
+  justify-content: center;
+}
+
+.drawer-profile-item {
+  display: flex;
+  align-items: center;
+  padding: 15px 20px;
+  text-decoration: none;
+  color: white;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  border-radius: 8px;
+  width: 100%;
+  justify-content: center;
+  
+  &:hover {
+    background-color: #1e1e1e;
+    color: #f5c518;
+    text-decoration: none;
+    
+    .profile-icon {
+      color: #f5c518;
+    }
+  }
+  
+  &.active {
+    background-color: #2a2a2a;
+    color: #f5c518;
+    
+    .profile-icon {
+      color: #f5c518;
+    }
+  }
+}
+
+.profile-icon {
+  width: 24px;
+  height: 24px;
+  margin-right: 10px;
+  color: white;
+  transition: color 0.3s ease;
+  flex-shrink: 0;
+}
+
+.profile-text {
+  font-size: 16px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+a {
+  text-decoration: none !important;
+  
+  &:hover {
+    text-decoration: none !important;
+  }
+}
+
+.MuiDrawer-paper {
+  background-color: #121212 !important;
+}

@@ -1,5 +1,3 @@
-import Navbar from '../Navbar/Navbar';
-import Footer from '../Footer/Footer';
 import { Box, Container, Typography, TextField, InputAdornment, Grid } from '@mui/material';
 import { Search as SearchIcon } from '@mui/icons-material';
 import { useEffect, useState } from 'react';
@@ -29,6 +27,7 @@ function SearchResultPage() {
     };
 
     useEffect(() => {
+        window.scrollTo(0, 0);
         if (debounceTimeout) {
             clearTimeout(debounceTimeout);
         }
@@ -39,7 +38,7 @@ function SearchResultPage() {
                 setIsLoading(false);
                 setSearchedMovies(response.movies);
             }
-        }, 2500);
+        }, 1500);
 
         setDebounceTimeout(timeout);
 
@@ -48,8 +47,6 @@ function SearchResultPage() {
 
     return (
         <div className="search-result-page">
-            <Navbar />
-
             <Container className="search-container">
                 <Box className="search-header">
                     <Typography variant="h4" className="search-title">
@@ -104,7 +101,6 @@ function SearchResultPage() {
                     }
                 </Box>
             </Container>
-            <Footer />
         </div>
     );
 }
