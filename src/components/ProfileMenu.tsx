@@ -51,7 +51,7 @@ const ProfileMenu: React.FC<Props> = () => {
     navigate('/create-movie');
   };
 
-  const handleLogin=()=>{
+  const handleLogin = () => {
     navigate('/login');
   }
 
@@ -62,7 +62,7 @@ const ProfileMenu: React.FC<Props> = () => {
           <IconButton
             onClick={handleClick}
             size="small"
-            sx={{ ml: 2 }}
+            sx={{ ml: 2}}
             aria-controls={open ? 'account-menu' : undefined}
             aria-haspopup="true"
             aria-expanded={open ? 'true' : undefined}
@@ -83,6 +83,11 @@ const ProfileMenu: React.FC<Props> = () => {
             sx: {
               overflow: 'visible',
               filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
+              minWidth: 180,
+              padding: '10px 0',
+              fontSize: '1rem',
+              color: '#F5C518',
+              bgcolor: '#1a1a1a',
               mt: 1.5,
               '& .MuiAvatar-root': {
                 width: 32,
@@ -95,10 +100,10 @@ const ProfileMenu: React.FC<Props> = () => {
                 display: 'block',
                 position: 'absolute',
                 top: 0,
+                bgcolor: '#1a1a1a',
                 right: 14,
                 width: 10,
                 height: 10,
-                bgcolor: 'background.paper',
                 transform: 'translateY(-50%) rotate(45deg)',
                 zIndex: 0,
               },
@@ -109,13 +114,13 @@ const ProfileMenu: React.FC<Props> = () => {
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
         <MenuItem onClick={handleProfile}>
-          <Avatar /> Profile
+          <Avatar style={{ color: 'white' }} /> Profile
         </MenuItem>
 
         {role === 'supervisor' && (
           <MenuItem onClick={handleCreateMovie}>
             <ListItemIcon>
-              <Clapperboard />
+              <Clapperboard style={{ color: 'white' }} />
             </ListItemIcon>
             Create Movie
           </MenuItem>
@@ -126,14 +131,14 @@ const ProfileMenu: React.FC<Props> = () => {
         {isLoggedIn ? (
           <MenuItem onClick={handleLogout}>
             <ListItemIcon>
-              <Logout fontSize="small" />
+              <Logout fontSize="small" style={{ color: 'white' }} />
             </ListItemIcon>
             Logout
           </MenuItem>
         ) : (
           <MenuItem onClick={handleLogin}>
             <ListItemIcon>
-              <Logout fontSize="small" />
+              <Logout fontSize="small" style={{ color: 'white' }} />
             </ListItemIcon>
             Login
           </MenuItem>
