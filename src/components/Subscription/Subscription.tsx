@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import {
   Box,
@@ -9,6 +9,7 @@ import {
   ListItem,
   ListItemText,
   ListItemIcon,
+  Tooltip
 } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import CheckIcon from '@mui/icons-material/Check';
@@ -72,12 +73,17 @@ const plans: Plan[] = [
 
 const Subscription: React.FC = () => {
   const navigate = useNavigate();
+const [isPremium, setIsPremium] = useState<boolean>(false);
 
-  useEffect(()=>{
+  useEffect(() => {
     window.scrollTo(0, 0);
-  })
+    if (localStorage.getItem('userPlan') === 'premium') {
+      setIsPremium(true);
+    }
+  }, []);
 
-  const handleSubscribe = async (selectedPlan:string) => {
+
+  const handleSubscribe = async (selectedPlan: string) => {
     if (!selectedPlan) {
       console.log("NOT SELECTED PLAN");
       return;
@@ -130,11 +136,19 @@ const Subscription: React.FC = () => {
                 </List>
 
               </Box>
-              <Button variant="contained" className="plan-button" onClick={() => {
-                handleSubscribe(plan.id);
-              }}>
-                {plan.buttonText}
-              </Button>
+              <Tooltip title={isPremium ? 'You already have premium access' : ''}>
+                <span>
+                  <Button
+                    variant="contained"
+                    className="plan-button"
+                    onClick={() => handleSubscribe(plan.id)}
+                    disabled={isPremium}
+                  >
+                    {isPremium ? 'Already Subscribed' : plan.buttonText}
+                  </Button>
+                </span>
+              </Tooltip>
+
             </Box>
           ))}
         </Box>

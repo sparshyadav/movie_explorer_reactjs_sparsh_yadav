@@ -23,6 +23,7 @@ import Cancel from './pages/SubscriptionPage/Cancel/Cancel';
 import FallbackPage from './pages/FallbackPage/FallbackPage';
 import UserProfilePage from './pages/UserProfilePage/UserProfilePage';
 import MainLayout from './pages/MainLayout';
+import WatchlistPage from './components/WatchlistPage/WatchlistPage';
 
 function App() {
   let toastShown = false;
@@ -67,6 +68,7 @@ function App() {
             <Route path="/success" element={<Success />} />
             <Route path="/cancel" element={<Cancel />} />
             <Route path="/profile" element={<UserProfilePage />} />
+            <Route path="/watchlist" element={<WatchlistPage />} />
           </Route>
         </Routes>
       </Elements>
