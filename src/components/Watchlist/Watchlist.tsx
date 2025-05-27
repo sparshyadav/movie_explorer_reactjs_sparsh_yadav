@@ -131,7 +131,7 @@ class Watchlist extends Component<{}, WhatToWatchState> {
                     className="netflix-card-carousel"
                     onMouseEnter={() => this.setState({ showControls: true })}
                 >
-                    <NavLink to={'/all-movies'}>
+                    <NavLink to={'/watchlist'}>
                         <h2 className="carousel-title main-title">
                             Your Watchlist
                             <span className='title-icon'>
