@@ -1,6 +1,7 @@
 import axios from "axios";
 import toast from "react-hot-toast";
 import Cookies from 'js-cookie';
+import { TrySharp } from "@mui/icons-material";
 
 const BASE_URL = 'https://movie-explorer-ror-aalekh-2ewg.onrender.com';
 
@@ -527,3 +528,29 @@ export const getWatchlist = async (): Promise<any> => {
     throw error;
   }
 };
+
+export const getCelebsAPI=async(): Promise<any>=>{
+    try{
+        const response=await axios.get(`${BASE_URL}/api/v1/celebrities?page=1&per_page=10`);
+
+        return response.data.celebrities;
+    }
+    catch(error){
+        console.error("Error Fetching Celebrities:", error);
+    throw error;
+    }
+}
+
+export const getCelebByIdAPI=async(id: String): Promise<any>=>{
+    try{
+        const response=await axios.get(`${BASE_URL}/api/v1/celebrities/${id}`);
+        console.log("RESPONSE: ", response);
+
+        return response.data;
+    }
+    catch(error){
+        console.error("Error Fetching Celebrity by ID:", error);
+    throw error;
+    }
+}
+

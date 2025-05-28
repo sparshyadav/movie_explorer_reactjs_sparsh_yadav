@@ -25,6 +25,7 @@ import UserProfilePage from './pages/UserProfilePage/UserProfilePage';
 import MainLayout from './pages/MainLayout';
 import WatchlistPage from './components/WatchlistPage/WatchlistPage';
 import CelebInfo from './components/CelebInfo/CelebInfo';
+import AddCelebrity from './components/AddCelebrity/AddCelebrity';
 
 function App() {
   let toastShown = false;
@@ -59,6 +60,7 @@ function App() {
           <Route element={<MainLayout />}>
             <Route path="/" element={<Home />} />
             <Route path="/create-movie" element={<AddMovie />} />
+            <Route path="/create-celeb" element={<AddCelebrity />} />
             <Route path="/edit-movie/:id" element={<AddMovie />} />
             <Route path="/movie-details/:id" element={<MovieDetails />} />
             <Route path="/all-movies" element={<AllMoviesPage />} />
@@ -70,7 +72,7 @@ function App() {
             <Route path="/cancel" element={<Cancel />} />
             <Route path="/profile" element={<UserProfilePage />} />
             <Route path="/watchlist" element={<WatchlistPage />} />
-            <Route path="/celeb" element={<CelebInfo />} />
+            <Route path="/celeb/:id" element={<CelebInfo />} />
           </Route>
         </Routes>
       </Elements>
