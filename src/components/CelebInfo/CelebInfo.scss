@@ -1,0 +1,259 @@
+$primary-black: #000000;
+$secondary-black: #111111;
+$tertiary-black: #1a1a1a;
+$primary-yellow: #FFD700;
+$text-white: #ffffff;
+$text-light: #e0e0e0;
+$text-gray: #cccccc;
+
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+@mixin transition {
+  transition: all 0.3s ease;
+}
+
+.celeb-page {
+  background-color: $primary-black;
+  color: $text-white;
+  min-height: 100vh;
+  font-family: 'Arial', sans-serif;
+}
+
+.banner-section {
+  position: relative;
+  height: 50vh;
+  min-height: 300px;
+  overflow: hidden;
+
+  .banner-image {
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: top;
+    background-repeat: no-repeat;
+    position: relative;
+  }
+
+  .banner-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.8));
+  }
+}
+
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+
+.profile-section {
+  padding: 2rem 0;
+  position: relative;
+  margin-top: -100px;
+  z-index: 2;
+
+  .profile-content {
+    @include flex-column;
+    align-items: center;
+    gap: 2rem;
+
+    @media (min-width: 768px) {
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+    }
+  }
+
+  .profile-image-container {
+    position: relative;
+    flex-shrink: 0;
+
+    .profile-image {
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      border: 4px solid $primary-yellow;
+      object-fit: cover;
+      box-shadow: 0 4px 20px rgba(255, 215, 0, 0.3);
+    }
+  }
+
+  .profile-details {
+    @include flex-column;
+    gap: 1.5rem;
+    flex: 1;
+    text-align: center;
+
+    @media (min-width: 768px) {
+      text-align: left;
+      margin-left: 2rem;
+    }
+
+    .name {
+      font-size: 2.5rem;
+      font-weight: bold;
+      color: $primary-yellow;
+      margin: 0;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+
+      @media (max-width: 600px) {
+        font-size: 2rem;
+      }
+    }
+
+    .roles {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      justify-content: center;
+
+      @media (min-width: 768px) {
+        justify-content: flex-start;
+      }
+
+      .role-tag {
+        background-color: $primary-yellow;
+        color: $primary-black;
+        padding: 0.3rem 0.8rem;
+        border-radius: 20px;
+        font-size: 0.9rem;
+        font-weight: bold;
+        @include transition;
+
+        &:hover {
+          transform: translateY(-1px);
+          box-shadow: 0 2px 8px rgba(255, 215, 0, 0.4);
+        }
+      }
+    }
+
+    .basic-info {
+      @include flex-column;
+      gap: 0.5rem;
+
+      @media (min-width: 500px) {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 1rem;
+      }
+
+      .info-item {
+        @include flex-column;
+        gap: 0.2rem;
+
+        @media (min-width: 500px) {
+          display: flex;
+          flex-direction: row;
+          gap: 0.5rem;
+        }
+
+        .label {
+          color: $primary-yellow;
+          font-weight: bold;
+          font-size: 0.9rem;
+        }
+
+        .value {
+          color: $text-white;
+          font-size: 0.9rem;
+        }
+      }
+    }
+
+    .biography {
+      max-width: 600px;
+
+      h3 {
+        color: $primary-yellow;
+        font-size: 1.3rem;
+        margin-bottom: 0.8rem;
+        font-weight: bold;
+      }
+
+      p {
+        line-height: 1.6;
+        font-size: 1rem;
+        color: $text-light;
+        margin: 0;
+      }
+    }
+  }
+}
+
+.movies-section {
+  padding: 3rem 0;
+  background-color: $secondary-black;
+
+  .section-title {
+    font-size: 2rem;
+    color: $primary-yellow;
+    text-align: center;
+    padding-bottom: 50px;
+    font-weight: bold;
+
+    @media (max-width: 600px) {
+      font-size: 1.6rem;
+    }
+  }
+
+  .movies-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.2rem;
+    justify-content: center;
+
+    @media (min-width: 768px) {
+      justify-content: flex-start;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 0 0.5rem;
+  }
+
+  .profile-section {
+    margin-top: -50px;
+    padding: 1rem 0;
+  }
+
+  .movies-section {
+    padding: 2rem 0;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media print {
+  .celeb-page {
+    background-color: white !important;
+    color: black !important;
+  }
+  
+  .banner-overlay {
+    display: none;
+  }
+}

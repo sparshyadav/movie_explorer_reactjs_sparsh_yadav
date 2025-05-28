@@ -3,7 +3,7 @@ import { Box, Typography, Button, Pagination } from '@mui/material';
 import './PlatformPageList.scss';
 import MovieCard from '../MovieCard/MovieCard';
 import { useSearchParams } from 'react-router-dom';
-import CircularProgress from '@mui/material/CircularProgress';
+import { CircularProgress } from '@mui/material';
 import { getEveryMovieAPI } from '../../API';
 
 interface Movie {
@@ -24,6 +24,7 @@ const PlatformPageList: React.FC = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
     const [searchParams, setSearchParams] = useSearchParams();
+
 
     const platforms = ['Netflix', 'Amazon', 'HBO', 'Hulu'];
 

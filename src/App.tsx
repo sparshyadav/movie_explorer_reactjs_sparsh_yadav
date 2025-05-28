@@ -24,6 +24,7 @@ import FallbackPage from './pages/FallbackPage/FallbackPage';
 import UserProfilePage from './pages/UserProfilePage/UserProfilePage';
 import MainLayout from './pages/MainLayout';
 import WatchlistPage from './components/WatchlistPage/WatchlistPage';
+import CelebInfo from './components/CelebInfo/CelebInfo';
 
 function App() {
   let toastShown = false;
@@ -69,6 +70,7 @@ function App() {
             <Route path="/cancel" element={<Cancel />} />
             <Route path="/profile" element={<UserProfilePage />} />
             <Route path="/watchlist" element={<WatchlistPage />} />
+            <Route path="/celeb" element={<CelebInfo />} />
           </Route>
         </Routes>
       </Elements>
