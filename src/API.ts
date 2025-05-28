@@ -532,8 +532,7 @@ export const getWatchlist = async (): Promise<any> => {
 export const getCelebsAPI=async(): Promise<any>=>{
     try{
         const response=await axios.get(`${BASE_URL}/api/v1/celebrities?page=1&per_page=10`);
-
-        return response.data.celebrities;
+        return response.data.data;
     }
     catch(error){
         console.error("Error Fetching Celebrities:", error);

@@ -3,6 +3,7 @@ import './CelebInfo.scss';
 import MovieCard from '../CelebMovieCard/CelebMovieCard';
 import { useParams } from 'react-router-dom';
 import { getCelebByIdAPI } from '../../API';
+import LinearProgress from '@mui/material/LinearProgress';
 
 interface Movie {
   id: number;
@@ -38,7 +39,7 @@ const CelebInfoPage: React.FC = () => {
     fetchCelebData();
   }, [id]);
 
-  if (!celebData) return <div>Loading...</div>;
+  if (!celebData) return <LinearProgress />;
 
   return (
     <div className="celeb-page">

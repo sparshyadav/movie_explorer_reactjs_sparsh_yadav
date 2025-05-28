@@ -5,6 +5,7 @@ import { ChevronRight } from 'lucide-react';
 import Box from '@mui/material/Box';
 import { getCelebsAPI } from '../../API';
 import NavigateWrapper from '../NavigateWrapper';
+import ShimmerCircle from '../ShimmerCircle/ShimmerCircle';
 
 interface Celeb {
     id: number;
@@ -105,7 +106,7 @@ export class BornToday extends Component<BornTodayProps, BornTodayState> {
         const { scrollPosition, showControls } = this.state;
 
         const canScrollLeft = scrollPosition > 0;
-        const canScrollRight = scrollPosition < (this.state.celebrities.length - this.visibleCards) * this.cardWidth;
+        const canScrollRight = scrollPosition < ((this.state.celebrities?.length ?? 0) - this.visibleCards) * this.cardWidth;
 
         return (
             <Box className='celeb-main-container'>
@@ -127,15 +128,23 @@ export class BornToday extends Component<BornTodayProps, BornTodayState> {
                         )}
 
                         <Box className="carousel-track" ref={this.carouselRef}>
-                            {this.state.celebrities.map((celeb) => (
-                                <Box className="carousel-item" key={celeb.id} onClick={() => this.handleClick(celeb.id)}>
-                                    <img className='celeb-image' src={celeb.image_url} alt={celeb.name} />
-                                    <p className='celeb-name'>{celeb.name}</p>
-                                    <p className='celeb-age'>{celeb.age}</p>
-                                </Box>
-                            ))}
-
+                            {this.state.celebrities.length === 0
+                                ? Array.from({ length: this.visibleCards }).map((_, idx) => (
+                                    <ShimmerCircle key={idx} />
+                                ))
+                                : this.state.celebrities.map((celeb) => (
+                                    <Box
+                                        className="carousel-item"
+                                        key={celeb.id}
+                                        onClick={() => this.handleClick(celeb.id)}
+                                    >
+                                        <img className="celeb-image" src={celeb.image_url} alt={celeb.name} />
+                                        <p className="celeb-name">{celeb.name}</p>
+                                        <p className="celeb-age">{celeb.age}</p>
+                                    </Box>
+                                ))}
                         </Box>
+
 
                         {showControls && canScrollRight && (
                             <button
