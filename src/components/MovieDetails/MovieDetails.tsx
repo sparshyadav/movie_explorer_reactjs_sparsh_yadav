@@ -57,6 +57,8 @@ const MovieDetails: React.FC = () => {
     };
 
     useEffect(() => {
+        window.scrollTo(0, 0);
+
         const fetchMovieDetails = async () => {
             if (!id) return;
             try {

@@ -8,8 +8,8 @@ import LinearProgress from '@mui/material/LinearProgress';
 interface Movie {
   id: number;
   title: string;
-  poster: string;
-  releaseYear: number;
+  poster_url: string;
+  release_year: number;
   rating: number;
 }
 
@@ -30,6 +30,8 @@ const CelebInfoPage: React.FC = () => {
   const [celebData, setCelebData] = useState<CelebData | null>(null);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+    
     const fetchCelebData = async () => {
       const response = await getCelebByIdAPI(String(id));
       console.log("RESULT: ", response);
@@ -39,7 +41,11 @@ const CelebInfoPage: React.FC = () => {
     fetchCelebData();
   }, [id]);
 
-  if (!celebData) return <LinearProgress />;
+  if (!celebData) return (
+    <div className="celeb-page">
+      <LinearProgress />
+    </div>
+  )
 
   return (
     <div className="celeb-page">
@@ -99,8 +105,8 @@ const CelebInfoPage: React.FC = () => {
                 key={`${movie.id}-${index}`}
                 id={movie.id}
                 title={movie.title}
-                poster={movie.poster}
-                releaseYear={movie.releaseYear}
+                poster={movie.poster_url}
+                releaseYear={movie.release_year}
                 rating={movie.rating}
               />
             ))}

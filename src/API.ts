@@ -95,8 +95,7 @@ export const getAllMoviesAPI = async (page: number) => {
 export const getEveryMovieAPI = async () => {
     try {
         const response = await axios.get(`${BASE_URL}/api/v1/movies?per_page=100`);
-
-        return response.data;
+        return response.data.movies;
     }
     catch (error: any) {
         console.log("Error Occurred while Getting Movies: ", error);
@@ -483,73 +482,91 @@ export const addToWatchlist = async (movieId: number): Promise<any> => {
 };
 
 export const removeFromWatchlist = async (movieId: number): Promise<any> => {
-  try {
-    const authToken = Cookies.get('authToken');
-    if (!authToken) {
-      throw new Error("Auth token not found in cookies.");
-    }
-
-    const response = await axios.delete(
-      `${BASE_URL}/api/v1/watchlists/${movieId}`,
-      {
-        headers: {
-          'Authorization': `Bearer ${authToken}`,
-          'Accept': 'application/json'
+    try {
+        const authToken = Cookies.get('authToken');
+        if (!authToken) {
+            throw new Error("Auth token not found in cookies.");
         }
-      }
-    );
 
-    return response.data;
+        const response = await axios.delete(
+            `${BASE_URL}/api/v1/watchlists/${movieId}`,
+            {
+                headers: {
+                    'Authorization': `Bearer ${authToken}`,
+                    'Accept': 'application/json'
+                }
+            }
+        );
 
-  } catch (error) {
-    console.error("Error removing from watchlist:", error);
-    throw error;
-  }
+        return response.data;
+
+    } catch (error) {
+        console.error("Error removing from watchlist:", error);
+        throw error;
+    }
 };
 
 export const getWatchlist = async (): Promise<any> => {
-  try {
-    const authToken = Cookies.get('authToken');
-    if (!authToken) {
-      throw new Error("Auth token not found in cookies.");
+    try {
+        const authToken = Cookies.get('authToken');
+        if (!authToken) {
+            throw new Error("Auth token not found in cookies.");
+        }
+
+        const response = await axios.get(`${BASE_URL}/api/v1/watchlists`, {
+            headers: {
+                'Authorization': `Bearer ${authToken}`,
+                'Accept': 'application/json'
+            }
+        });
+
+        return response.data.data;
+
+    } catch (error) {
+        console.error("Error fetching watchlist:", error);
+        throw error;
     }
-
-    const response = await axios.get(`${BASE_URL}/api/v1/watchlists`, {
-      headers: {
-        'Authorization': `Bearer ${authToken}`,
-        'Accept': 'application/json'
-      }
-    });
-
-    return response.data.data;
-
-  } catch (error) {
-    console.error("Error fetching watchlist:", error);
-    throw error;
-  }
 };
 
-export const getCelebsAPI=async(): Promise<any>=>{
-    try{
-        const response=await axios.get(`${BASE_URL}/api/v1/celebrities?page=1&per_page=10`);
+export const getCelebsAPI = async (): Promise<any> => {
+    try {
+        const response = await axios.get(`${BASE_URL}/api/v1/celebrities?page=1&per_page=10`);
         return response.data.data;
     }
-    catch(error){
+    catch (error) {
         console.error("Error Fetching Celebrities:", error);
-    throw error;
+        throw error;
     }
 }
 
-export const getCelebByIdAPI=async(id: String): Promise<any>=>{
-    try{
-        const response=await axios.get(`${BASE_URL}/api/v1/celebrities/${id}`);
+export const getCelebByIdAPI = async (id: String): Promise<any> => {
+    try {
+        const response = await axios.get(`${BASE_URL}/api/v1/celebrities/${id}`);
         console.log("RESPONSE: ", response);
 
         return response.data;
     }
-    catch(error){
+    catch (error) {
         console.error("Error Fetching Celebrity by ID:", error);
-    throw error;
+        throw error;
     }
 }
 
+export const addCelebrityAPI = (data: FormData) => {
+    const token = Cookies.get('authToken');
+    for (const [key, value] of data.entries()) {
+        console.log(key, value);
+    } try {
+        axios.post(`${BASE_URL}/api/v1/celebrities`, data, {
+            headers: {
+                'Accept': ' application/json',
+                'Content-Type': 'multipart/form-data',
+                'Authorization': `Bearer ${token}`
+            }
+        })
+    }
+    catch (error) {
+        console.error("Error Adding Celebrity:", error);
+        throw error;
+    }
+};

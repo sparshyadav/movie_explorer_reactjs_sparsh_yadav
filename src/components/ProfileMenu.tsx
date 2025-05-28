@@ -2,7 +2,6 @@ import React from 'react';
 import {
   Avatar,
   Box,
-  Divider,
   IconButton,
   ListItemIcon,
   Menu,
@@ -10,7 +9,7 @@ import {
   Tooltip,
 } from '@mui/material';
 import Logout from '@mui/icons-material/Logout';
-import { Clapperboard } from 'lucide-react';
+import { Clapperboard, CircleUserRound } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { signoutAPI } from '../API';
 import Cookies from 'js-cookie';
@@ -51,6 +50,11 @@ const ProfileMenu: React.FC<Props> = () => {
     navigate('/create-movie');
   };
 
+  const handleCreateCeleb = () => {
+    handleClose();
+    navigate('/create-celeb')
+  }
+
   const handleLogin = () => {
     navigate('/login');
   }
@@ -62,7 +66,7 @@ const ProfileMenu: React.FC<Props> = () => {
           <IconButton
             onClick={handleClick}
             size="small"
-            sx={{ ml: 2}}
+            sx={{ ml: 2 }}
             aria-controls={open ? 'account-menu' : undefined}
             aria-haspopup="true"
             aria-expanded={open ? 'true' : undefined}
@@ -126,7 +130,14 @@ const ProfileMenu: React.FC<Props> = () => {
           </MenuItem>
         )}
 
-        <Divider />
+        {role === 'supervisor' && (
+          <MenuItem onClick={handleCreateCeleb}>
+            <ListItemIcon>
+              <CircleUserRound style={{ color: 'white' }} />
+            </ListItemIcon>
+            Create Celebrity
+          </MenuItem>
+        )}
 
         {isLoggedIn ? (
           <MenuItem onClick={handleLogout}>

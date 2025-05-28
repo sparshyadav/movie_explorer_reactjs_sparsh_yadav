@@ -1,11 +1,13 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { User, Camera, Calendar, Globe, UserCheck, Film, Search, X, ChevronDown } from 'lucide-react';
+import { User, Camera, Calendar, Globe, UserCheck, Film, Search, X, ChevronDown, FileText } from 'lucide-react';
 import './AddCelebrity.scss';
+import { addCelebrityAPI, getEveryMovieAPI } from '../../API';
+import toast from 'react-hot-toast';
 
 interface Movie {
   id: number;
   title: string;
-  poster: string;
+  poster_url: string;
   year: number;
 }
 
@@ -13,6 +15,7 @@ interface CelebrityFormData {
   name: string;
   role: string;
   dateOfBirth: string;
+  bio: string;
   nationality: string;
   profileImage: File | null;
   bannerImage: File | null;
@@ -25,6 +28,7 @@ const AddCelebrity: React.FC = () => {
     role: '',
     dateOfBirth: '',
     nationality: '',
+    bio: '',
     profileImage: null,
     bannerImage: null,
     selectedMovies: []
@@ -37,17 +41,18 @@ const AddCelebrity: React.FC = () => {
   const [showMovieDropdown, setShowMovieDropdown] = useState<boolean>(false);
   const [isSearchingMovies, setIsSearchingMovies] = useState<boolean>(false);
   const movieSearchRef = useRef<HTMLDivElement>(null);
+  const [mockMovies, setMockMovies] = useState<Movie[]>([]);
 
-  const mockMovies: Movie[] = [
-    { id: 1, title: "The Dark Knight", poster: "https://images.unsplash.com/photo-1489599511983-3b9d0a1153fd?w=200&h=300&fit=crop", year: 2008 },
-    { id: 2, title: "Inception", poster: "https://images.unsplash.com/photo-1489599511983-3b9d0a1153fd?w=200&h=300&fit=crop", year: 2010 },
-    { id: 3, title: "Interstellar", poster: "https://images.unsplash.com/photo-1489599511983-3b9d0a1153fd?w=200&h=300&fit=crop", year: 2014 },
-    { id: 4, title: "The Matrix", poster: "https://images.unsplash.com/photo-1489599511983-3b9d0a1153fd?w=200&h=300&fit=crop", year: 1999 },
-    { id: 5, title: "Pulp Fiction", poster: "https://images.unsplash.com/photo-1489599511983-3b9d0a1153fd?w=200&h=300&fit=crop", year: 1994 },
-    { id: 6, title: "The Godfather", poster: "https://images.unsplash.com/photo-1489599511983-3b9d0a1153fd?w=200&h=300&fit=crop", year: 1972 },
-    { id: 7, title: "Forrest Gump", poster: "https://images.unsplash.com/photo-1489599511983-3b9d0a1153fd?w=200&h=300&fit=crop", year: 1994 },
-    { id: 8, title: "Avatar", poster: "https://images.unsplash.com/photo-1489599511983-3b9d0a1153fd?w=200&h=300&fit=crop", year: 2009 }
-  ];
+  useEffect(() => {
+    const fetchAllMovies = async () => {
+      let response = await getEveryMovieAPI();
+      const movies = Array.isArray(response) ? response : response?.data || [];
+
+      setMockMovies(movies);
+    }
+
+    fetchAllMovies();
+  }, [])
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -76,7 +81,7 @@ const AddCelebrity: React.FC = () => {
   const handleMovieSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     const query = e.target.value;
     setMovieSearchQuery(query);
-    
+
     if (query.trim().length > 0) {
       searchMovies(query);
     } else {
@@ -109,13 +114,16 @@ const AddCelebrity: React.FC = () => {
     { value: 'writer', label: 'Writer' }
   ];
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
+  ) => {
     const { name, value } = e.target;
     setFormData(prev => ({
       ...prev,
       [name]: value
     }));
   };
+
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>, imageType: 'profile' | 'banner') => {
     const file = e.target.files?.[0];
@@ -135,10 +143,37 @@ const AddCelebrity: React.FC = () => {
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Celebrity Data:', formData);
-    alert('Celebrity added successfully!');
+
+    const data = new FormData();
+    data.append('celebrity[name]', formData.name);
+    // data.append('role', formData.role);
+    data.append('celebrity[birth_date]', formData.dateOfBirth);
+    data.append('celebrity[nationality]', formData.nationality);
+    data.append('celebrity[biography]', formData.bio);
+
+    if (formData.profileImage) {
+      data.append('celebrity[image]', formData.profileImage);
+    }
+
+    // if (formData.bannerImage) {
+    //   data.append('bannerImage', formData.bannerImage);
+    // }
+
+    formData.selectedMovies.forEach((movie) => {
+      data.append('celebrity[movie_ids][]', movie.id.toString());
+    });
+
+    try {
+      const response = await addCelebrityAPI(data);
+      console.log('Celebrity created:', response);
+      toast.success('Celebrity added successfully!');
+      handleReset();
+    } catch (error) {
+      console.error('Error adding celebrity:', error);
+      toast.error('Failed to add celebrity.');
+    }
   };
 
   const handleReset = () => {
@@ -147,6 +182,7 @@ const AddCelebrity: React.FC = () => {
       role: '',
       dateOfBirth: '',
       nationality: '',
+      bio: '',
       profileImage: null,
       bannerImage: null,
       selectedMovies: []
@@ -241,6 +277,25 @@ const AddCelebrity: React.FC = () => {
               </div>
 
               <div className="add-celebrity__field">
+                <label htmlFor="biography" className="add-celebrity__label">
+                  <FileText size={18} />
+                  Biography
+                </label>
+                <textarea
+                  id="biography"
+                  name="bio"
+                  value={formData.bio}
+                  onChange={handleInputChange}
+                  className="add-celebrity__textarea"
+                  placeholder="Enter celebrity's biography, achievements, and career highlights..."
+                  rows={6}
+                />
+                <div className="add-celebrity__char-counter">
+                  {formData.bio.length}/1000 characters
+                </div>
+              </div>
+
+              <div className="add-celebrity__field">
                 <label className="add-celebrity__label">
                   <Film size={18} />
                   Movies
@@ -259,7 +314,7 @@ const AddCelebrity: React.FC = () => {
                       <ChevronDown size={20} className="add-celebrity__dropdown-icon" />
                     )}
                   </div>
-                  
+
                   {showMovieDropdown && (
                     <div className="add-celebrity__movie-dropdown">
                       {isSearchingMovies ? (
@@ -275,7 +330,7 @@ const AddCelebrity: React.FC = () => {
                             onClick={() => handleMovieSelect(movie)}
                           >
                             <img
-                              src={movie.poster}
+                              src={movie.poster_url}
                               alt={movie.title}
                               className="add-celebrity__movie-poster"
                             />
@@ -300,7 +355,7 @@ const AddCelebrity: React.FC = () => {
                       {formData.selectedMovies.map(movie => (
                         <div key={movie.id} className="add-celebrity__movie-chip">
                           <img
-                            src={movie.poster}
+                            src={movie.poster_url}
                             alt={movie.title}
                             className="add-celebrity__chip-poster"
                           />

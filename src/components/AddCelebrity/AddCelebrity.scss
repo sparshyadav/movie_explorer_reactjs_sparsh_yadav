@@ -10,14 +10,14 @@
   &__container {
     background: #1a1a1a;
     border-radius: 16px;
-    box-shadow: 
+    box-shadow:
       0 20px 40px rgba(0, 0, 0, 0.4),
       0 0 0 1px rgba(255, 215, 0, 0.1);
     padding: 40px;
     width: 100%;
     max-width: 1000px;
     position: relative;
-    
+
     &::before {
       content: '';
       position: absolute;
@@ -35,7 +35,7 @@
     align-items: center;
     gap: 16px;
     margin-bottom: 32px;
-    
+
     &-icon {
       color: #ffd700;
       width: 32px;
@@ -124,9 +124,95 @@
     }
   }
 
+  // ADD THESE STYLES TO YOUR EXISTING AddCelebrity.scss FILE
+  // Place them after the &__select styles and before the &__image-section
+
+  &__textarea {
+    background: #2a2a2a;
+    border: 2px solid #3a3a3a;
+    border-radius: 8px;
+    padding: 12px 16px;
+    color: #ffffff;
+    font-size: 16px;
+    font-family: inherit;
+    resize: vertical;
+    min-height: 120px;
+    max-height: 200px;
+    transition: all 0.3s ease;
+    line-height: 1.5;
+
+    &:focus {
+      outline: none;
+      border-color: #ffd700;
+      box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.1);
+    }
+
+    &::placeholder {
+      color: #999999;
+    }
+
+    // Custom scrollbar for textarea
+    &::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: #1a1a1a;
+      border-radius: 4px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: #ffd700;
+      border-radius: 4px;
+    }
+
+    &::-webkit-scrollbar-thumb:hover {
+      background: #ffed4e;
+    }
+  }
+
+  &__char-counter {
+    color: #999999;
+    font-size: 12px;
+    text-align: right;
+    margin-top: 4px;
+    transition: color 0.3s ease;
+
+    // Change color when approaching limit
+    &[data-warning="true"] {
+      color: #ffd700;
+    }
+
+    &[data-error="true"] {
+      color: #ff4444;
+    }
+  }
+
+  // Responsive adjustments for biography field
+  @media (max-width: 768px) {
+    &__textarea {
+      font-size: 14px;
+      min-height: 100px;
+      max-height: 150px;
+    }
+
+    &__char-counter {
+      font-size: 11px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    &__textarea {
+      padding: 10px 14px;
+      font-size: 14px;
+      min-height: 80px;
+      max-height: 120px;
+    }
+  }
+
   &__select {
     cursor: pointer;
-    
+
     option {
       background: #2a2a2a;
       color: #ffffff;
@@ -515,17 +601,29 @@
   }
 
   @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+    0% {
+      transform: rotate(0deg);
+    }
+
+    100% {
+      transform: rotate(360deg);
+    }
   }
 
   @keyframes bounce {
-    0%, 20%, 50%, 80%, 100% {
+
+    0%,
+    20%,
+    50%,
+    80%,
+    100% {
       transform: translateY(0);
     }
+
     40% {
       transform: translateY(-4px);
     }
+
     60% {
       transform: translateY(-2px);
     }
@@ -639,14 +737,20 @@
   }
 }
 
-.add-celebrity__field{
-    @media(max-width: 768px){
-        width: 100%;
-    }
+.add-celebrity__field {
+  @media(max-width: 768px) {
+    width: 100%;
+  }
 }
 
-.add-celebrity__form-fields{
-    @media(max-width: 768px){
-        width: 100%;
-    }
+.add-celebrity__form-fields {
+  @media(max-width: 768px) {
+    width: 100%;
+  }
+}
+
+.add-celebrity__select {
+  @media(max-width: 768px) {
+    width: 100%;
+  }
 }
