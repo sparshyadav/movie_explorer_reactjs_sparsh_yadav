@@ -48,7 +48,6 @@ const MovieDetails: React.FC = () => {
         }
     };
 
-
     const streaming_platform_url = {
         Netflix: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/69/Netflix_logo.svg/2560px-Netflix_logo.svg.png',
         Amazon: 'https://pentagram-production.imgix.net/38cf1cca-b7de-4393-85b9-cf36de0e38cf/Amazon_PrimeVideo_Documentation_02copy.jpg?crop=edges&fit=crop&h=630&rect=192%2C0%2C3456%2C2160&w=1200',
@@ -84,7 +83,7 @@ const MovieDetails: React.FC = () => {
             }
 
             console.log("RESPONSE OF WATCHLIST MOVIES: ", response);
-        }
+        };
 
         fetchMovieDetails();
         allWatchlistedMovies();
@@ -92,58 +91,56 @@ const MovieDetails: React.FC = () => {
 
     const handleAddWatchlist = async () => {
         const response = await addToWatchlist(Number(id));
-        console.log('Response of watchlsit: ', response);
-    }
+        console.log('Response of watchlist: ', response);
+    };
 
     const handleRemoveWatchlist = async () => {
         const response = await removeFromWatchlist(Number(id));
-        console.log('Response of watchlsit: ', response);
-    }
+        console.log('Response of watchlist: ', response);
+    };
 
     if (!movie) {
-        return (
-            <TopLineLoader />
-        )
+        return <TopLineLoader />;
     }
 
     return (
         <>
-            <div className="movie-page">
-                <div className="banner">
+            <div className="movie-details-page">
+                <div className="movie-details-banner">
                     <div
-                        className="banner__image"
+                        className="movie-details-banner__image"
                         style={{ backgroundImage: `url(${movie.banner_url})` }}
                     >
-                        <div className="banner__overlay"></div>
+                        <div className="movie-details-banner__overlay"></div>
                     </div>
-                    <div className='empty-space'></div>
+                    <div className="movie-details-empty-space"></div>
                 </div>
 
-                <div className="container">
-                    <div className="movie-content">
-                        <div className="movie-content__poster">
+                <div className="movie-details-container">
+                    <div className="movie-details-content">
+                        <div className="movie-details-content__poster">
                             <img
                                 src={movie.poster_url}
                                 alt={`${movie.title} poster`}
                             />
                         </div>
 
-                        <div className="movie-content__details">
-                            <div className="movie-header">
-                                <div className="movie-header__title-group">
+                        <div className="movie-details-content__details">
+                            <div className="movie-details-header">
+                                <div className="movie-details-header__title-group">
                                     <h1>{movie.title}</h1>
-                                    <div className="movie-meta">
+                                    <div className="movie-details-meta">
                                         <span>{movie.release_year}</span>
-                                        <span className="separator">•</span>
+                                        <span className="movie-details-separator">•</span>
                                         <span>{movie.duration} mins</span>
                                     </div>
                                 </div>
 
                                 <button
                                     onClick={toggleWatchlist}
-                                    className={`watchlist-btn ${isWatchlisted ? 'watchlist-btn--added' : ''}`}
+                                    className={`movie-details-watchlist-btn ${isWatchlisted ? 'movie-details-watchlist-btn--added' : ''}`}
                                 >
-                                    <div className='wtchlst-btn'>
+                                    <div className="movie-details-wtchlst-btn">
                                         {isWatchlisted ? (
                                             <>
                                                 <Check size={18} />
@@ -157,37 +154,36 @@ const MovieDetails: React.FC = () => {
                                         )}
                                     </div>
                                 </button>
-
                             </div>
 
-                            <div className="genre-tags">
+                            <div className="movie-details-genre-tags">
                                 {movie.genre}
                             </div>
 
-                            <div className="rating-section">
-                                <div className="rating-display">
-                                    <div className="rating-badge">
-                                        <Star className="star-icon" size={16} />
+                            <div className="movie-details-rating-section">
+                                <div className="movie-details-rating-display">
+                                    <div className="movie-details-rating-badge">
+                                        <Star className="movie-details-star-icon" size={16} />
                                         <span>{movie.rating.toFixed(1)}</span>
                                     </div>
-                                    <span className="rating-max">/10</span>
+                                    <span className="movie-details-rating-max">/10</span>
                                 </div>
-                                <div className="user-rating">
+                                <div className="movie-details-user-rating">
                                     <p>Rate this movie:</p>
-                                    <div className="star-rating">
+                                    <div className="movie-details-star-rating">
                                         {[1, 2, 3, 4, 5].map((star) => (
                                             <button
                                                 key={star}
                                                 onClick={() => handleRating(star)}
                                                 onMouseEnter={() => setHoverRating(star)}
                                                 onMouseLeave={() => setHoverRating(null)}
-                                                className="star-btn"
+                                                className="movie-details-star-btn"
                                             >
                                                 <Star
                                                     size={24}
                                                     className={`${(userRating && star <= userRating) || (hoverRating && star <= hoverRating)
-                                                        ? 'star-btn__filled'
-                                                        : 'star-btn__empty'
+                                                        ? 'movie-details-star-btn__filled'
+                                                        : 'movie-details-star-btn__empty'
                                                         }`}
                                                 />
                                             </button>
@@ -196,37 +192,37 @@ const MovieDetails: React.FC = () => {
                                 </div>
                             </div>
 
-                            <div className="movie-description">
+                            <div className="movie-details-description">
                                 <h2>Overview</h2>
                                 <p>{movie.description}</p>
                             </div>
-                            <div className="credits-section">
-                                <div className="credits-item">
+                            <div className="movie-details-credits-section">
+                                <div className="movie-details-credits-item">
                                     <h3>Director</h3>
                                     <p>{movie.director}</p>
                                 </div>
-                                <div className="credits-item">
+                                <div className="movie-details-credits-item">
                                     <h3>Lead Actor</h3>
                                     <p>{movie.main_lead}</p>
                                 </div>
                             </div>
 
-                            <div className="streaming-section">
+                            <div className="movie-details-streaming-section">
                                 <h2>Available on</h2>
-                                <div className="platform-list">
-                                    <div className="movie-box">
+                                <div className="movie-details-platform-list">
+                                    <div className="movie-details-movie-box">
                                         <img
                                             src={imageUrl}
                                             alt={`${movie.streaming_platform} logo`}
-                                            className="movie-poster"
+                                            className="movie-details-movie-poster"
                                         />
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div >
-            </div >
+                </div>
+            </div>
             <WhatToWatch />
         </>
     );

@@ -175,16 +175,16 @@ export class MainCarousal extends Component<{}, State> {
                                     />
                                     <Box className="banner-content">
                                         <NavLink to={`/movie-details/${movie.id}`}>
-                                            <Box className="poster-container">
+                                            <Box className="main-carousal-poster-container poster-container">
                                                 <img src={movie.poster_url} alt={`${movie.title} Poster`} className="poster-image" />
                                             </Box>
                                         </NavLink>
                                         <Box className='info-main-container'>
                                             <Box className="info-container">
-                                                <Typography variant={isSmallScreen ? "h4" : "h3"} className="movie-title">
+                                                <Typography variant={isSmallScreen ? "h4" : "h3"} className="main-carousal-movie-title movie-title">
                                                     {movie.title}
                                                 </Typography>
-                                                <Typography variant="body1" className="movie-description">
+                                                <Typography variant="body1" className="main-carousal-movie-description movie-description">
                                                     {this.truncateDescription(movie.description)}
                                                 </Typography>
                                             </Box>

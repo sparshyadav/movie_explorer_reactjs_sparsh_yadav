@@ -78,13 +78,13 @@
             object-fit: cover;
 
             @media(max-width:768px) {
-                height: 180px;
-                width: 180px;
+                height: 150px;
+                width: 150px;
             }
 
             @media(max-width:550px) {
-                height: 150px;
-                width: 150px;
+                height: 120px;
+                width: 120px;
             }
         }
 
@@ -200,6 +200,10 @@
     aspect-ratio: 1 / 1;
     border-radius: 50%;
     object-fit: cover;
+
+    @media(max-width: 768px){
+        width: 80%;
+    }
 }
 
 .born-today-edit-icon-wrapper {
