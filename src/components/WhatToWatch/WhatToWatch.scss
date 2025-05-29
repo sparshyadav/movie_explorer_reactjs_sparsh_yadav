@@ -8,15 +8,15 @@
 
 .netflix-card-carousel {
   width: 85%;
-  padding: 20px 0;
+  padding: 10px 0;
   position: relative;
 
-  .carousel-title {
+  .carousel-titlee {
     display: flex;
     color: #F5C518;
-    font-size: 32px;
+    font-size: 28px;
     font-weight: 600;
-    margin-bottom: 16px;
+    padding-bottom: 12px !important;
     font-family: 'Netflix Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 
     @media screen and (max-width: 768px) {
@@ -30,8 +30,8 @@
     }
 
     .next-icon {
-      height: 35px;
-      width: 35px;
+      height: 28px;
+      width: 28px;
       stroke-width: 3;
 
       @media screen and (max-width: 768px) {
@@ -47,8 +47,8 @@
     min-height: 400px;
   }
 
-  .main-title{
-    margin-bottom: 25px !important;
+  .main-title {
+    margin-bottom: 10px !important;
   }
 
   .carousel-track {

@@ -160,7 +160,7 @@ class Login extends React.Component<Props> {
                         disabled={this.state.isLoading}
                     >
                         {this.state.isLoading ? (
-                            <span className="loader">Loging In...</span>
+                            <span className="loader">Logging In...</span>
                         ) : (
                             'Login'
                         )}

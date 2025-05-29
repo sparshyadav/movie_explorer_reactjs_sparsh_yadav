@@ -38,7 +38,7 @@ function SearchResultPage() {
                 setIsLoading(false);
                 setSearchedMovies(response.movies);
             }
-        }, 1500);
+        }, 100);
 
         setDebounceTimeout(timeout);
 

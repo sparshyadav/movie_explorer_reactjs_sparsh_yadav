@@ -4,6 +4,7 @@ import { Add, Check } from '@mui/icons-material';
 import Box from '@mui/material/Box';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { Pencil, Crown } from 'lucide-react';
+import toast from 'react-hot-toast';
 
 interface ShowCardProps {
     id: string;
@@ -38,6 +39,7 @@ const MovieCard: React.FC<ShowCardProps> = ({
         const userPlan=localStorage.getItem('userPlan');
 
         if(userPlan!=='premium' && premium){
+            toast.error("Please Take Premium for Premium Movies!")
             navigate('/subscribe');
             return;
         }
@@ -80,7 +82,6 @@ const MovieCard: React.FC<ShowCardProps> = ({
                         <span className="star-icon">★</span>
                         <span className="rating">{rating.toFixed(1)}</span>
                     </Box>
-                    <Box className='bookmark-container'><span className="bookmark-icon">☆</span></Box>
                 </Box>
 
                 <Box className="title-row">

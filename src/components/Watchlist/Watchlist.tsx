@@ -132,7 +132,7 @@ class Watchlist extends Component<{}, WhatToWatchState> {
                     onMouseEnter={() => this.setState({ showControls: true })}
                 >
                     <NavLink to={'/watchlist'}>
-                        <h2 className="carousel-title main-title">
+                        <h2 className="carousel-titleee">
                             Your Watchlist
                             <span className='title-icon'>
                                 <ChevronRight className='next-icon' />

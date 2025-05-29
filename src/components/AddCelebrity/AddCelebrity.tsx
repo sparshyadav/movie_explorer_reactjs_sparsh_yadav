@@ -67,7 +67,7 @@ const AddCelebrity: React.FC = () => {
           bio: response.biography || '',
           profileImage: null,
           bannerImage: null,
-          selectedMovies: response.movies || [],
+          selectedMovies: [],
         });
         setProfilePreview(response.image_url || '');
         setBannerPreview(response.banner_url || '');
