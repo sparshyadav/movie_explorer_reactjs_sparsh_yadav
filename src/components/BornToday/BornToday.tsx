@@ -1,5 +1,5 @@
-import { Component, createRef } from 'react'
-import './BornToday.scss'
+import { Component, createRef } from 'react';
+import './BornToday.scss';
 import { ArrowBackIos, ArrowForwardIos } from '@mui/icons-material';
 import { ChevronRight, Pencil } from 'lucide-react';
 import Box from '@mui/material/Box';
@@ -46,7 +46,7 @@ export class BornToday extends Component<BornTodayProps, BornTodayState> {
         const fetchCelebs = async () => {
             const response = await getCelebsAPI();
             this.setState({ celebrities: response });
-        }
+        };
 
         const carousel = this.carouselRef.current;
         if (carousel) {
@@ -71,10 +71,10 @@ export class BornToday extends Component<BornTodayProps, BornTodayState> {
 
             this.setState({
                 scrollPosition: newPosition,
-                maxScrollReached: newPosition >= maxScroll - 20
-            })
+                maxScrollReached: newPosition >= maxScroll - 20,
+            });
         }
-    }
+    };
 
     handleScroll = (direction: 'left' | 'right') => {
         const { scrollPosition } = this.state;
@@ -98,12 +98,12 @@ export class BornToday extends Component<BornTodayProps, BornTodayState> {
     };
 
     handleClick = (id: number) => {
-        this.props.navigate(`/celeb/${id}`)
-    }
+        this.props.navigate(`/celeb/${id}`);
+    };
 
     handleEdit = (id: number) => {
         this.props.navigate(`edit-celeb/${id}`);
-    }
+    };
 
     render() {
         const { scrollPosition, showControls } = this.state;
@@ -112,20 +112,23 @@ export class BornToday extends Component<BornTodayProps, BornTodayState> {
         const canScrollRight = scrollPosition < ((this.state.celebrities?.length ?? 0) - this.visibleCards) * this.cardWidth;
 
         return (
-            <Box className='celeb-main-container'>
+            <Box className="born-today-main-container">
                 <Box
-                    className="celeb-card-carousel"
+                    className="born-today-card-carousel"
                     onMouseEnter={() => this.setState({ showControls: true })}
+                    onMouseLeave={() => this.setState({ showControls: false })}
                 >
-                    <h2 className="celeb-title">Born Today <span className='title-icon'><ChevronRight className='next-icon' /></span></h2>
+                    <h2 className="born-today-title">
+                        Born Today <span className="born-today-title-icon"><ChevronRight className="born-today-next-icon" /></span>
+                    </h2>
 
-                    <Box className="carousel-container">
+                    <Box className="born-today-carousel-container">
                         {showControls && canScrollLeft && (
                             <button
-                                className="carousel-control left-control"
+                                className="born-today-carousel-control born-today-left-control"
                                 onClick={(e) => {
                                     e.stopPropagation();
-                                    this.handleScroll('left')
+                                    this.handleScroll('left');
                                 }}
                                 aria-label="Scroll left"
                             >
@@ -133,41 +136,43 @@ export class BornToday extends Component<BornTodayProps, BornTodayState> {
                             </button>
                         )}
 
-                        <Box className="carousel-track" ref={this.carouselRef}>
+                        <Box className="born-today-carousel-track" ref={this.carouselRef}>
                             {this.state.celebrities.length === 0
                                 ? Array.from({ length: this.visibleCards }).map((_, idx) => (
                                     <ShimmerCircle key={idx} />
                                 ))
                                 : this.state.celebrities.map((celeb) => (
                                     <Box
-                                        className="carousel-item"
+                                        className="born-today-carousel-item"
                                         key={celeb.id}
                                         onClick={() => this.handleClick(celeb.id)}
                                     >
-                                        <Box className="celeb-image-container">
-                                            <img className="celeb-image" src={celeb.image_url} alt={celeb.name} />
+                                        <Box className="born-today-celeb-image-container">
+                                            <img className="born-today-celeb-image" src={celeb.image_url} alt={celeb.name} />
 
                                             {localStorage.getItem('role') === 'supervisor' && (
-                                                <Box className="edit-icon-wrapper" onClick={(e) => {
-                                                    e.stopPropagation();
-                                                    this.handleEdit(celeb.id);
-                                                }}>
-                                                    <button className="edit-btn">
+                                                <Box
+                                                    className="born-today-edit-icon-wrapper"
+                                                    onClick={(e) => {
+                                                        e.stopPropagation();
+                                                        this.handleEdit(celeb.id);
+                                                    }}
+                                                >
+                                                    <button className="born-today-edit-btn">
                                                         <Pencil size={16} />
                                                     </button>
                                                 </Box>
                                             )}
                                         </Box>
-                                        <p className="celeb-name">{celeb.name}</p>
-                                        <p className="celeb-age">{celeb.age}</p>
+                                        <p className="born-today-celeb-name">{celeb.name}</p>
+                                        <p className="born-today-celeb-age">{celeb.age}</p>
                                     </Box>
                                 ))}
                         </Box>
 
-
                         {showControls && canScrollRight && (
                             <button
-                                className="carousel-control right-control"
+                                className="born-today-carousel-control born-today-right-control"
                                 onClick={() => this.handleScroll('right')}
                                 aria-label="Scroll right"
                             >
@@ -177,7 +182,7 @@ export class BornToday extends Component<BornTodayProps, BornTodayState> {
                     </Box>
                 </Box>
             </Box>
-        )
+        );
     }
 }
 

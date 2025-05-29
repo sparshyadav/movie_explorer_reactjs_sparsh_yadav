@@ -1,4 +1,4 @@
-.main-container {
+.watchlist-main-container {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -6,12 +6,12 @@
   width: 100%;
 }
 
-.netflix-card-carousel {
+.watchlist-netflix-card-carousel {
   width: 85%;
   padding: 20px 0;
   position: relative;
 
-  .carousel-titleee {
+  .watchlist-carousel-title {
     display: flex;
     color: #F5C518;
     font-size: 28px;
@@ -23,16 +23,15 @@
       font-size: 28px;
     }
 
-    .title-icon {
+    .watchlist-title-icon {
       display: flex;
       justify-content: center;
       align-items: center;
     }
 
-    .next-icon {
+    .watchlist-next-icon {
       height: 28px;
       width: 28px;
-      ;
       stroke-width: 3;
 
       @media screen and (max-width: 768px) {
@@ -42,17 +41,17 @@
     }
   }
 
-  .carousel-container {
+  .watchlist-carousel-container {
     position: relative;
     width: 100%;
     min-height: 400px;
   }
 
-  .main-title {
+  .watchlist-main-title {
     margin-bottom: 25px !important;
   }
 
-  .carousel-track {
+  .watchlist-carousel-track {
     display: flex;
     gap: 20px;
     overflow-x: auto;
@@ -62,7 +61,7 @@
     -ms-overflow-style: none;
   }
 
-  .carousel-item {
+  .watchlist-carousel-item {
     width: auto;
     flex: 0 0 auto;
     transition: transform 0.3s ease;
@@ -72,7 +71,7 @@
     }
   }
 
-  .carousel-control {
+  .watchlist-carousel-control {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
@@ -83,7 +82,7 @@
     color: white;
     font-size: 24px;
     cursor: pointer;
-    z-index: 5;
+    z-index: 20; /* Increased z-index to ensure controls are above MovieCard */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -93,13 +92,13 @@
       background: rgba(0, 0, 0, 0.7);
     }
 
-    &.left-control {
+    &.watchlist-left-control {
       left: 0;
       border-top-right-radius: 4px;
       border-bottom-right-radius: 4px;
     }
 
-    &.right-control {
+    &.watchlist-right-control {
       right: 0;
       border-top-left-radius: 4px;
       border-bottom-left-radius: 4px;
@@ -112,18 +111,18 @@
 }
 
 @media (max-width: 768px) {
-  .netflix-card-carousel {
+  .watchlist-netflix-card-carousel {
     width: 95%;
 
-    .carousel-track {
+    .watchlist-carousel-track {
       gap: 12px;
     }
 
-    .carousel-item {
+    .watchlist-carousel-item {
       width: 160px;
     }
 
-    .carousel-control {
+    .watchlist-carousel-control {
       width: 40px;
       height: 80px;
 
@@ -135,8 +134,8 @@
 }
 
 @media (max-width: 480px) {
-  .netflix-card-carousel {
-    .carousel-item {
+  .watchlist-netflix-card-carousel {
+    .watchlist-carousel-item {
       width: 140px;
     }
   }

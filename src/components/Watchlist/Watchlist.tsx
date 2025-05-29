@@ -15,7 +15,7 @@ interface Movie {
     premium: boolean;
 }
 
-interface WhatToWatchState {
+interface WatchlistState {
     scrollPosition: number;
     maxScrollReached: boolean;
     showControls: boolean;
@@ -23,7 +23,7 @@ interface WhatToWatchState {
     isLoading: boolean;
 }
 
-class Watchlist extends Component<{}, WhatToWatchState> {
+class Watchlist extends Component<{}, WatchlistState> {
     carouselRef = createRef<HTMLDivElement>();
     cardWidth = 250;
     visibleCards = 5;
@@ -98,7 +98,7 @@ class Watchlist extends Component<{}, WhatToWatchState> {
         const shimmerItems = Array(8).fill(0);
 
         return shimmerItems.map((_, index) => (
-            <div className="carousel-item" key={`shimmer-${index}`}>
+            <div className="watchlist-carousel-item" key={`shimmer-${index}`}>
                 <MovieCardShimmer />
             </div>
         ));
@@ -106,7 +106,7 @@ class Watchlist extends Component<{}, WhatToWatchState> {
 
     renderMovieCards = () => {
         return this.state.allMovies.map((movie) => (
-            <div className="carousel-item" key={movie.id}>
+            <div className="watchlist-carousel-item" key={movie.id}>
                 <MovieCard
                     premium={movie.premium}
                     id={movie.id}
@@ -126,24 +126,25 @@ class Watchlist extends Component<{}, WhatToWatchState> {
         const restrictedScrollRight = canScrollRight && scrollPosition < (10 - this.visibleCards) * this.cardWidth;
 
         return (
-            <div className='main-container'>
+            <div className='watchlist-main-container'>
                 <div
-                    className="netflix-card-carousel"
+                    className="watchlist-netflix-card-carousel"
                     onMouseEnter={() => this.setState({ showControls: true })}
+                    onMouseLeave={() => this.setState({ showControls: false })}
                 >
                     <NavLink to={'/watchlist'}>
-                        <h2 className="carousel-titleee">
+                        <h2 className="watchlist-carousel-title">
                             Your Watchlist
-                            <span className='title-icon'>
-                                <ChevronRight className='next-icon' />
+                            <span className='watchlist-title-icon'>
+                                <ChevronRight className='watchlist-next-icon' />
                             </span>
                         </h2>
                     </NavLink>
 
-                    <div className="carousel-container">
+                    <div className="watchlist-carousel-container">
                         {showControls && canScrollLeft && (
                             <button
-                                className="carousel-control left-control"
+                                className="watchlist-carousel-control watchlist-left-control"
                                 onClick={() => this.handleScroll('left')}
                                 aria-label="Scroll left"
                             >
@@ -151,13 +152,13 @@ class Watchlist extends Component<{}, WhatToWatchState> {
                             </button>
                         )}
 
-                        <div className="carousel-track" ref={this.carouselRef}>
+                        <div className="watchlist-carousel-track" ref={this.carouselRef}>
                             {isLoading ? this.renderShimmerCards() : this.renderMovieCards()}
                         </div>
 
                         {showControls && restrictedScrollRight && (
                             <button
-                                className="carousel-control right-control"
+                                className="watchlist-carousel-control watchlist-right-control"
                                 onClick={() => this.handleScroll('right')}
                                 aria-label="Scroll right"
                             >

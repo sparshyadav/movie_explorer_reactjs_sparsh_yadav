@@ -34,11 +34,11 @@ interface StreamingPlatformState {
     isLoading: boolean;
 }
 
-interface StreamingPlatformProps { }
+interface StreamingPlatformProps {}
 
 export class StreamingPlatform extends Component<StreamingPlatformProps, StreamingPlatformState> {
     carouselRef = createRef<HTMLDivElement>();
-    cardWidth = 350; 
+    cardWidth = 350;
     visibleCards = 5;
     scrollAmount = this.cardWidth * this.visibleCards;
 
@@ -68,7 +68,7 @@ export class StreamingPlatform extends Component<StreamingPlatformProps, Streami
             let response = await getEveryMovieAPI();
             console.log("RESPONSE: ", response);
             this.setState({
-                allMovies: response.movies,
+                allMovies: response,
                 selectedPlatformMovies: response?.filter((movie: Movie) => movie.streaming_platform === 'Netflix'),
                 isLoading: false,
             });
@@ -140,7 +140,7 @@ export class StreamingPlatform extends Component<StreamingPlatformProps, Streami
     renderShimmerCards = () => {
         const shimmerItems = Array(8).fill(0);
         return shimmerItems.map((_, index) => (
-            <Box className="carousel-item" key={`shimmer-${index}`}>
+            <Box className="streaming-platform-carousel-item" key={`shimmer-${index}`}>
                 <MovieCardShimmer />
             </Box>
         ));
@@ -148,7 +148,7 @@ export class StreamingPlatform extends Component<StreamingPlatformProps, Streami
 
     renderMovieCards = () => {
         return this.state.selectedPlatformMovies.map((movie) => (
-            <Box className="carousel-item" key={movie.id}>
+            <Box className="streaming-platform-carousel-item" key={movie.id}>
                 <MovieCard
                     premium={movie.premium}
                     id={movie.id}
@@ -167,18 +167,19 @@ export class StreamingPlatform extends Component<StreamingPlatformProps, Streami
         const canScrollRight = scrollPosition < (this.state.selectedPlatformMovies.length - this.visibleCards) * this.cardWidth;
 
         return (
-            <Box className="main-container">
+            <Box className="streaming-platform-main-container">
                 <Box
-                    className="netflix-card-carousel"
+                    className="streaming-platform-netflix-card-carousel"
                     onMouseEnter={() => this.setState({ showControls: true })}
+                    onMouseLeave={() => this.setState({ showControls: false })}
                 >
                     <NavLink to={'/platforms'}>
-                        <h2 className="carousel-title">
-                            Explore What's Streaming <span className="title-icon"><ChevronRight className="next-icon" /></span>
+                        <h2 className="streaming-platform-carousel-title">
+                            Explore What's Streaming <span className="streaming-platform-title-icon"><ChevronRight className="streaming-platform-next-icon" /></span>
                         </h2>
                     </NavLink>
 
-                    <Box className="platform-options">
+                    <Box className="streaming-platform-platform-options">
                         {this.images.map((src, index) => (
                             <img
                                 key={index}
@@ -190,10 +191,10 @@ export class StreamingPlatform extends Component<StreamingPlatformProps, Streami
                         ))}
                     </Box>
 
-                    <Box className="carousel-container">
+                    <Box className="streaming-platform-carousel-container">
                         {showControls && canScrollLeft && (
                             <button
-                                className="carousel-control left-control"
+                                className="streaming-platform-carousel-control streaming-platform-left-control"
                                 onClick={() => this.handleScroll('left')}
                                 aria-label="Scroll left"
                             >
@@ -201,13 +202,13 @@ export class StreamingPlatform extends Component<StreamingPlatformProps, Streami
                             </button>
                         )}
 
-                        <Box className="carousel-track" ref={this.carouselRef}>
+                        <Box className="streaming-platform-carousel-track" ref={this.carouselRef}>
                             {isLoading ? this.renderShimmerCards() : this.renderMovieCards()}
                         </Box>
 
                         {showControls && canScrollRight && (
                             <button
-                                className="carousel-control right-control"
+                                className="streaming-platform-carousel-control streaming-platform-right-control"
                                 onClick={() => this.handleScroll('right')}
                                 aria-label="Scroll right"
                             >

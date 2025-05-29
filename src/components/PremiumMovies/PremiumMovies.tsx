@@ -60,8 +60,9 @@ const PremiumMovies: React.FC = () => {
         
                 if (activeCategory === 'All Movies') {
                     response = await getEveryMovieAPI();
-                    setAllMovies(response.movies);
-                    filteredMovies = response.movies.filter((mov: Movie) => mov.premium === true);
+                    console.log("RESPONSE OF ALL MOVIES: ", response);
+                    setAllMovies(response);
+                    filteredMovies = response.filter((mov: Movie) => mov.premium === true);
                 } else {
                     filteredMovies = allMovies.filter(
                         (mov: Movie) => mov.premium === true && mov.genre === activeCategory
