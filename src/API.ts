@@ -552,21 +552,62 @@ export const getCelebByIdAPI = async (id: String): Promise<any> => {
     }
 }
 
-export const addCelebrityAPI = (data: FormData) => {
+export const addCelebrityAPI = async(data: FormData) => {
     const token = Cookies.get('authToken');
-    for (const [key, value] of data.entries()) {
-        console.log(key, value);
-    } try {
-        axios.post(`${BASE_URL}/api/v1/celebrities`, data, {
+    try {
+        const response=await axios.post(`${BASE_URL}/api/v1/celebrities`, data, {
             headers: {
                 'Accept': ' application/json',
                 'Content-Type': 'multipart/form-data',
                 'Authorization': `Bearer ${token}`
             }
         })
+
+        console.log("RESPONSE OF ADD CELEB: ", response);
+        return response;
     }
     catch (error) {
         console.error("Error Adding Celebrity:", error);
+        throw error;
+    }
+};
+
+export const deleteCelebAPI = async (id: String): Promise<any> => {
+    const token = Cookies.get('authToken');
+    try {
+        const response = await axios.delete(`${BASE_URL}/api/v1/celebrities/${id}`, {
+            headers: {
+                'Accept': ' application/json',
+                'Content-Type': 'multipart/form-data',
+                'Authorization': `Bearer ${token}`
+            }
+        });
+        console.log("RESPONSE: ", response);
+
+        return response.data;
+    }
+    catch (error) {
+        console.error("Error Fetching Celebrity by ID:", error);
+        throw error;
+    }
+}
+
+export const editCelebrityAPI = async(id: Number, data: FormData) => {
+    const token = Cookies.get('authToken');
+    try {
+        const response=await axios.patch(`${BASE_URL}/api/v1/celebrities/${id}`, data, {
+            headers: {
+                'Accept': ' application/json',
+                'Content-Type': 'multipart/form-data',
+                'Authorization': `Bearer ${token}`
+            }
+        })
+
+        console.log("API RESPONSE OF UPDATING: ", response);
+        return response;
+    }
+    catch (error) {
+        console.error("Error Updating Celebrity:", error);
         throw error;
     }
 };

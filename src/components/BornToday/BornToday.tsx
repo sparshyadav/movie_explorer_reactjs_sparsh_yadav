@@ -1,7 +1,7 @@
 import { Component, createRef } from 'react'
 import './BornToday.scss'
 import { ArrowBackIos, ArrowForwardIos } from '@mui/icons-material';
-import { ChevronRight } from 'lucide-react';
+import { ChevronRight, Pencil } from 'lucide-react';
 import Box from '@mui/material/Box';
 import { getCelebsAPI } from '../../API';
 import NavigateWrapper from '../NavigateWrapper';
@@ -101,6 +101,9 @@ export class BornToday extends Component<BornTodayProps, BornTodayState> {
         this.props.navigate(`/celeb/${id}`)
     }
 
+    handleEdit = (id: number) => {
+        this.props.navigate(`edit-celeb/${id}`);
+    }
 
     render() {
         const { scrollPosition, showControls } = this.state;
@@ -120,7 +123,10 @@ export class BornToday extends Component<BornTodayProps, BornTodayState> {
                         {showControls && canScrollLeft && (
                             <button
                                 className="carousel-control left-control"
-                                onClick={() => this.handleScroll('left')}
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    this.handleScroll('left')
+                                }}
                                 aria-label="Scroll left"
                             >
                                 <ArrowBackIos />
@@ -138,7 +144,20 @@ export class BornToday extends Component<BornTodayProps, BornTodayState> {
                                         key={celeb.id}
                                         onClick={() => this.handleClick(celeb.id)}
                                     >
-                                        <img className="celeb-image" src={celeb.image_url} alt={celeb.name} />
+                                        <Box className="celeb-image-container">
+                                            <img className="celeb-image" src={celeb.image_url} alt={celeb.name} />
+
+                                            {localStorage.getItem('role') === 'supervisor' && (
+                                                <Box className="edit-icon-wrapper" onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    this.handleEdit(celeb.id);
+                                                }}>
+                                                    <button className="edit-btn">
+                                                        <Pencil size={16} />
+                                                    </button>
+                                                </Box>
+                                            )}
+                                        </Box>
                                         <p className="celeb-name">{celeb.name}</p>
                                         <p className="celeb-age">{celeb.age}</p>
                                     </Box>

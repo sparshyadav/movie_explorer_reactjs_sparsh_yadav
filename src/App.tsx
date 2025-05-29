@@ -60,8 +60,9 @@ function App() {
           <Route element={<MainLayout />}>
             <Route path="/" element={<Home />} />
             <Route path="/create-movie" element={<AddMovie />} />
-            <Route path="/create-celeb" element={<AddCelebrity />} />
             <Route path="/edit-movie/:id" element={<AddMovie />} />
+            <Route path="/create-celeb" element={<AddCelebrity />} />
+            <Route path="/edit-celeb/:id" element={<AddCelebrity />} />
             <Route path="/movie-details/:id" element={<MovieDetails />} />
             <Route path="/all-movies" element={<AllMoviesPage />} />
             <Route path="/search" element={<SearchResultPage />} />

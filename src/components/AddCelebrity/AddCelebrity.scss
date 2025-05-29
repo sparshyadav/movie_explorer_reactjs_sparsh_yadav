@@ -124,9 +124,6 @@
     }
   }
 
-  // ADD THESE STYLES TO YOUR EXISTING AddCelebrity.scss FILE
-  // Place them after the &__select styles and before the &__image-section
-
   &__textarea {
     background: #2a2a2a;
     border: 2px solid #3a3a3a;
@@ -151,7 +148,6 @@
       color: #999999;
     }
 
-    // Custom scrollbar for textarea
     &::-webkit-scrollbar {
       width: 8px;
     }
@@ -178,7 +174,6 @@
     margin-top: 4px;
     transition: color 0.3s ease;
 
-    // Change color when approaching limit
     &[data-warning="true"] {
       color: #ffd700;
     }
@@ -188,7 +183,6 @@
     }
   }
 
-  // Responsive adjustments for biography field
   @media (max-width: 768px) {
     &__textarea {
       font-size: 14px;
@@ -753,4 +747,8 @@
   @media(max-width: 768px) {
     width: 100%;
   }
+}
+
+.add-celebrity__image-preview--profile{
+  background-position: top;
 }

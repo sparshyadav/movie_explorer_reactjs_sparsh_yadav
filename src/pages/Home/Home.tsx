@@ -10,6 +10,10 @@ import toast from 'react-hot-toast';
 import Watchlist from '../../components/Watchlist/Watchlist';
 
 class Home extends Component {
+  componentDidMount(): void {
+    window.scrollTo(0, 0);
+  }
+
   render() {
     const authToken = Cookies.get('authToken');
     if (!authToken) {
@@ -20,7 +24,7 @@ class Home extends Component {
         <MainCarousal />
         <WhatToWatch />
         <StreamingPlatform />
-        <Watchlist />
+        {localStorage.getItem('role')!=='supervisor' && <Watchlist />}
         <BornToday />
       </Box>
     );

@@ -173,3 +173,46 @@
         }
     }
 }
+
+.celeb-image-container {
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.celeb-image {
+  width: 200px;
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.edit-icon-wrapper {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  z-index: 2;
+}
+
+.edit-btn {
+  background-color: #F5C518;
+  border: none;
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+
+  svg {
+    color: black;
+  }
+
+  &:hover {
+    background-color: #e0b700;
+  }
+}

@@ -1,8 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { User, Camera, Calendar, Globe, UserCheck, Film, Search, X, ChevronDown, FileText } from 'lucide-react';
 import './AddCelebrity.scss';
-import { addCelebrityAPI, getEveryMovieAPI } from '../../API';
+import { addCelebrityAPI, deleteCelebAPI, editCelebrityAPI, getCelebByIdAPI, getEveryMovieAPI } from '../../API';
 import toast from 'react-hot-toast';
+import { useNavigate, useParams } from 'react-router-dom';
 
 interface Movie {
   id: number;
@@ -40,8 +41,12 @@ const AddCelebrity: React.FC = () => {
   const [movieSearchResults, setMovieSearchResults] = useState<Movie[]>([]);
   const [showMovieDropdown, setShowMovieDropdown] = useState<boolean>(false);
   const [isSearchingMovies, setIsSearchingMovies] = useState<boolean>(false);
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+  const [isDeleting, setIsDeleting] = useState<boolean>(false);
   const movieSearchRef = useRef<HTMLDivElement>(null);
   const [mockMovies, setMockMovies] = useState<Movie[]>([]);
+  const { id } = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchAllMovies = async () => {
@@ -51,10 +56,36 @@ const AddCelebrity: React.FC = () => {
       setMockMovies(movies);
     }
 
+    const fetchEditCelebDetails = async (id: string) => {
+      try {
+        const response = await getCelebByIdAPI(id);
+        setFormData({
+          name: response.name || '',
+          role: response.role || '',
+          dateOfBirth: response.birth_date || '',
+          nationality: response.nationality || '',
+          bio: response.biography || '',
+          profileImage: null,
+          bannerImage: null,
+          selectedMovies: response.movies || [],
+        });
+        setProfilePreview(response.image_url || '');
+        setBannerPreview(response.banner_url || '');
+      } catch (error) {
+        console.error('Error fetching celebrity:', error);
+        toast.error('Failed to load celebrity details.');
+      }
+    };
+
     fetchAllMovies();
+    if (id) {
+      fetchEditCelebDetails(id);
+    }
   }, [])
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+
     const handleClickOutside = (event: MouseEvent) => {
       if (movieSearchRef.current && !movieSearchRef.current.contains(event.target as Node)) {
         setShowMovieDropdown(false);
@@ -143,36 +174,71 @@ const AddCelebrity: React.FC = () => {
     }
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-
+  const buildFormData = () => {
     const data = new FormData();
     data.append('celebrity[name]', formData.name);
-    // data.append('role', formData.role);
+    data.append('celebrity[role]', formData.role);
     data.append('celebrity[birth_date]', formData.dateOfBirth);
     data.append('celebrity[nationality]', formData.nationality);
     data.append('celebrity[biography]', formData.bio);
 
-    if (formData.profileImage) {
+    if (formData.profileImage instanceof File) {
       data.append('celebrity[image]', formData.profileImage);
     }
 
-    // if (formData.bannerImage) {
-    //   data.append('bannerImage', formData.bannerImage);
-    // }
+    if (formData.bannerImage instanceof File) {
+      data.append('celebrity[banner]', formData.bannerImage);
+    }
 
     formData.selectedMovies.forEach((movie) => {
       data.append('celebrity[movie_ids][]', movie.id.toString());
     });
 
+    return data;
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (isSubmitting) return;
+
+    setIsSubmitting(true);
+    const data = buildFormData();
+
     try {
-      const response = await addCelebrityAPI(data);
-      console.log('Celebrity created:', response);
-      toast.success('Celebrity added successfully!');
-      handleReset();
-    } catch (error) {
-      console.error('Error adding celebrity:', error);
-      toast.error('Failed to add celebrity.');
+      if (id) {
+        const response = await editCelebrityAPI(Number(id), data);
+        console.log('RESPONSE OF EDIT CELEBRITY:', response);
+        toast.success('Celebrity updated successfully!');
+        navigate('/');
+      } else {
+        console.log('Calling addCelebrityAPI with data:', data);
+        const response = await addCelebrityAPI(data);
+        console.log('RESPONSE OF ADD CELEBRITY:', response);
+        toast.success('Celebrity added successfully!');
+        handleReset();
+        navigate('/');
+      }
+    } catch (error: any) {
+      console.error('Error:', error);
+      toast.error(`Failed to ${id ? 'update' : 'add'} celebrity: ${error.message || 'Unknown error'}`);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleDelete = async () => {
+    if (!id || isDeleting) return;
+
+    setIsDeleting(true);
+    try {
+      const response = await deleteCelebAPI(id);
+      toast.success(response.message || 'Celebrity deleted successfully!');
+      navigate('/');
+    } catch (error: any) {
+      console.error('Error deleting celebrity:', error);
+      toast.error(`Failed to delete celebrity: ${error.message || 'Unknown error'}`);
+    } finally {
+      setIsDeleting(false);
     }
   };
 
@@ -185,7 +251,7 @@ const AddCelebrity: React.FC = () => {
       bio: '',
       profileImage: null,
       bannerImage: null,
-      selectedMovies: []
+      selectedMovies: [],
     });
     setProfilePreview('');
     setBannerPreview('');
@@ -202,7 +268,7 @@ const AddCelebrity: React.FC = () => {
           <h1 className="add-celebrity__title">Add New Celebrity</h1>
         </div>
 
-        <div className="add-celebrity__form">
+        <form onSubmit={handleSubmit} className="add-celebrity__form">
           <div className="add-celebrity__form-content">
             <div className="add-celebrity__form-fields">
               <div className="add-celebrity__field">
@@ -435,24 +501,36 @@ const AddCelebrity: React.FC = () => {
               </div>
             </div>
           </div>
-
           <div className="add-celebrity__actions">
-            <button
-              type="button"
-              onClick={handleReset}
-              className="add-celebrity__button add-celebrity__button--secondary"
-            >
-              Reset Form
-            </button>
+            {id ? (
+              <button
+                type="button"
+                onClick={handleDelete}
+                className="add-celebrity__button add-celebrity__button--danger"
+                disabled={isDeleting || isSubmitting}
+              >
+                {isDeleting ? 'Deleting...' : 'Delete Celebrity'}
+              </button>
+            ) : (
+              <button
+                type="button"
+                onClick={handleReset}
+                className="add-celebrity__button add-celebrity__button--secondary"
+                disabled={isSubmitting}
+              >
+                Reset Form
+              </button>
+            )}
             <button
               type="submit"
-              onClick={handleSubmit}
               className="add-celebrity__button add-celebrity__button--primary"
+              disabled={isSubmitting || isDeleting}
+              onClick={handleSubmit}
             >
-              Add Celebrity
+              {isSubmitting ? 'Submitting...' : id ? 'Update Celebrity' : 'Add Celebrity'}
             </button>
           </div>
-        </div>
+        </form>
       </div>
     </div>
   );

@@ -17,6 +17,7 @@ interface CelebData {
   name: string;
   bannerImage: string;
   image_url: string;
+  banner_url: string;
   biography: string;
   birth_date: string;
   age: number;
@@ -52,7 +53,7 @@ const CelebInfoPage: React.FC = () => {
       <div className="banner-section">
         <div
           className="banner-image"
-          style={{ backgroundImage: `url(${celebData.image_url})` }}
+          style={{ backgroundImage: `url(${celebData.banner_url})` }}
         >
           <div className="banner-overlay"></div>
         </div>

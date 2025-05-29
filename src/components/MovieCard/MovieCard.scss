@@ -190,6 +190,16 @@
     right: 4px;
     z-index: 2;
 
+    @media(max-width: 768px){
+        top: 5px;
+        right: 20px;
+    }
+
+     @media(max-width: 450px){
+        top: 5px;
+        right: 35px;
+    }
+
     .edit-btn {
         background-color: #F5C518;
         color: rgb(77, 76, 76);
