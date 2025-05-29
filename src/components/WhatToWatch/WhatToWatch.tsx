@@ -98,7 +98,7 @@ class WhatToWatch extends Component<{}, WhatToWatchState> {
         const shimmerItems = Array(8).fill(0);
 
         return shimmerItems.map((_, index) => (
-            <div className="carousel-item" key={`shimmer-${index}`}>
+            <div className="what-to-watch-carousel-item" key={`shimmer-${index}`}>
                 <MovieCardShimmer />
             </div>
         ));
@@ -106,7 +106,7 @@ class WhatToWatch extends Component<{}, WhatToWatchState> {
 
     renderMovieCards = () => {
         return this.state.allMovies.map((movie) => (
-            <div className="carousel-item" key={movie.id}>
+            <div className="what-to-watch-carousel-item" key={movie.id}>
                 <MovieCard
                     premium={movie.premium}
                     id={movie.id}
@@ -126,13 +126,13 @@ class WhatToWatch extends Component<{}, WhatToWatchState> {
         const restrictedScrollRight = canScrollRight && scrollPosition < (10 - this.visibleCards) * this.cardWidth;
 
         return (
-            <div className='main-container'>
+            <div className='what-to-watch-main-container'>
                 <div
-                    className="netflix-card-carousel"
+                    className="what-to-watch-carousel"
                     onMouseEnter={() => this.setState({ showControls: true })}
                 >
                     <NavLink to={'/all-movies'}>
-                        <h2 className="carousel-titlee">
+                        <h2 className="what-to-watch-title">
                             What to Watch
                             <span className='title-icon'>
                                 <ChevronRight className='next-icon' />
@@ -140,35 +140,35 @@ class WhatToWatch extends Component<{}, WhatToWatchState> {
                         </h2>
                     </NavLink>
 
-                    <div className="carousel-container">
+                    <div className="what-to-watch-carousel-container">
                         {showControls && canScrollLeft && (
                             <button
-                                className="carousel-control left-control"
+                                className="what-to-watch-carousel-control what-to-watch-left-control"
                                 onClick={() => this.handleScroll('left')}
                                 aria-label="Scroll left"
                             >
                                 <ArrowBackIos />
-                            </button>
-                        )}
+                        </button>
+                    )}
 
-                        <div className="carousel-track" ref={this.carouselRef}>
-                            {isLoading ? this.renderShimmerCards() : this.renderMovieCards()}
-                        </div>
-
-                        {showControls && restrictedScrollRight && (
-                            <button
-                                className="carousel-control right-control"
-                                onClick={() => this.handleScroll('right')}
-                                aria-label="Scroll right"
-                            >
-                                <ArrowForwardIos />
-                            </button>
-                        )}
+                    <div className="what-to-watch-carousel-track" ref={this.carouselRef}>
+                        {isLoading ? this.renderShimmerCards() : this.renderMovieCards()}
                     </div>
+
+                    {showControls && restrictedScrollRight && (
+                        <button
+                            className="what-to-watch-carousel-control what-to-watch-right-control"
+                            onClick={() => this.handleScroll('right')}
+                            aria-label="Scroll right"
+                            >
+                            <ArrowForwardIos />
+                        </button>
+                    )}
                 </div>
+            </div>
             </div>
         );
     }
 }
-
+ 
 export default WhatToWatch;
