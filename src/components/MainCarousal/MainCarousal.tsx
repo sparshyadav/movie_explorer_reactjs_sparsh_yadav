@@ -5,7 +5,7 @@ import { Box, Typography } from '@mui/material';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import { ArrowBackIos, ArrowForwardIos } from '@mui/icons-material';
-import { getAllMoviesAPI } from '../../API';
+import { getTopRatedMoviesAPI } from '../../API';
 import { NavLink } from 'react-router-dom';
 import ShimmerMainCarousal from './ShimmerMainCarousal';
 
@@ -35,6 +35,7 @@ type State = {
     allMovies: Movie[];
     isSmallScreen: boolean;
     loading: boolean;
+    error: string | null;
 }
 
 function NextArrow({ className, style, onClick }: ArrowProps) {
@@ -46,16 +47,17 @@ function NextArrow({ className, style, onClick }: ArrowProps) {
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                background: 'rgba(0,0,0,0.5)',
+                background: 'rgba(0,0,0,0.7)', // Darker for visibility
                 borderRadius: '50%',
-                right: '10px',
-                zIndex: 2,
-                width: '40px',
-                height: '40px',
+                right: '20px', // Adjusted for better placement
+                zIndex: 10, // Higher z-index
+                width: '50px',
+                height: '50px',
+                cursor: 'pointer',
             }}
             onClick={onClick}
         >
-            <ArrowForwardIos style={{ color: 'white', fontSize: '20px' }} />
+            <ArrowForwardIos style={{ color: 'white', fontSize: '24px' }} />
         </Box>
     );
 }
@@ -69,16 +71,17 @@ function PrevArrow({ className, style, onClick }: ArrowProps) {
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                background: 'rgba(0,0,0,0.5)',
+                background: 'rgba(0,0,0,0.7)', // Darker for visibility
                 borderRadius: '50%',
-                left: '10px',
-                zIndex: 2,
-                width: '40px',
-                height: '40px',
+                left: '20px', // Adjusted for better placement
+                zIndex: 10, // Higher z-index
+                width: '50px',
+                height: '50px',
+                cursor: 'pointer',
             }}
             onClick={onClick}
         >
-            <ArrowBackIos style={{ color: 'white', fontSize: '20px' }} />
+            <ArrowBackIos style={{ color: 'white', fontSize: '24px', marginLeft: '8px' }} />
         </Box>
     );
 }
@@ -90,18 +93,18 @@ export class MainCarousal extends Component<{}, State> {
         this.state = {
             allMovies: [],
             isSmallScreen: window.innerWidth < 500,
-            loading: true
+            loading: true,
+            error: null,
         };
     }
 
     truncateDescription(description: string) {
         if (this.state.isSmallScreen && description.length > 50) {
             return description.slice(0, 50) + "...";
-        } else if (description.length > 100) {
+        } else if (description.length > 300) { // Fixed truncation limit
             return description.slice(0, 300) + "...";
-        } else {
-            return description;
         }
+        return description;
     }
 
     handleResize = () => {
@@ -110,11 +113,18 @@ export class MainCarousal extends Component<{}, State> {
 
     componentDidMount() {
         const fetchMovies = async () => {
-            let response = await getAllMoviesAPI(1);
-            this.setState({
-                allMovies: response.movies, loading: false
-            });
-        }
+            try {
+                const response = await getTopRatedMoviesAPI();
+                console.log("RESULT: ", response);
+                this.setState({
+                    allMovies: Array.isArray(response.movies) ? response.movies : [],
+                    loading: false,
+                });
+            } catch (error) {
+                console.error("Failed to fetch movies:", error);
+                this.setState({ error: "Failed to load movies", loading: false });
+            }
+        };
 
         fetchMovies();
         window.addEventListener('resize', this.handleResize);
@@ -137,44 +147,53 @@ export class MainCarousal extends Component<{}, State> {
             arrows: true,
             nextArrow: <NextArrow />,
             prevArrow: <PrevArrow />,
+            adaptiveHeight: false, // Prevent height jumps
         };
+
+        const { allMovies, loading, error, isSmallScreen } = this.state;
 
         return (
             <Box className='carousal-main-container'>
                 <Box className="main-carousal">
-                    {
-                        this.state.loading ? (
-                            <ShimmerMainCarousal />
-                        ) : (
-                            <Slider {...settings}>
-                                {this.state.allMovies?.map((movie) => (
-                                    <Box key={movie.id} className="carousel-item">
-                                        <Box
-                                            className="banner-image"
-                                            sx={{ backgroundImage: `url(${movie.banner_url})` }}
-                                        />
-                                        <Box className="banner-content">
-                                            <NavLink to={`movie-details/${movie.id}`}>
-                                                <Box className="poster-container">
-                                                    <img src={movie.poster_url} alt="Poster" className="poster-image" />
-                                                </Box>
-                                            </NavLink>
-                                            <Box className='info-main-container'>
-                                                <Box className="info-container">
-                                                    <Typography variant="h3" className="movie-title">
-                                                        {movie.title}
-                                                    </Typography>
-                                                    <Typography variant="body1" className="movie-description">
-                                                        {this.truncateDescription(movie.description)}
-                                                    </Typography>
-                                                </Box>
+                    {loading ? (
+                        <ShimmerMainCarousal />
+                    ) : error ? (
+                        <Typography variant="h6" color="error" textAlign="center">
+                            {error}
+                        </Typography>
+                    ) : allMovies.length === 0 ? (
+                        <Typography variant="h6" color="textSecondary" textAlign="center">
+                            No movies available
+                        </Typography>
+                    ) : (
+                        <Slider {...settings}>
+                            {allMovies.map((movie) => (
+                                <Box key={movie.id} className="carousel-item">
+                                    <Box
+                                        className="banner-image"
+                                        sx={{ backgroundImage: `url(${movie.banner_url})` }}
+                                    />
+                                    <Box className="banner-content">
+                                        <NavLink to={`/movie-details/${movie.id}`}>
+                                            <Box className="poster-container">
+                                                <img src={movie.poster_url} alt={`${movie.title} Poster`} className="poster-image" />
+                                            </Box>
+                                        </NavLink>
+                                        <Box className='info-main-container'>
+                                            <Box className="info-container">
+                                                <Typography variant={isSmallScreen ? "h4" : "h3"} className="movie-title">
+                                                    {movie.title}
+                                                </Typography>
+                                                <Typography variant="body1" className="movie-description">
+                                                    {this.truncateDescription(movie.description)}
+                                                </Typography>
                                             </Box>
                                         </Box>
                                     </Box>
-                                ))}
-                            </Slider>
-                        )
-                    }
+                                </Box>
+                            ))}
+                        </Slider>
+                    )}
                 </Box>
             </Box>
         );
