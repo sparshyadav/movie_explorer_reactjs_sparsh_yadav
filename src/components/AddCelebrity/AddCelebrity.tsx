@@ -209,14 +209,14 @@ const AddCelebrity: React.FC = () => {
         const response = await editCelebrityAPI(Number(id), data);
         console.log('RESPONSE OF EDIT CELEBRITY:', response);
         toast.success('Celebrity updated successfully!');
-        navigate('/');
+        navigate(`/celeb/${id}`);
       } else {
         console.log('Calling addCelebrityAPI with data:', data);
         const response = await addCelebrityAPI(data);
         console.log('RESPONSE OF ADD CELEBRITY:', response);
         toast.success('Celebrity added successfully!');
         handleReset();
-        navigate('/');
+        navigate(`/celeb/${response.data.celebrity.id}`);
       }
     } catch (error: any) {
       console.error('Error:', error);

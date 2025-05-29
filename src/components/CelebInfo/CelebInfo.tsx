@@ -32,7 +32,7 @@ const CelebInfoPage: React.FC = () => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    
+
     const fetchCelebData = async () => {
       const response = await getCelebByIdAPI(String(id));
       console.log("RESULT: ", response);
@@ -50,45 +50,45 @@ const CelebInfoPage: React.FC = () => {
 
   return (
     <div className="celeb-page">
-      <div className="banner-section">
+      <div className="celeb-banner-section">
         <div
-          className="banner-image"
+          className="celeb-banner-image"
           style={{ backgroundImage: `url(${celebData.banner_url})` }}
         >
-          <div className="banner-overlay"></div>
+          <div className="celeb-banner-overlay"></div>
         </div>
       </div>
 
-      <div className="profile-section">
-        <div className="container">
-          <div className="profile-content">
-            <div className="profile-image-container">
+      <div className="celeb-profile-section">
+        <div className="celeb-container">
+          <div className="celeb-profile-content">
+            <div className="celeb-profile-image-container">
               <img
                 src={celebData.image_url}
                 alt={celebData.name}
-                className="profile-image"
+                className="celeb-profile-image"
               />
             </div>
-            <div className="profile-details">
-              <h1 className="name">{celebData.name}</h1>
-              <div className="roles">
-                <span className="role-tag">{celebData.role}</span>
+            <div className="celeb-profile-details">
+              <h1 className="celeb-name">{celebData.name}</h1>
+              <div className="celeb-roles">
+                <span className="celeb-role-tag">{celebData.role}</span>
               </div>
-              <div className="basic-info">
-                <div className="info-item">
-                  <span className="label">Born:</span>
-                  <span className="value">{celebData.birth_date}</span>
+              <div className="celeb-basic-info">
+                <div className="celeb-info-item">
+                  <span className="celeb-label">Born:</span>
+                  <span className="celeb-value">{celebData.birth_date}</span>
                 </div>
-                <div className="info-item">
-                  <span className="label">Age:</span>
-                  <span className="value">{celebData.age}</span>
+                <div className="celeb-info-item">
+                  <span className="celeb-label">Age:</span>
+                  <span className="celeb-value">{celebData.age}</span>
                 </div>
-                <div className="info-item">
-                  <span className="label">Nationality:</span>
-                  <span className="value">{celebData.nationality}</span>
+                <div className="celeb-info-item">
+                  <span className="celeb-label">Nationality:</span>
+                  <span className="celeb-value">{celebData.nationality}</span>
                 </div>
               </div>
-              <div className="biography">
+              <div className="celeb-biography">
                 <h3>Biography</h3>
                 <p>{celebData.biography}</p>
               </div>
@@ -97,10 +97,10 @@ const CelebInfoPage: React.FC = () => {
         </div>
       </div>
 
-      <div className="movies-section">
-        <div className="container">
-          <h2 className="section-title">Filmography</h2>
-          <div className="movies-list">
+      <div className="celeb-movies-section">
+        <div className="celeb-container">
+          <h2 className="celeb-section-title">Filmography</h2>
+          <div className="celeb-movies-list">
             {(celebData.movies ?? []).map((movie, index) => (
               <MovieCard
                 key={`${movie.id}-${index}`}
@@ -111,7 +111,6 @@ const CelebInfoPage: React.FC = () => {
                 rating={movie.rating}
               />
             ))}
-
           </div>
         </div>
       </div>

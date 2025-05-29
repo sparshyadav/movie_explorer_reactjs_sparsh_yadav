@@ -28,13 +28,13 @@ $text-gray: #cccccc;
   font-family: 'Arial', sans-serif;
 }
 
-.banner-section {
+.celeb-banner-section {
   position: relative;
   height: 65vh;
   min-height: 300px;
   overflow: hidden;
 
-  .banner-image {
+  .celeb-banner-image {
     width: 100%;
     height: 100%;
     background-size: cover;
@@ -43,7 +43,7 @@ $text-gray: #cccccc;
     position: relative;
   }
 
-  .banner-overlay {
+  .celeb-banner-overlay {
     position: absolute;
     top: 0;
     left: 0;
@@ -53,21 +53,19 @@ $text-gray: #cccccc;
   }
 }
 
-
-.container {
+.celeb-container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 1rem;
 }
 
-
-.profile-section {
+.celeb-profile-section {
   padding: 2rem 0;
   position: relative;
   margin-top: -100px;
   z-index: 2;
 
-  .profile-content {
+  .celeb-profile-content {
     @include flex-column;
     align-items: center;
     gap: 2rem;
@@ -79,11 +77,11 @@ $text-gray: #cccccc;
     }
   }
 
-  .profile-image-container {
+  .celeb-profile-image-container {
     position: relative;
     flex-shrink: 0;
 
-    .profile-image {
+    .celeb-profile-image {
       width: 200px;
       height: 200px;
       border-radius: 50%;
@@ -93,7 +91,7 @@ $text-gray: #cccccc;
     }
   }
 
-  .profile-details {
+  .celeb-profile-details {
     @include flex-column;
     gap: 1.5rem;
     flex: 1;
@@ -104,7 +102,7 @@ $text-gray: #cccccc;
       margin-left: 2rem;
     }
 
-    .name {
+    .celeb-name {
       font-size: 2.5rem;
       font-weight: bold;
       color: $primary-yellow;
@@ -116,7 +114,7 @@ $text-gray: #cccccc;
       }
     }
 
-    .roles {
+    .celeb-roles {
       display: flex;
       flex-wrap: wrap;
       gap: 0.5rem;
@@ -126,7 +124,7 @@ $text-gray: #cccccc;
         justify-content: flex-start;
       }
 
-      .role-tag {
+      .celeb-role-tag {
         background-color: $primary-yellow;
         color: $primary-black;
         padding: 0.3rem 0.8rem;
@@ -142,7 +140,7 @@ $text-gray: #cccccc;
       }
     }
 
-    .basic-info {
+    .celeb-basic-info {
       @include flex-column;
       gap: 0.5rem;
 
@@ -153,7 +151,7 @@ $text-gray: #cccccc;
         gap: 1rem;
       }
 
-      .info-item {
+      .celeb-info-item {
         @include flex-column;
         gap: 0.2rem;
 
@@ -163,20 +161,20 @@ $text-gray: #cccccc;
           gap: 0.5rem;
         }
 
-        .label {
+        .celeb-label {
           color: $primary-yellow;
           font-weight: bold;
           font-size: 0.9rem;
         }
 
-        .value {
+        .celeb-value {
           color: $text-white;
           font-size: 0.9rem;
         }
       }
     }
 
-    .biography {
+    .celeb-biography {
       max-width: 600px;
 
       h3 {
@@ -196,11 +194,11 @@ $text-gray: #cccccc;
   }
 }
 
-.movies-section {
+.celeb-movies-section {
   padding: 3rem 0;
   background-color: $secondary-black;
 
-  .section-title {
+  .celeb-section-title {
     font-size: 2rem;
     color: $primary-yellow;
     text-align: center;
@@ -212,7 +210,7 @@ $text-gray: #cccccc;
     }
   }
 
-  .movies-list {
+  .celeb-movies-list {
     display: flex;
     flex-wrap: wrap;
     gap: 1.2rem;
@@ -225,16 +223,16 @@ $text-gray: #cccccc;
 }
 
 @media (max-width: 480px) {
-  .container {
+  .celeb-container {
     padding: 0 0.5rem;
   }
 
-  .profile-section {
+  .celeb-profile-section {
     margin-top: -50px;
     padding: 1rem 0;
   }
 
-  .movies-section {
+  .celeb-movies-section {
     padding: 2rem 0;
   }
 }
@@ -252,8 +250,8 @@ html {
     background-color: white !important;
     color: black !important;
   }
-  
-  .banner-overlay {
+
+  .celeb-banner-overlay {
     display: none;
   }
 }
