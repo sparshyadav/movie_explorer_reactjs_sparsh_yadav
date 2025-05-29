@@ -1,124 +1,105 @@
 .netflix-show-card.shimmer {
-  background-color: #141414;
-  border-radius: 4px;
-  overflow: hidden;
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.5);
-  font-family: 'Netflix Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  width: 175px;
+    background-color: #141414;
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.5);
+    font-family: 'Netflix Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    width: 175px;
 
-  @media (max-width: 768px){
-    width: 150px;
-  }
+    @media (max-width: 768px) {
+        width: 150px;
+    }
 
-  @media (max-width: 500px){
-    width: 140px;
-  }
+    @media (max-width: 500px) {
+        width: 140px;
+    }
 
-  .poster-container {
-      position: relative;
-      width: 100%;
-      height: 250px;
-      overflow: hidden;
+    .poster-container {
+        position: relative;
+        width: 100%;
+        height: 250px;
+        overflow: hidden;
 
-      .poster-image.shimmer-placeholder {
-          width: 100%;
-          height: 100%;
-          background: #2e2e2e;
-          animation: shimmer 1.5s infinite;
-      }
+        .poster-image.shimmer-placeholder {
+            width: 100%;
+            height: 100%;
+            background: #2e2e2e;
+            animation: shimmer 1.5s infinite linear;
+        }
 
-      .crown-badge.shimmer-placeholder {
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 36px;
-          height: 45px;
-          background: #2e2e2e;
-          clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 70%, 0 100%);
-          animation: shimmer 1.5s infinite;
-      }
-  }
+        .crown-badge.shimmer-placeholder {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 36px;
+            height: 45px;
+            background: #2e2e2e;
+            clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 70%, 0 100%);
+            animation: shimmer 1.5s infinite linear;
+        }
+    }
 
-  .show-info {
-      padding: 12px;
+    .show-info {
+        padding: 12px;
 
-      .rating-container {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          margin-bottom: 8px;
+        .rating-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 8px;
 
-          .rating-info {
-              display: flex;
-              align-items: center;
+            .rating-info {
+                display: flex;
+                align-items: center;
 
-              .star-icon.shimmer-placeholder {
-                  width: 16px;
-                  height: 16px;
-                  background: #2e2e2e;
-                  margin-right: 4px;
-                  animation: shimmer 1.5s infinite;
-              }
+                .star-icon.shimmer-placeholder {
+                    width: 16px;
+                    height: 16px;
+                    background: #2e2e2e;
+                    margin-right: 4px;
+                    animation: shimmer 1.5s infinite linear;
+                }
 
-              .rating.shimmer-placeholder {
-                  width: 40px;
-                  height: 16px;
-                  background: #2e2e2e;
-                  animation: shimmer 1.5s infinite;
-              }
-          }
+                .rating.shimmer-placeholder {
+                    width: 40px;
+                    height: 16px;
+                    background: #2e2e2e;
+                    animation: shimmer 1.5s infinite linear;
+                }
+            }
+        }
 
-          .bookmark-container.shimmer-placeholder {
-              width: 20px;
-              height: 20px;
-              background: #2e2e2e;
-              animation: shimmer 1.5s infinite;
-          }
-      }
+        .title-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
 
-      .title-row {
-          display: flex;
-          align-items: center;
-          margin-bottom: 12px;
+            .title.shimmer-placeholder {
+                width: 80%;
+                height: 20px;
+                background: #2e2e2e;
+                animation: shimmer 1.5s infinite linear;
+            }
+        }
 
-          .title.shimmer-placeholder {
-              width: 80%;
-              height: 20px;
-              background: #2e2e2e;
-              animation: shimmer 1.5s infinite;
-          }
-      }
-
-      .watch-options-btn.shimmer-placeholder {
-          width: 100%;
-          height: 34px;
-          background: #2e2e2e;
-          border-radius: 4px;
-          margin-bottom: 10px;
-          animation: shimmer 1.5s infinite;
-      }
-
-      .action-buttons {
-          display: flex;
-          justify-content: space-between;
-
-          .watchlist-btn.shimmer-placeholder {
-              width: 100%;
-              height: 30px;
-              background: #2e2e2e;
-              animation: shimmer 1.5s infinite;
-          }
-      }
-  }
+        .watch-options-btn.shimmer-placeholder {
+            width: 100%;
+            height: 34px;
+            background: #2e2e2e;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            animation: shimmer 1.5s infinite linear;
+        }
+    }
 }
 
 @keyframes shimmer {
-  0% {
-      background: linear-gradient(to right, #2e2e2e 0%, #3a3a3a 50%, #2e2e2e 100%);
-      background-size: 200% 100%;
-      background-position: 0 0;
-  }
-  100% {
-      background-position: 200% 0;
-  }
+    0% {
+        background: linear-gradient(to right, #2e2e2e 0%, #2e2e2e 40%, #5a5a5a 50%, #2e2e2e 60%, #2e2e2e 100%);
+        background-size: 250% 100%;
+        background-position: -100% 0;
+    }
+    100% {
+        background-position: 150% 0;
+    }
 }

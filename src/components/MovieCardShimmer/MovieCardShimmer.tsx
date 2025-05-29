@@ -16,7 +16,6 @@ const MovieCardShimmer: React.FC = () => {
                         <Box className="star-icon shimmer-placeholder"></Box>
                         <Box className="rating shimmer-placeholder"></Box>
                     </Box>
-                    <Box className="bookmark-container shimmer-placeholder"></Box>
                 </Box>
 
                 <Box className="title-row">
@@ -24,10 +23,6 @@ const MovieCardShimmer: React.FC = () => {
                 </Box>
 
                 <Box className="watch-options-btn shimmer-placeholder"></Box>
-
-                {/* <Box className="action-buttons">
-                    <Box className="watchlist-btn shimmer-placeholder"></Box>
-                </Box> */}
             </Box>
         </Box>
     );

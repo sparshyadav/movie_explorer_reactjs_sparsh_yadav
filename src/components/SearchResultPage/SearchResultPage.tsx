@@ -1,4 +1,4 @@
-import { Box, Container, Typography, TextField, InputAdornment, Grid } from '@mui/material';
+import { Box, Container, Typography, TextField, InputAdornment } from '@mui/material';
 import { Search as SearchIcon } from '@mui/icons-material';
 import { useEffect, useState } from 'react';
 import './SearchResultPage.scss';
@@ -70,7 +70,6 @@ function SearchResultPage() {
                     />
                 </Box>
 
-
                 <Box className="search-results">
                     {
                         isLoading ? (
@@ -84,7 +83,7 @@ function SearchResultPage() {
                                 </Typography>
 
                                 <Box className='search-main-container'>
-                                    <Grid container spacing={4} className='grid'>
+                                    <Box className='grid'>
                                         {searchedMovies.map((movie,) => (
                                             <MovieCard
                                                 premium={movie.premium}
@@ -94,7 +93,7 @@ function SearchResultPage() {
                                                 rating={Number(movie.rating)}
                                             />
                                         ))}
-                                    </Grid>
+                                    </Box>
                                 </Box>
                             </>
                         )

@@ -116,6 +116,7 @@ const MovieDetails: React.FC = () => {
                     >
                         <div className="banner__overlay"></div>
                     </div>
+                    <div className='empty-space'></div>
                 </div>
 
                 <div className="container">

@@ -122,7 +122,7 @@ $text-gray: #cccccc;
     }
 
     .movie-title {
-      color: lighten($primary-yellow, 10%);
+      color: ($primary-yellow, 10%);
     }
 
     .movie-rating {
