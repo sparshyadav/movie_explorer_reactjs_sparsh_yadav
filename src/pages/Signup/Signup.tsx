@@ -133,6 +133,7 @@ class Signup extends React.Component<Props> {
 
         return (
             <Box className="signup-container">
+                <Box className='login-title-binge'>BINGE</Box>
                 <Box className="signup-card">
                     <h1 className="signup-title">Sign Up</h1>
 

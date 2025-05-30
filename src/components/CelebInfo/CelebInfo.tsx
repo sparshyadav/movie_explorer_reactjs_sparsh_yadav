@@ -74,18 +74,20 @@ const CelebInfoPage: React.FC = () => {
               <div className="celeb-roles">
                 <span className="celeb-role-tag">{celebData.role}</span>
               </div>
-              <div className="celeb-basic-info">
-                <div className="celeb-info-item">
-                  <span className="celeb-label">Born:</span>
-                  <span className="celeb-value">{celebData.birth_date}</span>
-                </div>
-                <div className="celeb-info-item">
-                  <span className="celeb-label">Age:</span>
-                  <span className="celeb-value">{celebData.age}</span>
-                </div>
-                <div className="celeb-info-item">
-                  <span className="celeb-label">Nationality:</span>
-                  <span className="celeb-value">{celebData.nationality}</span>
+              <div className='celeb-main-info-container'>
+                <div className="celeb-basic-info">
+                  <div className="celeb-info-item">
+                    <span className="celeb-label">Born:</span>
+                    <span className="celeb-value">{celebData.birth_date}</span>
+                  </div>
+                  <div className="celeb-info-item">
+                    <span className="celeb-label">Age:</span>
+                    <span className="celeb-value">{celebData.age}</span>
+                  </div>
+                  <div className="celeb-info-item">
+                    <span className="celeb-label">Nationality:</span>
+                    <span className="celeb-value">{celebData.nationality}</span>
+                  </div>
                 </div>
               </div>
               <div className="celeb-biography">
@@ -97,23 +99,25 @@ const CelebInfoPage: React.FC = () => {
         </div>
       </div>
 
-      <div className="celeb-movies-section">
-        <div className="celeb-container">
-          <h2 className="celeb-section-title">Filmography</h2>
-          <div className="celeb-movies-list">
-            {(celebData.movies ?? []).map((movie, index) => (
-              <MovieCard
-                key={`${movie.id}-${index}`}
-                id={movie.id}
-                title={movie.title}
-                poster={movie.poster_url}
-                releaseYear={movie.release_year}
-                rating={movie.rating}
-              />
-            ))}
+      {celebData.movies.length!=0 &&
+        <div className="celeb-movies-section">
+          <div className="celeb-container">
+            <h2 className="celeb-section-title">Filmography</h2>
+            <div className="celeb-movies-list">
+              {(celebData.movies ?? []).map((movie, index) => (
+                <MovieCard
+                  key={`${movie.id}-${index}`}
+                  id={movie.id}
+                  title={movie.title}
+                  poster={movie.poster_url}
+                  releaseYear={movie.release_year}
+                  rating={movie.rating}
+                />
+              ))}
+            </div>
           </div>
         </div>
-      </div>
+      }
     </div>
   );
 };

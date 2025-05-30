@@ -1,9 +1,27 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap');
+
 .login-container {
-    background: url('/Login_Signup_Banner.jpg') center/cover no-repeat;
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  position: relative;
+  background: url('/Login_Signup_Banner.jpg') center/cover no-repeat;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  z-index: 1;
+  overflow: hidden;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+      linear-gradient(to top, rgba(0, 0, 0, 0.125), rgba(0, 0, 0, 0.05)),
+      rgba(0, 0, 0, 0.4); 
+    z-index: -1;
+  }
 }
 
 .login-card {
@@ -11,11 +29,12 @@
     padding: 25px;
     border-radius: 10px;
     width: 90%;
-    max-width: 550px;
+    max-width: 450px;
     color: white;
     display: flex;
     flex-direction: column;
     gap: 15px;
+    margin-top: 75px;
 }
 
 .login-title {
@@ -132,4 +151,16 @@
         cursor: pointer;
         color: #f5c518;
     }
+}
+
+.login-title-binge {
+    font-size: 40px;
+    color: #F5C518;
+    width: 100%;
+    font-weight: 800;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    padding-left: 25px;
+    font-family: "Orbitron", sans-serif;
 }

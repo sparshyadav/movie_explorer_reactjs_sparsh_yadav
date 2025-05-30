@@ -144,7 +144,7 @@ $text-gray: #cccccc;
       @include flex-column;
       gap: 0.5rem;
 
-      @media (min-width: 500px) {
+      @media (min-width: 100px) {
         display: flex;
         flex-direction: row;
         flex-wrap: wrap;
@@ -253,5 +253,14 @@ html {
 
   .celeb-banner-overlay {
     display: none;
+  }
+}
+
+.celeb-main-info-container{
+  display: flex;
+  flex-wrap: wrap;
+
+  @media(max-width: 768px){
+    justify-content: center;
   }
 }

@@ -124,6 +124,7 @@ class Login extends React.Component<Props> {
 
         return (
             <Box className="login-container">
+                <Box className='login-title-binge'>BINGE</Box>
                 <Box className="login-card" onKeyDown={this.handleKeyDown}>
                     <h1 className="login-title">Login</h1>
 
