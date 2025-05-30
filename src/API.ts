@@ -109,6 +109,23 @@ export const getTopRatedMoviesAPI = async () => {
     }
 }
 
+export const getLatestReleaseMoviesAPI = async () => {
+    try {
+        const response = await axios.get(`${BASE_URL}/api/v1/movies?page=1&per_page=10&sort_by=release_year&sort_direction=desc`);
+        console.log("RESPONSE: ", response);
+        return response.data;
+    }
+    catch (error: any) {
+        console.log("Error Occurred while Getting Movies: ", error);
+        if (error?.response?.data?.errors.length > 1) {
+            toast.error(error?.response?.data?.errors[0]);
+        }
+        else {
+            toast.error(error?.response?.data?.errors);
+        }
+    }
+}
+
 export const getEveryMovieAPI = async () => {
     try {
         const response = await axios.get(`${BASE_URL}/api/v1/movies?per_page=100`);

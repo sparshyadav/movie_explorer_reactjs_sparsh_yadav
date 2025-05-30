@@ -44,7 +44,8 @@ const PlatformPageList: React.FC = () => {
             try {
                 setLoading(true);
                 const response = await getEveryMovieAPI();
-                const moviesFromAPI = response?.movies || [];
+                console.log("RESPONSE OF ALL MOVIES: ", response);
+                const moviesFromAPI = response|| [];
                 setAllMovies(moviesFromAPI);
 
                 const platformMovies = moviesFromAPI.filter((m: { streaming_platform: string; }) => m.streaming_platform === 'Netflix');

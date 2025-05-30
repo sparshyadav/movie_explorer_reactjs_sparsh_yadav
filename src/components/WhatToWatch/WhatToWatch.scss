@@ -82,7 +82,7 @@
     color: white;
     font-size: 24px;
     cursor: pointer;
-    z-index: 15; /* Higher than carousel-item:hover */
+    z-index: 15;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -115,7 +115,7 @@
     width: 95%;
 
     .what-to-watch-carousel-track {
-      gap: 12px;
+      gap: 10px;
     }
 
     .what-to-watch-carousel-item {
@@ -137,6 +137,10 @@
   .what-to-watch-carousel {
     .what-to-watch-carousel-item {
       width: 140px;
+    }
+
+    .what-to-watch-carousel-track {
+      gap: 0px;
     }
   }
 }

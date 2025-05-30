@@ -119,7 +119,7 @@ export class BornToday extends Component<BornTodayProps, BornTodayState> {
                     onMouseLeave={() => this.setState({ showControls: false })}
                 >
                     <h2 className="born-today-title">
-                        Born Today <span className="born-today-title-icon"><ChevronRight className="born-today-next-icon" /></span>
+                        Trending Celebs <span className="born-today-title-icon"><ChevronRight className="born-today-next-icon" /></span>
                     </h2>
 
                     <Box className="born-today-carousel-container">

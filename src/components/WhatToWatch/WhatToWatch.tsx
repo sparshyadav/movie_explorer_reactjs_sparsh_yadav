@@ -5,7 +5,7 @@ import MovieCard from '../../components/MovieCard/MovieCard';
 import MovieCardShimmer from '../../components/MovieCardShimmer/MovieCardShimmer';
 import { ChevronRight } from 'lucide-react';
 import { NavLink } from 'react-router-dom';
-import { getAllMoviesAPI } from '../../API';
+import { getAllMoviesAPI, getLatestReleaseMoviesAPI } from '../../API';
 
 interface Movie {
     id: string;
@@ -43,7 +43,7 @@ class WhatToWatch extends Component<{}, WhatToWatchState> {
     componentDidMount() {
         const fetchMovies = async () => {
             this.setState({ isLoading: true });
-            let response = await getAllMoviesAPI(2);
+            let response = await getLatestReleaseMoviesAPI();
             this.setState({
                 allMovies: response.movies,
                 isLoading: false
@@ -133,7 +133,7 @@ class WhatToWatch extends Component<{}, WhatToWatchState> {
                 >
                     <NavLink to={'/all-movies'}>
                         <h2 className="what-to-watch-title">
-                            What to Watch
+                            Latest Release
                             <span className='title-icon'>
                                 <ChevronRight className='next-icon' />
                             </span>
