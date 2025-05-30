@@ -117,7 +117,7 @@ const MovieDetails: React.FC = () => {
                 </div>
 
                 <div className="movie-details-container">
-                    <div className="movie-details-content">
+                    <div className={`movie-details-content ${movie ? 'movie-details-content--animated' : ''}`}>
                         <div className="movie-details-content__poster">
                             <img
                                 src={movie.poster_url}

@@ -33,21 +33,21 @@ function Footer() {
                 </Box>
 
                 <Box className="links-section">
-                    <Box className="main-links">
+                    {/* <Box className="main-links"> */}
                         <a href="#" className="link-with-icon">Help <span className="external-icon">↗</span></a>
                         <a href="#" className="link-with-icon">Site Index <span className="external-icon">↗</span></a>
                         <a href="#" className="link-with-icon">BingePro <span className="external-icon">↗</span></a>
                         <a href="#" className="link-with-icon">Box Office Mojo <span className="external-icon">↗</span></a>
                         <a href="#" className="link-with-icon">License Binge Data <span className="external-icon">↗</span></a>
-                    </Box>
+                    {/* </Box> */}
 
-                    <Box className="secondary-links">
+                    {/* <Box className="secondary-links"> */}
                         <a href="#">Press Room</a>
                         <a href="#" className="link-with-icon">Advertising <span className="external-icon">↗</span></a>
                         <a href="#" className="link-with-icon">Jobs <span className="external-icon">↗</span></a>
                         <a href="#">Conditions of Use</a>
                         <a href="#">Privacy Policy</a>
-                    </Box>
+                    {/* </Box> */}
                 </Box>
 
                 <Box className="company-info">

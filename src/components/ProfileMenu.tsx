@@ -13,6 +13,7 @@ import { Clapperboard, CircleUserRound } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { signoutAPI } from '../API';
 import Cookies from 'js-cookie';
+import toast from 'react-hot-toast';
 
 type Props = {
   role: 'admin' | 'user';
@@ -41,6 +42,13 @@ const ProfileMenu: React.FC<Props> = () => {
   };
 
   const handleProfile = () => {
+    const token=Cookies.get('authToken');
+    if(!token){
+      toast.error("Please Login First");
+      navigate('/login');
+      return;
+    }
+
     handleClose();
     navigate('/profile');
   };

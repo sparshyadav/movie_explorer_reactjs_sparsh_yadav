@@ -31,7 +31,7 @@ const MoviePageList: React.FC = () => {
         'Horror',
         'Romance',
         'Thriller',
-        'Si-Fi',
+        'Sci-Fi',
         'Adventure',
         'Animation'
     ];

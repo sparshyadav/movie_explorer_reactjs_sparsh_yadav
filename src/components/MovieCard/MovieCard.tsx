@@ -5,6 +5,7 @@ import Box from '@mui/material/Box';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { Pencil, Crown } from 'lucide-react';
 import toast from 'react-hot-toast';
+import Cookies from 'js-cookie';
 
 interface ShowCardProps {
     id: string;
@@ -37,6 +38,12 @@ const MovieCard: React.FC<ShowCardProps> = ({
 
     const handleDetails = () => {
         const userPlan=localStorage.getItem('userPlan');
+        const token=Cookies.get('authToken');
+        if(!token){
+            toast.error("Please Login First");
+            navigate('/login');
+            return;
+        }
 
         if(userPlan!=='premium' && premium){
             toast.error("Please Take Premium for Premium Movies!")

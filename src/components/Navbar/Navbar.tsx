@@ -10,6 +10,7 @@ import { Crown, AlignJustify } from 'lucide-react';
 import Cookies from 'js-cookie';
 import { getSubscriptionStatus } from '../../API';
 import Tooltip from '@mui/material/Tooltip';
+import toast from 'react-hot-toast';
 
 function Navbar({ onMenuClick }: { onMenuClick: () => void }) {
     const navigate = useNavigate();
@@ -33,6 +34,12 @@ function Navbar({ onMenuClick }: { onMenuClick: () => void }) {
     }
 
     const handleSubscription = () => {
+        const token = Cookies.get('authToken');
+        if (!token) {
+            toast.error("Please Login First");
+            navigate('/login');
+            return;
+        }
         navigate('/subscribe')
     }
 
@@ -44,7 +51,7 @@ function Navbar({ onMenuClick }: { onMenuClick: () => void }) {
         <Container maxWidth={false} disableGutters className="navbar-container">
             <Box className='navbar-center-container' >
                 <Box className='hamburger-container'>
-                    <AlignJustify className='search-icon hamburger-icon' onClick={onMenuClick}/>
+                    <AlignJustify className='search-icon hamburger-icon' onClick={onMenuClick} />
                 </Box>
                 <Box className='right-container'>
                     <NavLink to={'/'}>

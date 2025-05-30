@@ -350,3 +350,34 @@ $box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
     justify-content: center;
     gap: 5px;
 }
+
+
+@keyframes slideUpFromBottom {
+    0% {
+        transform: translateY(100px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.movie-details-content--animated {
+    .movie-details-content__poster {
+        animation: slideUpFromBottom 0.6s ease-out forwards; 
+    }
+    .movie-details-header__title-group h1 {
+        animation: slideUpFromBottom 0.6s ease-out 0.2s forwards;
+    }
+    .movie-details-description p {
+        animation: slideUpFromBottom 0.6s ease-out 0.4s forwards; 
+    }
+
+    .movie-details-content__poster,
+    .movie-details-header__title-group h1,
+    .movie-details-description p {
+        opacity: 0;
+        transform: translateY(100px);
+    }
+}

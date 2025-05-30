@@ -24,7 +24,7 @@ class Home extends Component {
         <MainCarousal />
         <WhatToWatch />
         <StreamingPlatform />
-        {localStorage.getItem('role')!=='supervisor' && <Watchlist />}
+        {localStorage.getItem('role')!=='supervisor' && Cookies.get("authToken") && <Watchlist />}
         <BornToday />
       </Box>
     );
