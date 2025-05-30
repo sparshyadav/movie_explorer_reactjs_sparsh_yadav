@@ -5,7 +5,7 @@ import MovieCard from '../../components/MovieCard/MovieCard';
 import MovieCardShimmer from '../../components/MovieCardShimmer/MovieCardShimmer';
 import { ChevronRight } from 'lucide-react';
 import { NavLink } from 'react-router-dom';
-import { getAllMoviesAPI, getLatestReleaseMoviesAPI } from '../../API';
+import { getLatestReleaseMoviesAPI } from '../../API';
 
 interface Movie {
     id: string;
