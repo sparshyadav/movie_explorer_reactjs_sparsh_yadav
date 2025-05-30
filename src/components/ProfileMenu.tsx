@@ -37,6 +37,7 @@ const ProfileMenu: React.FC<Props> = () => {
   const handleLogout = () => {
     handleClose();
     localStorage.clear();
+    Cookies.remove('authToken');
     signoutAPI();
     navigate('/login');
   };
