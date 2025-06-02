@@ -10,10 +10,6 @@ import toast from 'react-hot-toast';
 import Watchlist from '../../components/Watchlist/Watchlist';
 
 class Home extends Component {
-  componentDidMount(): void {
-    window.scrollTo(0, 0);
-  }
-
   render() {
     const authToken = Cookies.get('authToken');
     if (!authToken) {
