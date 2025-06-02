@@ -64,7 +64,7 @@ const MovieCard: React.FC<ShowCardProps> = ({
 
     return (
         <Box className="netflix-show-card">
-            <Box className="poster-container">
+            <Box className="poster-container"  onClick={handleDetails}>
                 <img src={posterImage} alt={`${title} poster`} className="poster-image" />
                 {
                     premium && (
@@ -95,7 +95,7 @@ const MovieCard: React.FC<ShowCardProps> = ({
                     <span className="title">{title}</span>
                 </Box>
 
-                <button onClick={handleDetails} className="watch-options-btn">More Info</button>
+                <button className="watch-options-btn">More Info</button>
 
                 {/* <Box className="action-buttons">
                     <button

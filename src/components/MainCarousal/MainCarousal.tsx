@@ -47,17 +47,16 @@ function NextArrow({ className, style, onClick }: ArrowProps) {
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                background: 'rgba(0,0,0,0.7)', // Darker for visibility
                 borderRadius: '50%',
-                right: '20px', // Adjusted for better placement
-                zIndex: 10, // Higher z-index
+                right: '0px',
+                zIndex: 10,
                 width: '50px',
                 height: '50px',
                 cursor: 'pointer',
             }}
             onClick={onClick}
         >
-            <ArrowForwardIos style={{ color: 'white', fontSize: '24px' }} />
+            <ArrowForwardIos style={{ color: 'white', fontSize: '35px' }} />
         </Box>
     );
 }
@@ -71,17 +70,16 @@ function PrevArrow({ className, style, onClick }: ArrowProps) {
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                background: 'rgba(0,0,0,0.7)', // Darker for visibility
                 borderRadius: '50%',
-                left: '20px', // Adjusted for better placement
-                zIndex: 10, // Higher z-index
+                left: '0px',
+                zIndex: 10,
                 width: '50px',
                 height: '50px',
                 cursor: 'pointer',
             }}
             onClick={onClick}
         >
-            <ArrowBackIos style={{ color: 'white', fontSize: '24px', marginLeft: '8px' }} />
+            <ArrowBackIos style={{ color: 'white', fontSize: '35px', marginLeft: '8px' }} />
         </Box>
     );
 }
@@ -101,7 +99,7 @@ export class MainCarousal extends Component<{}, State> {
     truncateDescription(description: string) {
         if (this.state.isSmallScreen && description.length > 50) {
             return description.slice(0, 50) + "...";
-        } else if (description.length > 300) { // Fixed truncation limit
+        } else if (description.length > 300) {
             return description.slice(0, 300) + "...";
         }
         return description;
@@ -147,7 +145,7 @@ export class MainCarousal extends Component<{}, State> {
             arrows: true,
             nextArrow: <NextArrow />,
             prevArrow: <PrevArrow />,
-            adaptiveHeight: false, // Prevent height jumps
+            adaptiveHeight: false,
         };
 
         const { allMovies, loading, error, isSmallScreen } = this.state;
