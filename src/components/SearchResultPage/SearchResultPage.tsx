@@ -2,7 +2,7 @@ import { Box, Container, Typography, TextField, InputAdornment } from '@mui/mate
 import { Search as SearchIcon } from '@mui/icons-material';
 import { useEffect, useState } from 'react';
 import './SearchResultPage.scss';
-import { searchMovieAPI } from '../../API';
+import { getTopRatedMoviesAPI, searchMovieAPI } from '../../API';
 import MovieCard from '../MovieCard/MovieCard';
 import CircularProgress from '@mui/material/CircularProgress';
 
@@ -19,12 +19,22 @@ function SearchResultPage() {
     const [searchedMovies, setSearchedMovies] = useState<Movie[]>([]);
     const [debounceTimeout, setDebounceTimeout] = useState<NodeJS.Timeout | null>(null);
     const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [topTrendingMovies, setTopTrendingMovies] = useState<Movie[]>([]);
 
     const handleSearchChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
         const value = event.target.value;
         setIsLoading(true);
         setSearchQuery(value);
     };
+
+    useEffect(() => {
+        const useFetchTopMovies = async () => {
+            const response = await getTopRatedMoviesAPI();
+            setTopTrendingMovies(response.movies);
+        }
+
+        useFetchTopMovies();
+    }, [])
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -77,14 +87,30 @@ function SearchResultPage() {
                                 <CircularProgress />
                             </Box>
                         ) : (
-                            <>
-                                <Typography variant="body2" className="results-count">
-                                    Found {searchedMovies?.length} results
-                                </Typography>
+                            searchedMovies?.length ? (
+                                <>
+                                    <Typography variant="body2" className="results-count">
+                                        Found {searchedMovies?.length} results
+                                    </Typography>
 
+                                    <Box className='search-main-container'>
+                                        <Box className='grid'>
+                                            {searchedMovies.map((movie,) => (
+                                                <MovieCard
+                                                    premium={movie.premium}
+                                                    id={movie.id}
+                                                    title={movie.title}
+                                                    posterImage={movie.poster_url}
+                                                    rating={Number(movie.rating)}
+                                                />
+                                            ))}
+                                        </Box>
+                                    </Box>
+                                </>
+                            ) : (
                                 <Box className='search-main-container'>
                                     <Box className='grid'>
-                                        {searchedMovies.map((movie,) => (
+                                        {topTrendingMovies.map((movie,) => (
                                             <MovieCard
                                                 premium={movie.premium}
                                                 id={movie.id}
@@ -95,7 +121,7 @@ function SearchResultPage() {
                                         ))}
                                     </Box>
                                 </Box>
-                            </>
+                            )
                         )
                     }
                 </Box>

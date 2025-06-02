@@ -31,6 +31,9 @@ $transition: all 0.3s ease;
   .search-header {
     margin-bottom: 2rem;
     width: 88%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     
     .search-title {
       color: $secondary-color;
@@ -39,10 +42,16 @@ $transition: all 0.3s ease;
       text-transform: uppercase;
       letter-spacing: 1px;
       font-size: 28px;
+      text-align: center;
     }
     
     .search-input {
       margin-bottom: 1.5rem;
+      width: 70%;
+
+      @media(max-width: 768px){
+        width: 90%;
+      }
       
       .MuiOutlinedInput-root {
         background-color: rgba(255, 255, 255, 0.05);
@@ -130,23 +139,23 @@ $transition: all 0.3s ease;
         width: 90%;
         display: flex;
         flex-wrap: wrap;
-        gap: 15px;
-        justify-content: space-evenly;
+        gap: 25px;
+        justify-content: center;
       }
     }
 
     .results-count {
       color: rgba(255, 255, 255, 0.6);
       margin-bottom: 1.5rem;
-      margin-left: 4.5rem;
+      margin-left: 7.5rem;
       font-style: italic;
 
       @media(max-width: 768px){
-        margin-left: 3rem;
+        margin-left: 5rem;
       }
 
-      @media(max-width: 450px){
-        margin-left: 1rem;
+      @media(max-width: 635px){
+        margin-left: 3rem;
       }
     }
     
@@ -296,4 +305,14 @@ $transition: all 0.3s ease;
 .loading-circular{
   display: flex;
   justify-content: center;
+}
+
+.trend-movies{
+  border: 1px solid white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 25px;
+  width: 80%;
 }
