@@ -52,7 +52,8 @@ const MovieDetails: React.FC = () => {
         Netflix: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/69/Netflix_logo.svg/2560px-Netflix_logo.svg.png',
         Amazon: 'https://pentagram-production.imgix.net/38cf1cca-b7de-4393-85b9-cf36de0e38cf/Amazon_PrimeVideo_Documentation_02copy.jpg?crop=edges&fit=crop&h=630&rect=192%2C0%2C3456%2C2160&w=1200',
         HBO: 'https://9meters.com/wp-content/uploads/hbo-max-logo.webp',
-        Hulu: 'https://greenhouse.hulu.com/app/uploads/sites/12/2023/10/logo-gradient-3up.svg'
+        Hulu: 'https://greenhouse.hulu.com/app/uploads/sites/12/2023/10/logo-gradient-3up.svg',
+        "Disney+": 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ-8JHyKoCdxA30SXXUR3WxPX9Ee6q80PBTNw&s'
     };
 
     useEffect(() => {
@@ -62,6 +63,7 @@ const MovieDetails: React.FC = () => {
             if (!id) return;
             try {
                 const response = await movieDetailsAPI(Number(id));
+                console.log("RESPONSE: ", response);
                 setMovie(response);
 
                 if (response.streaming_platform in streaming_platform_url) {
